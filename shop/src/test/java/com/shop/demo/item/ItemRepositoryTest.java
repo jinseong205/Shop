@@ -19,6 +19,7 @@ public class ItemRepositoryTest {
 		item.setItemName("Test Item");
 		item.setPirce(10000);
 		item.setDetail("Test Desc");
+		
 	}
 	
 }
