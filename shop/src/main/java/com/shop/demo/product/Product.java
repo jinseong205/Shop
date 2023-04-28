@@ -1,4 +1,4 @@
-package com.shop.demo.item;
+package com.shop.demo.product;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
-import com.shop.demo.constant.ItemSellStatus;
+import com.shop.demo.constant.productSellStatus;
 
 import lombok.Data;
 import lombok.ToString;
@@ -19,14 +19,14 @@ import lombok.ToString;
 @Data
 @ToString
 @Entity
-public class Item {
+public class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(nullable = false, length = 100)
-	private String itemName;
+	private String productName;
 	
 	@Column(nullable = false)
 	private int pirce;
@@ -37,9 +37,9 @@ public class Item {
 	@Lob
 	private String Detail;
 	
-	private ItemSellStatus itemSellStatus;
-	
 	@Enumerated(EnumType.STRING)
+	private productSellStatus productSellStatus;
+	
 	private LocalDateTime crtDt;
 	
 	private LocalDateTime updtDt;
