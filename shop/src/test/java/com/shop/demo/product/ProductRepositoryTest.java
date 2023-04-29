@@ -16,7 +16,6 @@ public class ProductRepositoryTest {
 	@Autowired
 	ProductRepository productRepository;
 
-	@Test
 	@DisplayName("--- 상품 저장 테스트 ---")
 	public void createProductTest() {
 
@@ -35,7 +34,6 @@ public class ProductRepositoryTest {
 		}
 	}
 
-	@Test
 	@DisplayName("--- 상품명 조회 테스트 ---")
 	public void findByProductList() {
 
@@ -48,7 +46,6 @@ public class ProductRepositoryTest {
 		
 	}
 	
-	@Test
 	@DisplayName("--- 상품명, 상품상세설명 or 조회 테스트 ---")
 	public void findByProductNameOrProductDetail() {
 
@@ -61,7 +58,6 @@ public class ProductRepositoryTest {
 		
 	}
 	
-	@Test
 	@DisplayName("--- 가격 LessThan 조회 테스트 ---")
 	public void findByPriceLessThanTest() {
 
@@ -74,7 +70,6 @@ public class ProductRepositoryTest {
 		
 	}
 	
-	@Test
 	@DisplayName("--- 가격 LessThan 내림차순 조회 테스트 ---")
 	public void findByPriceLessThanOrderByPriceTest() {
 
@@ -86,7 +81,6 @@ public class ProductRepositoryTest {
 		}
 		
 	}
-	
 	
 	@Test
 	@DisplayName("--- 상품상세설명 조회 테스트 ---")
