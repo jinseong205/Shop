@@ -3,16 +3,24 @@ package com.shop.demo.product;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.shop.demo.constant.productSellStatus;
 
 @SpringBootTest
 public class ProductRepositoryTest {
 
+	@PersistenceContext
+	EntityManager em;
+	
 	@Autowired
 	ProductRepository productRepository;
 
@@ -82,7 +90,6 @@ public class ProductRepositoryTest {
 		
 	}
 	
-	@Test
 	@DisplayName("--- 상품상세설명 조회 테스트 ---")
 	public void findByProductDetail() {
 
@@ -95,4 +102,28 @@ public class ProductRepositoryTest {
 		
 	}
 
+	@Test
+	@DisplayName("--- QueryDsl 조회 테스트1 ---")
+	public void queryDslTest() {
+		this.createProductTest();
+		
+		JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+		QProduct qProduct = QProduct.product;
+		
+		JPAQuery<Product> query = queryFactory.selectFrom(qProduct)
+				.where(qProduct.productSellStatus.eq(productSellStatus.SELL))
+				.where(qProduct.productDetail.like("%" + "Desc" + "%"))
+				.orderBy(qProduct.price.desc());
+		
+		List<Product> productList = query.fetch();
+
+		for(Product product : productList) {
+			System.out.println(product.toString());
+		}
+		
+				
+	
+	}
+	
+	
 }
