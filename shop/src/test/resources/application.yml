@@ -10,7 +10,7 @@ server:
 logging:
   pattern:
     file: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:line%line] - %msg%n"
-    rolling-file-name: "C:/logging/demo/demo.%d{yyyy-MM-dd}.%i"
+    rolling-file-name: "C:/logging/shop/shop.%d{yyyy-MM-dd}.%i"
   file:
     name: C:/logging/demo/demo.log
     max-history: 30

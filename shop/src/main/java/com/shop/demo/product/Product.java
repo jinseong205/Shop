@@ -29,13 +29,13 @@ public class Product {
 	private String productName;
 	
 	@Column(nullable = false)
-	private int pirce;
+	private int price;
 	
 	@Column(nullable = false)
 	private int stockNum;
 
 	@Lob
-	private String Detail;
+	private String productDetail;
 	
 	@Enumerated(EnumType.STRING)
 	private productSellStatus productSellStatus;

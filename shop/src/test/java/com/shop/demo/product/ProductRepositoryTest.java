@@ -1,6 +1,7 @@
 package com.shop.demo.product;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,26 +10,68 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.shop.demo.constant.productSellStatus;
 
-
 @SpringBootTest
 public class ProductRepositoryTest {
 
 	@Autowired
 	ProductRepository productRepository;
-	
+
 	@Test
 	@DisplayName("--- 상품 저장 테스트 ---")
-	public void createItmeTest() {
-		Product product = new Product();
-		product.setProductName("Test Item");
-		product.setPirce(10000);
-		product.setDetail("Test Desc");
-		product.setProductSellStatus(productSellStatus.SELL);
-		product.setStockNum(1000);
-		product.setCrtDt(LocalDateTime.now());
-		product.setUpdtDt(LocalDateTime.now());
+	public void createProductTest() {
+
+		for (int i = 0; i < 10; i++) {
+
+			Product product = new Product();
+			product.setProductName("Test Item" + i);
+			product.setPrice(10000 * i);
+			product.setProductDetail("Test Desc" + i);
+			product.setProductSellStatus(productSellStatus.SELL);
+			product.setStockNum(100 * i);
+			product.setCrtDt(LocalDateTime.now());
+			product.setUpdtDt(LocalDateTime.now());
+
+			productRepository.save(product);
+		}
+	}
+
+	@Test
+	@DisplayName("--- 상품명 조회 테스트 ---")
+	public void findByProductList() {
+
+		this.createProductTest();
 		
-		productRepository.save(product);
+		List<Product> productList = productRepository.findByProductName("Test Item1");
+		for(Product product : productList) {
+			System.out.println(product.toString());
+		}
+		
 	}
 	
+	@Test
+	@DisplayName("--- 상품명, 상품상세설명 or 조회 테스트 ---")
+	public void findByProductNameOrProductDetail() {
+
+		this.createProductTest();
+		
+		List<Product> productList = productRepository.findByProductNameOrProductDetail("Test Item2","Test Desc3");
+		for(Product product : productList) {
+			System.out.println(product.toString());
+		}
+		
+	}
+	
+	@Test
+	@DisplayName("--- 가격 LessThan 테스트 ---")
+	public void findByPriceLessThanTest() {
+
+		this.createProductTest();
+		
+		List<Product> productList = productRepository.findByPriceLessThan(30000);
+		for(Product product : productList) {
+			System.out.println(product.toString());
+		}
+		
+		
+	}
 }
