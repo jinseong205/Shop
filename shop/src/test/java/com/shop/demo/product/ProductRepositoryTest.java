@@ -62,16 +62,43 @@ public class ProductRepositoryTest {
 	}
 	
 	@Test
-	@DisplayName("--- 가격 LessThan 테스트 ---")
+	@DisplayName("--- 가격 LessThan 조회 테스트 ---")
 	public void findByPriceLessThanTest() {
 
 		this.createProductTest();
 		
-		List<Product> productList = productRepository.findByPriceLessThan(30000);
+		List<Product> productList = productRepository.findByPriceLessThan(60000);
 		for(Product product : productList) {
 			System.out.println(product.toString());
 		}
 		
+	}
+	
+	@Test
+	@DisplayName("--- 가격 LessThan 내림차순 조회 테스트 ---")
+	public void findByPriceLessThanOrderByPriceTest() {
+
+		this.createProductTest();
+		
+		List<Product> productList = productRepository.findByPriceLessThanOrderByPriceDesc(60000);
+		for(Product product : productList) {
+			System.out.println(product.toString());
+		}
 		
 	}
+	
+	
+	@Test
+	@DisplayName("--- 상품상세설명 조회 테스트 ---")
+	public void findByProductDetail() {
+
+		this.createProductTest();
+		
+		List<Product> productList = productRepository.findByProdctDetail("Desc");
+		for(Product product : productList) {
+			System.out.println(product.toString());
+		}
+		
+	}
+
 }
