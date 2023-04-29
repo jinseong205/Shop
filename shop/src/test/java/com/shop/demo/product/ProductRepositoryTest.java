@@ -10,7 +10,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.shop.demo.constant.productSellStatus;
@@ -24,7 +28,7 @@ public class ProductRepositoryTest {
 	@Autowired
 	ProductRepository productRepository;
 
-	@DisplayName("--- 상품 저장 테스트 ---")
+	@DisplayName("--- 상품 저장 테스트1 ---")
 	public void createProductTest() {
 
 		for (int i = 0; i < 10; i++) {
@@ -34,6 +38,36 @@ public class ProductRepositoryTest {
 			product.setPrice(10000 * i);
 			product.setProductDetail("Test Desc" + i);
 			product.setProductSellStatus(productSellStatus.SELL);
+			product.setStockNum(100 * i);
+			product.setCrtDt(LocalDateTime.now());
+			product.setUpdtDt(LocalDateTime.now());
+
+			productRepository.save(product);
+		}
+	}
+	
+	@DisplayName("--- 상품 저장 테스트2 ---")
+	public void createProductTest2() {
+
+		for (int i = 0; i < 7; i++) {
+			Product product = new Product();
+			product.setProductName("Test Item" + i);
+			product.setPrice(10000 * i);
+			product.setProductDetail("Test Desc" + i);
+			product.setProductSellStatus(productSellStatus.SELL);
+			product.setStockNum(100 * i);
+			product.setCrtDt(LocalDateTime.now());
+			product.setUpdtDt(LocalDateTime.now());
+
+			productRepository.save(product);
+		}
+		
+		for (int i = 7; i < 10; i++) {
+			Product product = new Product();
+			product.setProductName("Test Item" + i);
+			product.setPrice(10000 * i);
+			product.setProductDetail("Test Desc" + i);
+			product.setProductSellStatus(productSellStatus.SOLD_OUT);
 			product.setStockNum(100 * i);
 			product.setCrtDt(LocalDateTime.now());
 			product.setUpdtDt(LocalDateTime.now());
@@ -102,9 +136,9 @@ public class ProductRepositoryTest {
 		
 	}
 
-	@Test
 	@DisplayName("--- QueryDsl 조회 테스트1 ---")
 	public void queryDslTest() {
+		
 		this.createProductTest();
 		
 		JPAQueryFactory queryFactory = new JPAQueryFactory(em);
@@ -121,9 +155,39 @@ public class ProductRepositoryTest {
 			System.out.println(product.toString());
 		}
 		
-				
-	
 	}
+	
+	@Test
+	@DisplayName("--- QueryDsl 조회 테스트2 ---")
+	public void queryDslTest2(){
+		
+		this.createProductTest2();
+		
+		BooleanBuilder booleanBuilder = new BooleanBuilder();
+		QProduct product = QProduct.product;
+		
+		String productDetail = "Desc";
+		int price = 10000;
+		//String productSellStat = "SELL";
+		
+		booleanBuilder.and(product.productDetail.like("%" + productDetail + "%"));
+		booleanBuilder.and(product.price.gt(price));
+		booleanBuilder.and(product.productSellStatus.eq(productSellStatus.SELL));
+	
+		Pageable pagealbe = PageRequest.of(0, 5);
+		Page<Product> productPagingResult = productRepository.findAll(booleanBuilder, pagealbe);
+		
+		System.out.println("total elements : " + productPagingResult.getTotalElements());
+		
+		List<Product> resultProductList= productPagingResult.getContent();
+		
+		for(Product p : resultProductList) {
+			System.out.println(p.toString());
+		}
+		
+	}
+	
+	
 	
 	
 }
