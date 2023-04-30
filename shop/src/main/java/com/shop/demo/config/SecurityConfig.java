@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 																			// postAuthorize annotion 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private final CorsFilter corsFilter;
+	private final CorsConfig corsConfig;
 
 	private final UserRepository userRepository;
 
@@ -74,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.csrf().disable(); // csrf 비활성화
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // session 사용하지 않음
-				.and().addFilter(corsFilter).formLogin().disable().httpBasic().disable()
+				.and().addFilter(corsConfig.corsFilter()).formLogin().disable().httpBasic().disable()
 				.addFilter(jwtAuthenticationFilter()) // AuthenticationManager
 				.addFilter(jwtAuthorizationFilter()) // AuthenticationManager
 				.authorizeRequests().antMatchers("/api/user/**")
