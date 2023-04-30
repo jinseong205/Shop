@@ -6,22 +6,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shop.demo.product.Product;
+
 @RestController
 public class TestController {
-
-	@GetMapping("home")
-	public String home() {
-		return "<h1>home</h1>";
-	}
-
-	@PostMapping("token")
-	public String token() {
-		return "<h1>token</h1>";
-	}
-
 	
-	@GetMapping("api/test")
+	@GetMapping("api/test/ex1")
 	public ResponseEntity<?> test(){
-		return new ResponseEntity<>("test",HttpStatus.OK);
+		
+		Product p = new Product();
+		p.setId(1L);
+		p.setProductName("TEST");
+		p.setProductDetail("TEST DESC");
+		
+		return new ResponseEntity<>(p,HttpStatus.OK);
 	}
 }
