@@ -22,10 +22,11 @@ const login = (username, password) => {
   return axios.post(API_URL + 'login', user)
     .then((response) => {
       console.log(response.headers.get("Authorization"));
-      if (response.data.accessToken) {
-        localStorage.setItem(response.headers.get("Authorization"));
+      alert("response :" + response.headers.get("Authorization"));
+      if (response.headers.get("Authorization")) {
+        localStorage.setItem('user', response.headers.get("Authorization"));
       }
-      return response.data;
+      return response.headers.get("Authorization");
     });
 };
 
@@ -34,7 +35,8 @@ const logout = () => {
 };
 
 const getCurrentUser = () => {
-  return JSON.parse( localStorage.getItem('user'));
+
+  return JSON.parse( localStorage.getItem('user')??'');
 };
 
 export default {

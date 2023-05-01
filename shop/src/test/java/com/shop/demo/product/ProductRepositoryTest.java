@@ -17,7 +17,7 @@ import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.shop.demo.constant.productSellStatus;
+import com.shop.demo.constant.ProductSellStatus;
 
 @SpringBootTest
 public class ProductRepositoryTest {
@@ -37,7 +37,7 @@ public class ProductRepositoryTest {
 			product.setProductName("Test Item" + i);
 			product.setPrice(10000 * i);
 			product.setProductDetail("Test Desc" + i);
-			product.setProductSellStatus(productSellStatus.SELL);
+			product.setProductSellStatus(ProductSellStatus.SELL);
 			product.setStockNum(100 * i);
 			product.setCrtDt(LocalDateTime.now());
 			product.setUpdtDt(LocalDateTime.now());
@@ -54,7 +54,7 @@ public class ProductRepositoryTest {
 			product.setProductName("Test Item" + i);
 			product.setPrice(10000 * i);
 			product.setProductDetail("Test Desc" + i);
-			product.setProductSellStatus(productSellStatus.SELL);
+			product.setProductSellStatus(ProductSellStatus.SELL);
 			product.setStockNum(100 * i);
 			product.setCrtDt(LocalDateTime.now());
 			product.setUpdtDt(LocalDateTime.now());
@@ -67,7 +67,7 @@ public class ProductRepositoryTest {
 			product.setProductName("Test Item" + i);
 			product.setPrice(10000 * i);
 			product.setProductDetail("Test Desc" + i);
-			product.setProductSellStatus(productSellStatus.SOLD_OUT);
+			product.setProductSellStatus(ProductSellStatus.SOLD_OUT);
 			product.setStockNum(100 * i);
 			product.setCrtDt(LocalDateTime.now());
 			product.setUpdtDt(LocalDateTime.now());
@@ -145,7 +145,7 @@ public class ProductRepositoryTest {
 		QProduct qProduct = QProduct.product;
 		
 		JPAQuery<Product> query = queryFactory.selectFrom(qProduct)
-				.where(qProduct.productSellStatus.eq(productSellStatus.SELL))
+				.where(qProduct.productSellStatus.eq(ProductSellStatus.SELL))
 				.where(qProduct.productDetail.like("%" + "Desc" + "%"))
 				.orderBy(qProduct.price.desc());
 		
@@ -172,7 +172,7 @@ public class ProductRepositoryTest {
 		
 		booleanBuilder.and(product.productDetail.like("%" + productDetail + "%"));
 		booleanBuilder.and(product.price.gt(price));
-		booleanBuilder.and(product.productSellStatus.eq(productSellStatus.SELL));
+		booleanBuilder.and(product.productSellStatus.eq(ProductSellStatus.SELL));
 	
 		Pageable pagealbe = PageRequest.of(0, 5);
 		Page<Product> productPagingResult = productRepository.findAll(booleanBuilder, pagealbe);

@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
-import com.shop.demo.constant.productSellStatus;
+import com.shop.demo.constant.ProductSellStatus;
 
 import lombok.Data;
 import lombok.ToString;
@@ -38,7 +38,7 @@ public class Product {
 	private String productDetail;
 	
 	@Enumerated(EnumType.STRING)
-	private productSellStatus productSellStatus;
+	private ProductSellStatus productSellStatus;
 	
 	private LocalDateTime crtDt;
 	
