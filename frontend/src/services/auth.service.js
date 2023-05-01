@@ -22,9 +22,8 @@ const login = (username, password) => {
   return axios.post(API_URL + 'login', user)
     .then((response) => {
       console.log(response.headers.get("Authorization"));
-      alert("response :" + response.data);
       if (response.data.accessToken) {
-        localStorage.setItem('user', JSON.stringify(response.data));
+        localStorage.setItem(response.headers.get("Authorization"));
       }
       return response.data;
     });
