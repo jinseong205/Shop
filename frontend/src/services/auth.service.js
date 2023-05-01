@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/';
 
-const register = (email :String, password: String) => {
+const register = (email , password) => {
   const user = {
     email: email,
     password: password
@@ -11,13 +11,18 @@ const register = (email :String, password: String) => {
   return axios.post(API_URL + 'join', user);
 };
 
-const login = (email : String, password: String) => {
+const login = (username, password) => {
   const user = {
-    email: email,
+    username: username,
     password: password
   };
+
+      
+
   return axios.post(API_URL + 'login', user)
     .then((response) => {
+      console.log(response.headers.get("Authorization"));
+      alert("response :" + response.data);
       if (response.data.accessToken) {
         localStorage.setItem('user', JSON.stringify(response.data));
       }
@@ -30,8 +35,7 @@ const logout = () => {
 };
 
 const getCurrentUser = () => {
-
-  return JSON.parse( localStorage.getItem('user')??'');
+  return JSON.parse( localStorage.getItem('user'));
 };
 
 export default {

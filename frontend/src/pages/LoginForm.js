@@ -3,24 +3,24 @@ import { Link, useNavigate } from "react-router-dom";
 import authService from "../services/auth.service";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   const navigate = useNavigate();
 
-  const handleLogin = async (e : any) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     setMessage("");
     setLoading(true);
 
     try {
-      await authService.login(email, password);
+      await authService.login(username, password);
       navigate("/");
       window.location.reload();
-    } catch (error: any) {
+    } catch (error) {
       const resMessage =
         (error.response &&
           error.response.data &&
@@ -40,14 +40,14 @@ const LoginForm = () => {
         <Link to="/" style={{ textDecoration: "none" }}><h1>JWT Sample</h1></Link>
         <form onSubmit={handleLogin}>
           <div className="form-group">
-            <label htmlFor="email">E-Mail</label>
+            <label htmlFor="username">ID</label>
             &nbsp;
             <input
               type="text"
               className="form-control"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>

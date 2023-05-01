@@ -9,7 +9,7 @@ const JoinForm = () => {
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
 
-    const handleSignup = (e : any) => {
+    const handleSignup = (e) => {
         e.preventDefault();
         authService.register(email, password).then(
             (response) => {
