@@ -18,8 +18,7 @@ public class UserController {
 	
 	@PostMapping("join")
 	public ResponseEntity<?> join(@RequestBody User user){
-		userService.join(user);
-		return new ResponseEntity<>("회원가입 완료",HttpStatus.CREATED);
+		return new ResponseEntity<>(userService.join(user),HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/api/user")

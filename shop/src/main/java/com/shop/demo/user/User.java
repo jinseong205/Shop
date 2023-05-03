@@ -1,14 +1,13 @@
 package com.shop.demo.user;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,22 +39,18 @@ public class User {
 	@Column(nullable = false, length = 100) // hash (비밀번호 암호화)
 	private String password;	//user_pw
 	
+	private String name;
+	
 	@Column( length = 50) 
 	private String email;		
+
+	private String addr;
 	
 	//@ColumnDefault("'user'")
 	@Column(nullable = false, length = 100) // hash (비밀번호 암호화)
 	private String roles;	//Enum을 쓰는게 좋음 //admin, user, manager
 	
-	@Column( length = 50) 
-	private String provider;
-
-	@Column( length = 50) 
-	private String providerId;
-	
-
 	//예비속성
-	
 	@Column( length = 50) 
 	private String attr1;
 	
@@ -87,7 +82,9 @@ public class User {
 	private String attr10;
 	
 	@CreationTimestamp	//시간이 자동으로 입력
-	private Timestamp createDate;
+	private LocalDateTime crtDt;
+	
+	private LocalDateTime updtDt;
 
 	public List<String> getRoleList(){
 		if(this.roles.length() > 0) {
@@ -97,15 +94,13 @@ public class User {
 	}
 	
 	@Builder
-	public User(String username, String password, String email, String roles, String provider, String providerId,
-			Timestamp createDate) {
+	public User(String username, String password, String email, String roles, LocalDateTime crtDt, LocalDateTime updtDt) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.roles = roles;
-		this.provider = provider;
-		this.providerId = providerId;
-		this.createDate = createDate;
+		this.crtDt = crtDt;
+		this.updtDt = updtDt;
 	}
 
 }
