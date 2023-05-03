@@ -10,6 +10,8 @@ import com.shop.demo.filter.MyFilter2;
 @Configuration
 public class FilterConfig {
 	
+	
+	/*
 	@Bean
 	public FilterRegistrationBean<MyFilter1> filter1(){
 		FilterRegistrationBean<MyFilter1> bean = new FilterRegistrationBean<>(new MyFilter1());
@@ -25,6 +27,8 @@ public class FilterConfig {
 		bean.setOrder(1);				//낮은 번호가 필터 중에서 가장 먼저 실행됨
 		return bean;
 	}
+	
+	*/
 	
 	/*
 	@Bean

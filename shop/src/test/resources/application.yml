@@ -12,10 +12,10 @@ logging:
     file: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:line%line] - %msg%n"
     rolling-file-name: "C:/logging/shop/shop.%d{yyyy-MM-dd}.%i"
   file:
-    name: C:/logging/demo/demo.log
+    name: C:/logging/shop/demo.log
     max-history: 30
   level:
-    '[com.jinseong.demo]': DEBUG
+    '[com.shop.demo]': DEBUG
       
 spring:
   devtools:

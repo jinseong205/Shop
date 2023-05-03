@@ -10,8 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
-import org.springframework.web.filter.CorsFilter;
 
 import com.shop.demo.config.jwt.JwtAuthenticationFilter;
 import com.shop.demo.config.jwt.JwtAuthorizationFilter;
@@ -28,12 +28,16 @@ import lombok.RequiredArgsConstructor;
 																			// postAuthorize annotion 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	
+	
 	private final CorsConfig corsConfig;
 
 	private final UserRepository userRepository;
 
 	private final JwtProperties jwtProperties;
-
+		
+	private final AuthenticationFailureHandler customFailureHandler;
+	
 	@Bean
 	public BCryptPasswordEncoder encodePwd() {
 		return new BCryptPasswordEncoder();
@@ -77,10 +81,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().addFilter(corsConfig.corsFilter()).formLogin().disable().httpBasic().disable()
 				.addFilter(jwtAuthenticationFilter()) // AuthenticationManager
 				.addFilter(jwtAuthorizationFilter()) // AuthenticationManager
-				.authorizeRequests().antMatchers("/api/user/**")
-				.access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
+				.authorizeRequests()
+				.antMatchers("/api/user/**").access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
 				.antMatchers("/api/manager/**").access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-				.antMatchers("/api/admin/**").access("hasRole('ROLE_ADMIN')").anyRequest().permitAll();
+				.antMatchers("/api/admin/**").access("hasRole('ROLE_ADMIN')");
+				//.anyRequest().permitAll();
 
 	}
 

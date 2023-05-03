@@ -43,11 +43,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		//super.doFilterInternal(request, response, chain);
-		log.debug("********** JwtAuthorizationFilter -- Authentication is required **********");
+		//log.debug("********** JwtAuthorizationFilter -- Authentication is required **********");
 
 		
 		String jwtHeader = request.getHeader(jwtProperties.getHEADER_STRING());
-		log.debug("********** JwtAuthorizationFilter -- " + jwtHeader + " **********");
+		//log.debug("********** JwtAuthorizationFilter -- " + jwtHeader + " **********");
 
 		//Header 확인
 		if(jwtHeader == null || !jwtHeader.startsWith(jwtProperties.getTOKEN_PREFIX())) {
@@ -64,6 +64,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 		if(username != null) {
 			log.debug("********** JwtAuthorizationFilter -- " + username + " **********");
 			User userEntity = userRepository.findByUsername(username);
+			
 			PrincipalDetails principalDetails = new PrincipalDetails(userEntity);
 			Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
 
