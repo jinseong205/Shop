@@ -23,9 +23,8 @@ public class TraceFilter implements Filter{
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		
-		log.debug("********** Filter Test : TraceFilter **********");
-		log.debug("********** Request : " + req.getRequestURL() + " **********");
-		log.debug("********** Request : " + req.getMethod() + " **********");
+		log.debug("********** TraceFilter >> URL: " + req.getRequestURL() + " **********");
+		log.debug("********** TraceFilter >> method: " + req.getMethod() + " **********");
 		
 		chain.doFilter(req, res);
 	}

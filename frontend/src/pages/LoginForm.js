@@ -36,19 +36,21 @@ const LoginForm = () => {
       body: JSON.stringify(user)
 
     })
-    .then((res) => res.json())
-    .then((res) => {
-        //console.log(res)
+      .then(res => {
         if (res.status === 200) {
           console.log(res.headers.get("Authorization"));
           if (res.headers.get("Authorization")) {
             localStorage.setItem('user', res.headers.get("Authorization"));
-            navigate("/")
+            navigate("/");
           }
-        }else {
-          alert("로그인 실패 : " + res.data);
-          console.log(res.data);
+        } else {
+          console.log("not 200");
+          return res.json();
         }
+      })
+      .then(data => {
+        console.log(data);
+        alert(data.errorMessage);
       });
   }
 

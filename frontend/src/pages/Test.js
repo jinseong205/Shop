@@ -14,7 +14,10 @@ const Test = () => {
          //data 요청 -> promise -> data 다운 완료
          fetch("http://localhost:8080/api/test/ex0",{})
          .then(res=>res.json())
-         .then(res=>console.log(res));
+         .then(res=>{
+              alert("로그인 실패 : " + res);
+              console.log(res)}
+            );
 
      },[])
 
