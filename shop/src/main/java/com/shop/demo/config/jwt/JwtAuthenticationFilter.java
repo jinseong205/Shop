@@ -20,7 +20,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shop.demo.config.auth.PrincipalDetails;
-import com.shop.demo.error.ApiExceptionHandler;
 import com.shop.demo.error.ErrorResult;
 import com.shop.demo.user.User;
 
@@ -62,18 +61,37 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			//    -> PrincipalDetailsService 의 loadUserByUser가 실행됨 
 			//    -> 정상이면  authentication 리턴 됨
 			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+			
 			Authentication authentication = authenticationManager.authenticate(authenticationToken);
+			
 			PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal();
+			
 			log.debug("********** login Success - principalDetails -> user : " + principalDetails.getUser().toString() + "**********");
 		
 			
 			// 3. principDetails를 세션에 저장 => 로그인이 됨 (Spring Security가 권한 관리를 용이하게 함)
 			return authentication;	
 			
-		} catch (Exception e) {
+		}catch(NullPointerException e) {
 			log.debug("********** login Fail **********");
-			//e.printStackTrace();
-			ErrorResult errorResult = new ErrorResult("ID 또는 Password가 일치하지 않습니다. ");
+			
+			ErrorResult errorResult = new ErrorResult("존재하지 않는 아이디 입니다.");
+			
+			ObjectMapper mapper = new ObjectMapper();
+			String result ="";
+			try {result = mapper.writeValueAsString(errorResult);} 
+			catch (JsonProcessingException ex) {ex.printStackTrace();}
+			
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			try {response.getWriter().write(result);} 
+			catch (IOException ex) {ex.printStackTrace();}
+		}
+		catch (Exception e) {
+			log.debug("********** login Fail **********");
+			
+			e.printStackTrace();
+			
+			ErrorResult errorResult = new ErrorResult(e.getMessage());
 			
 			ObjectMapper mapper = new ObjectMapper();
 			String result ="";
@@ -120,7 +138,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		log.debug("********** login Fail - unsuccessfulAuthentication **********");
 		
-		ErrorResult errorResult = new ErrorResult("ID 또는 Password가 일치하지 않습니다. ");
+		ErrorResult errorResult = new ErrorResult("아이디 혹은 패스워드가 일치하지 않습니다.");
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String result = mapper.writeValueAsString(errorResult);
