@@ -16,9 +16,9 @@ public class UserController {
 
 	private final UserService userService;
 	
-	@PostMapping("join")
+	@PostMapping("/api/join")
 	public ResponseEntity<?> join(@RequestBody User user){
-		return new ResponseEntity<>(userService.join(user),HttpStatus.CREATED);
+		return new ResponseEntity<>(userService.join(user),HttpStatus.OK);
 	}
 	
 	@GetMapping("/api/user")

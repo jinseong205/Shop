@@ -28,49 +28,35 @@ const LoginForm = () => {
   const Login = async (e) => {
     e.preventDefault();
 
-    try {
-      fetch("http://localhost:8080/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8"
-        },
-        body: JSON.stringify(user)
+    fetch("http://localhost:8080/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(user)
 
-      }).then((res) => {
+    })
+    .then((res) => res.json())
+    .then((res) => {
         //console.log(res)
         if (res.status === 200) {
           console.log(res.headers.get("Authorization"));
           if (res.headers.get("Authorization")) {
             localStorage.setItem('user', res.headers.get("Authorization"));
+            navigate("/")
           }
-          return res.headers.get("Authorization");
-                  navigate("/");
-        } else {
+        }else {
           alert("로그인 실패 : " + res.data);
           console.log(res.data);
         }
-      }
-      );
-
-    } catch (err) {
-      const resMessage =
-        (err.response &&
-          err.response.data &&
-          err.response.data.message) ||
-          err.message ||
-          err.toString();
-
-      alert("로그인 실패 : " + resMessage);
-    }
-
-
+      });
   }
 
   return (
     <>
       <Header />
       <Container>
- 
+
         <div className="col-md-12">
 
           <h1>로그인</h1>

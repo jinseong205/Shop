@@ -62,7 +62,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 		
 		// Jwt 토큰 서명을 통해서 서명이 정상적이면 Authentication 객체를 만들어 준다.
 		if(username != null) {
-			log.debug("********** JwtAuthorizationFilter -- " + username + " **********");
+			//log.debug("********** JwtAuthorizationFilter -- " + username + " **********");
 			User userEntity = userRepository.findByUsername(username);
 			
 			PrincipalDetails principalDetails = new PrincipalDetails(userEntity);
