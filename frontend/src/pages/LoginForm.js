@@ -44,7 +44,6 @@ const LoginForm = () => {
             navigate("/");
           }
         } else {
-          console.log("not 200");
           return res.json();
         }
       })
