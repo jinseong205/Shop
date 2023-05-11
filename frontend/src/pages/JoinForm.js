@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import authService from "../services/auth.service";
 import { Container } from "react-bootstrap";
 import Header from "../components/Header";
 import Footer from "../components/Footer";

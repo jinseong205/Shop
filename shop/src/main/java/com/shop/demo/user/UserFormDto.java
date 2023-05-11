@@ -4,34 +4,31 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data						//Getter Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class UserFormDto {
 
-	private String username;	//user_id
+	@NotBlank(message = "아이디는 필수 입력 값잆니다.")
+	@Length(min=8, max=20, message = "아이디는 8자 이상 20자 이하로 입력하세요.")
+	private String username;	
 	
-	private String password;	//user_pw
+	@NotBlank(message = "비밀번호는 필수 입력 값잆니다.")
+	@Length(min=8, max=20, message = "패스워드는 8자 이상 20자 이하로 입력하세요.")
+
+	private String password;	
 	
 	private String name;
 	
-	private String email;		
-	
+	@NotBlank(message = "주소는 필수 입력 값잆니다.")
 	private String addr;
 	
-	private String roles;
-	
-	public List<String> getRoleList(){
-		if(this.roles.length() > 0) {
-			return Arrays.asList(this.roles.split(","));
-		}
-		return new ArrayList<>();
-	}
 }
 	

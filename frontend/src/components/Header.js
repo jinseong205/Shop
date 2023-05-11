@@ -10,7 +10,7 @@ function Header() {
     <>
       <Navbar bg="dark" expand="lg">
         <Container fluid>
-          <Link to="/" className="navbar-brand me-5 text-light">Gomawoomi</Link>
+          <Link to="/" className="navbar-brand me-5 text-light">JShop</Link>
           <Navbar.Toggle className="bg-light" aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
 
