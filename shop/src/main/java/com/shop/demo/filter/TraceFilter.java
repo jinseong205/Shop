@@ -56,7 +56,7 @@ public class TraceFilter implements Filter{
             ip = req.getRemoteAddr(); 
         }
 		
-		log.debug("********** TraceFilter >> URL: " + ip + " **********");
+		log.debug("********** TraceFilter >> IP : " + ip + " **********");
 		log.debug("********** TraceFilter >> URL: " + req.getRequestURL() + " **********");
 		log.debug("********** TraceFilter >> method: " + req.getMethod() + " **********");
 		

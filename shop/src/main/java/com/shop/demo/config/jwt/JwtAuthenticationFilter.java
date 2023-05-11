@@ -135,6 +135,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				.withExpiresAt(new Date(System.currentTimeMillis() + jwtProperties.getEXPIRATION_TIME()))					//Token 만료 시간
 				.withClaim("id", principalDetails.getUser().getId())
 				.withClaim("username", principalDetails.getUser().getUsername())
+				.withClaim("roles", principalDetails.getUser().getRoles())
 				.sign(Algorithm.HMAC512(jwtProperties.getSECRET()));
 
 
