@@ -17,7 +17,14 @@ public class UserController {
 	private final UserService userService;
 	
 	@PostMapping("/api/join")
-	public ResponseEntity<?> join(@RequestBody User user){
+	public ResponseEntity<?> join(@RequestBody UserFormDto userFormDto){
+		User user = new User().builder()
+						.username(userFormDto.getUsername())
+						.password(userFormDto.getPassword())
+						.name(userFormDto.getName())
+						.email(userFormDto.getAddr())
+						.addr(userFormDto.getAddr())
+						.build();
 		return new ResponseEntity<>(userService.join(user),HttpStatus.OK);
 	}
 	

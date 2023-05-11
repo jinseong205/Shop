@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.shop.demo.user.User;
-import com.shop.demo.user.UserDto;
+import com.shop.demo.user.UserFormDto;
 import com.shop.demo.user.UserService;
 
 @SpringBootTest
@@ -25,7 +25,7 @@ public class UserServiceTest {
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public User createUser() {
-		UserDto userDto = new UserDto();
+		UserFormDto userDto = new UserFormDto();
 		
 		userDto.setUsername("gomawoomi");
 		userDto.setPassword("0000");

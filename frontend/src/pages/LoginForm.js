@@ -48,11 +48,15 @@ const LoginForm = () => {
         }
       })
       .then(data => {
-        console.log(data);
-        alert(data.errorMessage);
+        if(data != null){
+          console.log(data);
+          alert(data.errorMessage);
+        }
       })
       .catch(err => {
-        alert("로그인 오류");
+        if(err){
+        alert("로그인 중 오류가 발생 하였습니다." + err);
+        }
       });
   }
 

@@ -28,15 +28,32 @@ const JoinForm = () => {
 
     const handleSignup = (e) => {
         e.preventDefault();
-        authService.register(email, password).then(
-            (res) => {
-                alert(res.response.data);
+
+        fetch("http://localhost:8080/api/join", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8"
+          },
+          body: JSON.stringify(user)
+    
+        })
+          .then(res => {
+            if (res.status === 200) {
+                alert("회원가입이 완료되었습니다.");
                 navigate("/login");
-            },
-            (err) => {
-                alert(err.response.data.message);
+            } else {
+              return res.json();
             }
-        );
+          })
+          .then(data => {
+            if(data != null){
+                console.log(data);
+                alert(data.errorMessage);
+              }
+          })
+          .catch(err => {
+            alert("회원가입 중 오류가 발생 하였습니다.");
+          });
     };
 
     return (
