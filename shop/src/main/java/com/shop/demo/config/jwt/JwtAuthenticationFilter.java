@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -85,8 +86,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			try {response.getWriter().write(result);} 
 			catch (IOException ex) {ex.printStackTrace();}
-		}
-		catch (Exception e) {
+		}catch(BadCredentialsException e) {
+			log.debug("********** login Fail **********");
+			
+			ErrorResult errorResult = new ErrorResult("아이디 혹은 패스워드가 일치하지 않습니다.");
+			
+			ObjectMapper mapper = new ObjectMapper();
+			String result ="";
+			try {result = mapper.writeValueAsString(errorResult);} 
+			catch (JsonProcessingException ex) {ex.printStackTrace();}
+			
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			try {response.getWriter().write(result);} 
+			catch (IOException ex) {ex.printStackTrace();}
+		}catch (Exception e) {
 			log.debug("********** login Fail **********");
 			
 			e.printStackTrace();

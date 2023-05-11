@@ -50,6 +50,9 @@ const LoginForm = () => {
       .then(data => {
         console.log(data);
         alert(data.errorMessage);
+      })
+      .catch(err => {
+        alert("로그인 오류");
       });
   }
 
