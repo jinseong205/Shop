@@ -1,13 +1,44 @@
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom'
+import jwt_decode from 'jwt-decode';
+
+
 
 function Header() {
+
+  const [username, setUsername] = useState(null)
+  const [userRoles, setUserRoles] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwt_decode(token);
+      if (decodedToken) {
+        setUserRoles(decodedToken.roles);
+        setUsername(decodedToken.username);
+      }
+    }
+  }, []);
+
+  const logout = () => {
+    localStorage.setItem("token", null);
+
+  }
+
+  /*
+ {username == null ? (<>미로그인</>) : (<>{username}</>)}
+  */
+
+
+
   return (
     <>
+
       <Navbar bg="dark" expand="lg">
         <Container fluid>
           <Link to="/" className="navbar-brand me-5 text-light">JShop</Link>
@@ -20,7 +51,7 @@ function Header() {
               navbarScroll
             >
 
-              <Form className="d-flex  me-auto" style={{minWidth:"40%"}}>
+              <Form className="d-flex  me-auto" style={{ minWidth: "40%" }}>
                 <Form.Control
                   type="search"
                   placeholder="Search"
@@ -50,13 +81,28 @@ function Header() {
       <Navbar variant="outline-dark" >
         <Container fluid >
 
-          <div className="d-flex me-auto"></div>
-          <div className="d-flex me-4">
-            <Link className="nav-link" to="/join">회원가입</Link>
-          </div>
-          <div className="d-flex me-4">
-            <Link className="nav-link" to="/login">로그인</Link>
-          </div>
+          {username == null ? (
+            <>
+              <div className="d-flex me-auto"></div>
+              <div className="d-flex me-4">
+                <Link className="nav-link" to="/join">회원가입</Link>
+              </div>
+              <div className="d-flex me-4">
+                <Link className="nav-link" to="/login">로그인</Link>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="d-flex me-auto"></div>
+              <div className="d-flex me-4">
+                <Link className="nav-link" to="/join">{username}{userRoles}</Link>
+              </div>
+              <div className="d-flex me-4">
+                <Link className="nav-link" to="/login">로그아웃</Link>
+              </div>
+            </>
+          )}
+
         </Container>
       </Navbar>
     </>

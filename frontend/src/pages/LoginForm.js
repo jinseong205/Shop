@@ -40,7 +40,7 @@ const LoginForm = () => {
         if (res.status === 200) {
           console.log(res.headers.get("Authorization"));
           if (res.headers.get("Authorization")) {
-            localStorage.setItem('user', res.headers.get("Authorization"));
+            localStorage.setItem('token', res.headers.get("Authorization"));
             navigate("/");
           }
         } else {
@@ -49,7 +49,7 @@ const LoginForm = () => {
       })
       .then(data => {
         if(data != null){
-          console.log(data);
+          console.log(data);  
           alert(data.errorMessage);
         }
       })

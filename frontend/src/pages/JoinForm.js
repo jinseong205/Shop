@@ -28,6 +28,7 @@ const JoinForm = () => {
     const handleSignup = (e) => {
         e.preventDefault();
 
+
         fetch("http://localhost:8080/api/join", {
           method: "POST",
           headers: {
@@ -116,7 +117,7 @@ const JoinForm = () => {
                             <input
                                 type="text"
                                 className="form-control"
-                                name="text"
+                                name="addr"
                                 onChange={changeValue}
                             />
                         </div>
