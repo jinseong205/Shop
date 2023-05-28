@@ -16,7 +16,7 @@ function Header() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
+    if (token != null) {
       const decodedToken = jwt_decode(token);
       if (decodedToken) {
         setUserRoles(decodedToken.roles);
@@ -26,22 +26,17 @@ function Header() {
   }, []);
 
   const logout = () => {
-    localStorage.setItem("token", null);
-
+    localStorage.removeItem("token", "");
+    setUsername(null);
+    setUserRoles(null);
   }
-
-  /*
- {username == null ? (<>미로그인</>) : (<>{username}</>)}
-  */
-
-
 
   return (
     <>
 
       <Navbar bg="dark" expand="lg">
         <Container fluid>
-          <Link to="/" className="navbar-brand me-5 text-light">JShop</Link>
+          <Link to="/" className="navbar-brand me-5 text-light">J-Shop</Link>
           <Navbar.Toggle className="bg-light" aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
 
@@ -81,7 +76,7 @@ function Header() {
       <Navbar variant="outline-dark" >
         <Container fluid >
 
-          {username == null ? (
+          {username == null ?
             <>
               <div className="d-flex me-auto"></div>
               <div className="d-flex me-4">
@@ -91,17 +86,32 @@ function Header() {
                 <Link className="nav-link" to="/login">로그인</Link>
               </div>
             </>
-          ) : (
+          : 
             <>
               <div className="d-flex me-auto"></div>
+                { userRoles.includes('ROLE_ADMIN') ?
+                  <div className="d-flex me-4">
+                  <Link className="nav-link" to="/productForm">회원관리</Link>
+                  </div>
+                  : <></>
+                }
+                {userRoles.includes('ROLE_MANAGER') || userRoles.includes('ROLE_ADMIN') ?
+                                    <div className="d-flex me-4">
+                                    <Link className="nav-link" to="/productForm">상품등록</Link>
+                                    </div>
+                  : <></>
+                }
               <div className="d-flex me-4">
-                <Link className="nav-link" to="/join">{username}{userRoles}</Link>
+                <Link className="nav-link" onClick={logout}>마이페이지</Link>
               </div>
+
               <div className="d-flex me-4">
-                <Link className="nav-link" to="/login">로그아웃</Link>
+                <Link className="nav-link" onClick={logout}>로그아웃</Link>
               </div>
+
+
             </>
-          )}
+          }
 
         </Container>
       </Navbar>

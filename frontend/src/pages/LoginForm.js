@@ -25,7 +25,7 @@ const LoginForm = () => {
     });
   }
 
-  const Login = async (e) => {
+  const login = async (e) => {
     e.preventDefault();
 
     fetch("http://localhost:8080/api/login", {
@@ -68,7 +68,7 @@ const LoginForm = () => {
         <div className="col-md-12">
 
           <h1>로그인</h1>
-          <Form onSubmit={Login}>
+          <Form onSubmit={login}>
             <div className="form-group">
               <label htmlFor="username">ID</label>
               &nbsp;

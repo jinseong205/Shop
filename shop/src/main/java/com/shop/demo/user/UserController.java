@@ -39,12 +39,12 @@ public class UserController {
 
 	@GetMapping("/api/manager")
 	public String manager() {
-		return "user";
+		return "manager";
 	}
 
 	@GetMapping("/api/admin")
 	public String admin() {
-		return "user";
+		return "admin";
 	}
 
 }
