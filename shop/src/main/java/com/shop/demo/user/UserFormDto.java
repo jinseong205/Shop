@@ -27,8 +27,11 @@ public class UserFormDto {
 	
 	private String name;
 	
+	private String email;
+	
 	@NotBlank(message = "주소는 필수 입력 값잆니다.")
 	private String addr;
 	
+
 }
 	

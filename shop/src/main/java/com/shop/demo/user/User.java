@@ -84,6 +84,7 @@ public class User {
 	@CreationTimestamp	//시간이 자동으로 입력
 	private LocalDateTime crtDt;
 	
+	@CreationTimestamp	
 	private LocalDateTime updtDt;
 
 	public List<String> getRoleList(){

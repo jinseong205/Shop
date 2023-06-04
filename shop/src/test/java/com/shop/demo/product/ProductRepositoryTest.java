@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.shop.demo.constant.ProductSellStatus;
 
 @SpringBootTest
 public class ProductRepositoryTest {
