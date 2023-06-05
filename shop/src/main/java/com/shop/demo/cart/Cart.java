@@ -24,13 +24,8 @@ public class Cart {
 	private long id;
 	
 	@OneToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="user_id")
 	private User user;
 	
-	@ManyToOne
-	@JoinColumn(name="id")
-	private Product product;
-	
-	private int count;
 	
 }
