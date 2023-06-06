@@ -33,7 +33,7 @@ public class OrderItem {
 
 	private int count;
 
-	private LocalDateTime regDt;
+	private LocalDateTime crtDt;
 	
 	private LocalDateTime updtDt;
 }

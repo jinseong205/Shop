@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +30,7 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 	
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User user;
 	
@@ -38,10 +39,10 @@ public class Order {
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
 	
-	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, orphanRemoval = true)	//연관관계의 주인이 아님. 
+	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)	//연관관계의 주인이 아님. 
 	private List<OrderItem> orderProducts = new ArrayList<>();
 	
-	private LocalDateTime regDt;
+	private LocalDateTime crtDt;
 	
 	private LocalDateTime updtDt;
 	
