@@ -21,8 +21,8 @@ import com.shop.demo.user.User;
 import lombok.Data;
 
 @Entity
-@Table
 @Data
+@Table(name="orders")
 public class Order {
 	
 	@Id	
@@ -30,7 +30,7 @@ public class Order {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="member_id")
+	@JoinColumn(name="user_id")
 	private User user;
 	
 	private LocalDateTime ordDt;

@@ -22,7 +22,7 @@ public class OrderItem {
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id")
+	@JoinColumn(name="product_id")
 	private Product product;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
