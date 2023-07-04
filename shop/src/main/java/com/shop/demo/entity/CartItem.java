@@ -24,8 +24,8 @@ public class CartItem {
 	private Cart order;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="product_id")
-	private Product product;
+	@JoinColumn(name="item_id")
+	private Item item;
 	
 	private int count;
 

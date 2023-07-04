@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
-import com.shop.demo.constant.ProductSellStatus;
+import com.shop.demo.constant.ItemSellStatus;
 
 import lombok.Data;
 import lombok.ToString;
@@ -29,7 +29,7 @@ public class ProductDto {
 
 	private String productDetail;
 
-	private ProductSellStatus productSellStatus;
+	private ItemSellStatus productSellStatus;
 	
 	private LocalDateTime crtDt;
 	

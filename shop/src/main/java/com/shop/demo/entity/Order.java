@@ -43,7 +43,7 @@ public class Order {
 	private OrderStatus orderStatus;
 	
 	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)	//연관관계의 주인이 아님. 
-	private List<OrderItem> orderProducts = new ArrayList<>();
+	private List<OrderItem> orderItems = new ArrayList<>();
 	
 	@CreationTimestamp	
 	@Column(name="CRT_DT")

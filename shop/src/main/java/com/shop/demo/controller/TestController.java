@@ -5,10 +5,10 @@ import java.rmi.ServerException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.shop.demo.entity.Product;
+import com.shop.demo.constant.ItemSellStatus;
+import com.shop.demo.entity.Item;
 
 @RestController
 public class TestController {
@@ -24,12 +24,14 @@ public class TestController {
 	@GetMapping("api/test/ex1")
 	public ResponseEntity<?> test1(){
 		
-		Product p = new Product();
-		p.setId(1L);
-		p.setProductName("TEST");
-		p.setProductDetail("TEST DESC");
+		Item i = new Item();
+		i.setId(1L);
+		i.setItemName("TEST");
+		i.setItemDetail("TEST DESC");
+		i.setItemSellStatus(ItemSellStatus.SELL);
 		
-		return new ResponseEntity<>(p,HttpStatus.OK);
+		
+		return new ResponseEntity<>(i,HttpStatus.OK);
 	}
 
 }

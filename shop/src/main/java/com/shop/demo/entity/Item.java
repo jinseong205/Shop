@@ -13,7 +13,7 @@ import javax.persistence.Lob;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.shop.demo.constant.ProductSellStatus;
+import com.shop.demo.constant.ItemSellStatus;
 
 import lombok.Data;
 import lombok.ToString;
@@ -21,14 +21,14 @@ import lombok.ToString;
 @Data
 @ToString
 @Entity
-public class Product {
+public class Item {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(nullable = false, length = 100)
-	private String productName;
+	private String itemName;
 	
 	@Column(nullable = false)
 	private int price;
@@ -37,10 +37,10 @@ public class Product {
 	private int stockNum;
 
 	@Lob
-	private String productDetail;
+	private String itemDetail;
 	
 	@Enumerated(EnumType.STRING)
-	private ProductSellStatus productSellStatus;
+	private ItemSellStatus itemSellStatus;
 	
 	@CreationTimestamp	
 	@Column(name="CRT_DT")
