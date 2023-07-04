@@ -1,6 +1,8 @@
-package com.shop.demo.user;
+package com.shop.demo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.shop.demo.entity.User;
 
 
 //CURD 함수를 JpaRepository 가 들고 있음

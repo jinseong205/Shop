@@ -1,4 +1,4 @@
-package com.shop.demo.user;
+package com.shop.demo.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.shop.demo.user.User;
-import com.shop.demo.user.UserFormDto;
-import com.shop.demo.user.UserService;
+import com.shop.demo.config.dto.UserFormDto;
+import com.shop.demo.entity.User;
+import com.shop.demo.service.UserService;
 
 @SpringBootTest
 @Transactional
@@ -37,6 +37,7 @@ public class UserServiceTest {
 				.password(userDto.getPassword())
 				.name(userDto.getName())
 				.email(userDto.getEmail())
+				.roles("ROLE_USER")
 				.build();	
 	}
 	

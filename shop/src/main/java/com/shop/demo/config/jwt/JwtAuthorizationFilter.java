@@ -16,8 +16,8 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.shop.demo.config.auth.PrincipalDetails;
-import com.shop.demo.user.User;
-import com.shop.demo.user.UserRepository;
+import com.shop.demo.entity.User;
+import com.shop.demo.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
 

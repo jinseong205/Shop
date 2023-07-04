@@ -1,4 +1,4 @@
-package com.shop.demo.test;
+package com.shop.demo.controller;
 
 import java.rmi.ServerException;
 
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.shop.demo.product.Product;
+import com.shop.demo.entity.Product;
 
 @RestController
 public class TestController {

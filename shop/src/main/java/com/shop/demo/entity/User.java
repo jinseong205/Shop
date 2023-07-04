@@ -1,4 +1,4 @@
-package com.shop.demo.user;
+package com.shop.demo.entity;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -82,9 +82,11 @@ public class User {
 	private String attr10;
 	
 	@CreationTimestamp	//시간이 자동으로 입력
+	@Column(name="CRT_DT")
 	private LocalDateTime crtDt;
 	
 	@CreationTimestamp	
+	@Column(name="UPDT_DT")
 	private LocalDateTime updtDt;
 
 	public List<String> getRoleList(){

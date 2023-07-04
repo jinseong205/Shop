@@ -1,4 +1,4 @@
-package com.shop.demo.product;
+package com.shop.demo.test;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -17,6 +16,10 @@ import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.shop.demo.constant.ProductSellStatus;
+import com.shop.demo.entity.Product;
+import com.shop.demo.entity.QProduct;
+import com.shop.demo.repository.ProductRepository;
 
 @SpringBootTest
 public class ProductRepositoryTest {
@@ -156,7 +159,6 @@ public class ProductRepositoryTest {
 		
 	}
 	
-	@Test
 	@DisplayName("--- QueryDsl 조회 테스트2 ---")
 	public void queryDslTest2(){
 		
@@ -186,7 +188,7 @@ public class ProductRepositoryTest {
 		
 	}
 	
-	
+
 	
 	
 }

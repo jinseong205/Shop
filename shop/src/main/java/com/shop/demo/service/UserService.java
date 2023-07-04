@@ -1,11 +1,12 @@
-package com.shop.demo.user;
+package com.shop.demo.service;
 
 import javax.transaction.Transactional;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.shop.demo.user.UserRepository;
+import com.shop.demo.entity.User;
+import com.shop.demo.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

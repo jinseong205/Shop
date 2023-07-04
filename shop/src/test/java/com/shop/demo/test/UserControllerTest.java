@@ -1,4 +1,4 @@
-package com.shop.demo.user;
+package com.shop.demo.test;
 
 import javax.transaction.Transactional;
 
@@ -16,6 +16,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.shop.demo.config.dto.UserFormDto;
+import com.shop.demo.entity.User;
+import com.shop.demo.service.UserService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -56,7 +59,7 @@ public class UserControllerTest {
 	}
 	
 	@Test
-	@DisplayName("로그인 성공 테스트")
+	@DisplayName("--- 로그인 성공 테스트 ---")
 	public void loginSuccessTest() throws Exception{
 		
 		String username = "gogo1234";

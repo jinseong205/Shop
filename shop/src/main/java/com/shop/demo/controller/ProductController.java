@@ -1,4 +1,4 @@
-package com.shop.demo.product;
+package com.shop.demo.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 

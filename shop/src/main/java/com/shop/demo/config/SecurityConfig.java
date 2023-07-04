@@ -17,7 +17,7 @@ import com.shop.demo.config.jwt.JwtAuthenticationFilter;
 import com.shop.demo.config.jwt.JwtAuthorizationFilter;
 import com.shop.demo.config.jwt.JwtProperties;
 import com.shop.demo.filter.TraceFilter;
-import com.shop.demo.user.UserRepository;
+import com.shop.demo.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.shop.demo.user;
+package com.shop.demo.config.dto;
 
 import java.util.ArrayList;
 import java.util.Arrays;
