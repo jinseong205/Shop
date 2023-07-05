@@ -107,6 +107,13 @@
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/osdt_core.jar</systemPath>
 		</dependency>
 		
+		<!-- Security Test -->
+		<dependency>
+    		<groupId>org.springframework.security</groupId>
+    		<artifactId>spring-security-test</artifactId>
+    		<scope>test</scope>
+		</dependency>
+		
 		<!-- h2 DB (Test) -->		
 		<dependency>
             <groupId>com.h2database</groupId>

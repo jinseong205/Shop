@@ -1,6 +1,5 @@
 package com.shop.demo.entity;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity						//User Class가 자동으로 Oracle에 생성
 @Table(name="users")
-public class User {
+public class User extends BaseEntity{
 
 
 	@Id	//pk
@@ -81,14 +80,7 @@ public class User {
 	@Column( length = 50) 
 	private String attr10;
 	
-	@CreationTimestamp	//시간이 자동으로 입력
-	@Column(name="CRT_DT")
-	private LocalDateTime crtDt;
 	
-	@CreationTimestamp	
-	@Column(name="UPDT_DT")
-	private LocalDateTime updtDt;
-
 	public List<String> getRoleList(){
 		if(this.roles.length() > 0) {
 			return Arrays.asList(this.roles.split(","));
@@ -97,13 +89,11 @@ public class User {
 	}
 	
 	@Builder
-	public User(String username, String password, String email, String roles, LocalDateTime crtDt, LocalDateTime updtDt) {
+	public User(String username, String password, String email, String roles) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.roles = roles;
-		this.crtDt = crtDt;
-		this.updtDt = updtDt;
 	}
 
 }

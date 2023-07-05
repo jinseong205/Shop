@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -17,6 +18,7 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name="order_item")
 public class OrderItem {
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 	

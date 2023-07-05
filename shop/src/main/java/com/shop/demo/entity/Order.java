@@ -27,7 +27,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name="orders")
-public class Order {
+public class Order extends BaseEntity {
 	
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 	
@@ -42,16 +42,8 @@ public class Order {
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
 	
-	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)	//연관관계의 주인이 아님. 
+	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY)	//연관관계의 주인이 아님. 
 	private List<OrderItem> orderItems = new ArrayList<>();
-	
-	@CreationTimestamp	
-	@Column(name="CRT_DT")
-	private LocalDateTime crtDt;
-	
-	@CreationTimestamp	
-	@Column(name="UPDT_DT")
-	private LocalDateTime updtDt;
 	
 	
 }

@@ -34,7 +34,7 @@ public class UserServiceTest {
 		
 		return User.builder()
 				.username(userDto.getUsername())
-				.password(userDto.getPassword())
+				.password(bCryptPasswordEncoder.encode(userDto.getPassword()))
 				.name(userDto.getName())
 				.email(userDto.getEmail())
 				.roles("ROLE_USER")

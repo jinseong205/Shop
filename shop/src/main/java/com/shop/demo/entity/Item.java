@@ -21,7 +21,7 @@ import lombok.ToString;
 @Data
 @ToString
 @Entity
-public class Item {
+public class Item extends BaseEntity{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,14 +41,6 @@ public class Item {
 	
 	@Enumerated(EnumType.STRING)
 	private ItemSellStatus itemSellStatus;
-	
-	@CreationTimestamp	
-	@Column(name="CRT_DT")
-	private LocalDateTime crtDt;
-	
-	@CreationTimestamp	
-	@Column(name="UPDT_DT")
-	private LocalDateTime updtDt;
 	
 	@Column(length = 200)
 	private String attr1;
