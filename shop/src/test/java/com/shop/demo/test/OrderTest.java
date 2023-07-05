@@ -56,8 +56,6 @@ public class OrderTest {
 		product.setItemDetail("Test Desc");
 		product.setItemSellStatus(ItemSellStatus.SELL);
 		product.setStockNum(100);
-		product.setCrtDt(LocalDateTime.now());
-		product.setUpdtDt(LocalDateTime.now());
 
 		return product;
 	}

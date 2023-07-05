@@ -45,10 +45,10 @@ public class UserTest {
 		
 		User user = userRepository.findById(newUser.getId()).orElseThrow(EntityNotFoundException::new);
 
-		System.out.println("crtDt : " + user.getCRT_DT());
-		System.out.println("updtDt : " + user.getUPDT_DT());
-		System.out.println("create By : " + user.getCRT_ID());
-		System.out.println("modify By : " + user.getUPDT_ID());
+		System.out.println("crtDt : " + user.getCrtDt());
+		System.out.println("updtDt : " + user.getUpdtDt());
+		System.out.println("create By : " + user.getCrtName());
+		System.out.println("modify By : " + user.getUpdtName());
 
 	}
 

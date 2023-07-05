@@ -18,8 +18,8 @@ public class BaseEntity extends BaseTimeEntity{
 	/* 등록자, 수정자 */ 
     @CreatedBy
     @Column(updatable = false)
-    private String CRT_ID;
+    private String crtName;
 
     @LastModifiedBy
-    private String UPDT_ID;
+    private String updtName;
 }

@@ -43,8 +43,6 @@ public class ItemRepositoryTest {
 			item.setItemDetail("Test Desc" + i);
 			item.setItemSellStatus(ItemSellStatus.SELL);
 			item.setStockNum(100 * i);
-			item.setCrtDt(LocalDateTime.now());
-			item.setUpdtDt(LocalDateTime.now());
 
 			itemRepository.save(item);
 		}
@@ -60,8 +58,6 @@ public class ItemRepositoryTest {
 			item.setItemDetail("Test Desc" + i);
 			item.setItemSellStatus(ItemSellStatus.SELL);
 			item.setStockNum(100 * i);
-			item.setCrtDt(LocalDateTime.now());
-			item.setUpdtDt(LocalDateTime.now());
 
 			itemRepository.save(item);
 		}
@@ -73,8 +69,6 @@ public class ItemRepositoryTest {
 			item.setItemDetail("Test Desc" + i);
 			item.setItemSellStatus(ItemSellStatus.SOLD_OUT);
 			item.setStockNum(100 * i);
-			item.setCrtDt(LocalDateTime.now());
-			item.setUpdtDt(LocalDateTime.now());
 
 			itemRepository.save(item);
 		}

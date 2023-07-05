@@ -37,7 +37,8 @@ spring:
     hibernate:
       ddl-auto: create #create update none
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        physical-strategy: ImprovedNamingStrategy 
+        #physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
 # main:
 #   allow-bean-definition-overriding: true  
