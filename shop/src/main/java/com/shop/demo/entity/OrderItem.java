@@ -25,22 +25,16 @@ public class OrderItem {
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="item_id")
+	@JoinColumn(name="ITEM_ID")
 	private Item item;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name= "order_id")
+	@JoinColumn(name= "ORDER_ID")
 	private Order order;
 
+    @Column(name ="ORDER_PRICE")
 	private int orderPrice;
 
 	private int count;
 
-	@CreationTimestamp	
-	@Column(name="CRT_DT")
-	private LocalDateTime crtDt;
-	
-	@CreationTimestamp	
-	@Column(name="UPDT_DT")
-	private LocalDateTime updtDt;
 }

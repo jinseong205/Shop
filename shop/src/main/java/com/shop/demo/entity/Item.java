@@ -1,7 +1,5 @@
 package com.shop.demo.entity;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,8 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-
-import org.hibernate.annotations.CreationTimestamp;
+import javax.persistence.Table;
 
 import com.shop.demo.constant.ItemSellStatus;
 
@@ -20,26 +17,30 @@ import lombok.ToString;
 
 @Data
 @ToString
+@Table(name="item")
 @Entity
-public class Item extends BaseEntity{
+public class Item extends BaseEntity{	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="item_id")
 	private Long id;
 	
-	@Column(nullable = false, length = 100)
+	@Column(name="ITEM_NAME", nullable = false, length = 100)
 	private String itemName;
 	
 	@Column(nullable = false)
 	private int price;
 	
-	@Column(nullable = false)
+	@Column(name="STOCK_NUM", nullable = false)
 	private int stockNum;
 
 	@Lob
+    @Column(name ="ITEM_DETAIL")
 	private String itemDetail;
 	
 	@Enumerated(EnumType.STRING)
+    @Column(name ="IMG_SELL_STATUS")
 	private ItemSellStatus itemSellStatus;
 	
 	@Column(length = 200)

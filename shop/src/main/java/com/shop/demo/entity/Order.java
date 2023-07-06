@@ -30,16 +30,17 @@ import lombok.Data;
 public class Order extends BaseEntity {
 	
 	@Id	
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 	
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+	@Column(name="order_id")
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	private LocalDateTime ordDt;
 	
 	@Enumerated(EnumType.STRING)
+    @Column(name ="ord_status")
 	private OrderStatus orderStatus;
 	
 	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY)	//연관관계의 주인이 아님. 

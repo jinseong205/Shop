@@ -17,8 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.shop.demo.config.dto.UserFormDto;
 import com.shop.demo.entity.Cart;
-import com.shop.demo.entity.CartRepository;
 import com.shop.demo.entity.User;
+import com.shop.demo.repository.CartRepository;
 import com.shop.demo.repository.UserRepository;
 import com.shop.demo.service.UserService;
 

@@ -2,6 +2,7 @@ package com.shop.demo.entity;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,10 +16,11 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="cart_item")
+@Table(name="CART_ITEM")
 public class CartItem {
 	@Id	
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="cart_item_id")
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)

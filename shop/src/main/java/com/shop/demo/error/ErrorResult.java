@@ -6,10 +6,10 @@ import lombok.ToString;
 @Data
 @ToString
 public class ErrorResult {
-	private String errorMessage;
+	private String message;
 
-	public ErrorResult(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public ErrorResult(String message) {
+		this.message = message;
 	}
 	
 	

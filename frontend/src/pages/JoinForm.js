@@ -7,9 +7,6 @@ import Footer from "../components/Footer";
 const JoinForm = () => {
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
     const [user, setUser] = useState({
         username: "",
         password: "",
@@ -27,7 +24,6 @@ const JoinForm = () => {
 
     const handleSignup = (e) => {
         e.preventDefault();
-
 
         fetch("http://localhost:8080/api/join", {
           method: "POST",
@@ -48,7 +44,7 @@ const JoinForm = () => {
           .then(data => {
             if(data != null){
                 console.log(data);
-                alert(data.errorMessage);
+                alert(data.message);
               }
           })
           .catch(err => {

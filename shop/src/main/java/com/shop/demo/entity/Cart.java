@@ -1,5 +1,6 @@
 package com.shop.demo.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ public class Cart {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+	@Column(name="cart_id")
 	private long id;
 	
 	@OneToOne(fetch= FetchType.LAZY)

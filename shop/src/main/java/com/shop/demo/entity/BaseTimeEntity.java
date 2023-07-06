@@ -22,10 +22,11 @@ public abstract class BaseTimeEntity {
 
 	/* 생성일, 수정일 */ 
 	@CreatedDate
-	@Column(updatable = false)
+    @Column(name ="CRT_DT" ,updatable = false)
 	private LocalDateTime crtDt;
 	
 	@LastModifiedDate
+    @Column(name ="UPDT_DT")
 	private LocalDateTime updtDt;
 	
 	

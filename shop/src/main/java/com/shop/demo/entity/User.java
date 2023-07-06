@@ -24,12 +24,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity						//User Class가 자동으로 Oracle에 생성
-@Table(name="users")
+@Table(name="rs")
 public class User extends BaseEntity{
 
 
 	@Id	//pk
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 	// project에 연결된 db의 넘버링 전략을 따라간다.
+	@Column(name="user_id")
 	private Long id;	//sequnce //auto_increment
 	
 	@Column(nullable = false, length = 100, unique = true)
@@ -40,10 +41,11 @@ public class User extends BaseEntity{
 	
 	private String name;
 	
-	@Column( length = 50) 
-	private String email;		
-
 	private String addr;
+	
+	@Column(length = 50) 
+	private String email;		
+	
 	
 	//@ColumnDefault("'user'")
 	@Column(nullable = false, length = 100) // hash (비밀번호 암호화)
@@ -88,12 +90,5 @@ public class User extends BaseEntity{
 		return new ArrayList<>();
 	}
 	
-	@Builder
-	public User(String username, String password, String email, String roles) {
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.roles = roles;
-	}
 
 }

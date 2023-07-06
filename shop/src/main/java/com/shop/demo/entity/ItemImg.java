@@ -1,5 +1,6 @@
 package com.shop.demo.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,15 +18,20 @@ import lombok.Data;
 public class ItemImg {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="item_img_id")
 	private Long id;
 	
+    @Column(name ="img_name")
 	private String imgName;
-	
+
+    @Column(name ="ori_img_name")
 	private String oriImgName;
 	
+    @Column(name ="img_url")
 	private String imgUrl;
 	
+    @Column(name ="rep_img_yn")
 	private String repImgYn;
 
 	@ManyToOne(fetch = FetchType.LAZY)

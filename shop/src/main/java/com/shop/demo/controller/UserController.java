@@ -16,7 +16,9 @@ import com.shop.demo.entity.User;
 import com.shop.demo.service.UserService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -31,10 +33,11 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			throw new Exception(bindingResult.getFieldError().getDefaultMessage());
 		}
+		
 
 		User user;
 		user = User.builder().username(userFormDto.getUsername()).password(bCryptPasswordEncoder.encode(userFormDto.getPassword()))
-				.name(userFormDto.getName()).email(userFormDto.getAddr()).addr(userFormDto.getAddr()).roles("ROLE_USER").build();
+				.name(userFormDto.getName()).email(userFormDto.getEmail()).addr(userFormDto.getAddr()).roles("ROLE_USER").build();
 		userService.join(user);
 		return new ResponseEntity<>(null , HttpStatus.OK);
 	}
