@@ -21,26 +21,32 @@ spring:
   devtools:
     livereload:
       enabled: true # livereload 서버 켜기
-  
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@db202201212242_high?TNS_ADMIN=C:/key/Wallet_DB202201212242
     username: demo
     password: 00780078Jsjs^^
-
-    
   mvc:
     view:
       prefix: /templates/
       suffix: .mustache
-
   jpa:
     hibernate:
-      ddl-auto: create    #create update none
+      ddl-auto: update    #create update none
       naming:
         #physical-strategy: org.hibernate.cfg.ImprovedNamingStrategy         
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 20MB       #파일 1개당 최대 사이즈
+      max-request-size: 100MB   #요청당 최대 파일 크기
+
+itemImgLocation: C:/shop/item
+uploadPath: file:///C:/shop/
+      
+           
+  
 jwt:
   token:
     header: DEMO-AUTH

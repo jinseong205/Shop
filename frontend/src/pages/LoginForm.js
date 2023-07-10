@@ -50,7 +50,7 @@ const LoginForm = () => {
       .then(data => {
         if(data != null){
           console.log(data);  
-          alert(data.errorMessage);
+          alert(data.message);
         }
       })
       .catch(err => {
