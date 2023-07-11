@@ -44,9 +44,6 @@ spring:
 
 itemImgLocation: C:/shop/item
 uploadPath: file:///C:/shop/
-      
-           
-  
 jwt:
   token:
     header: DEMO-AUTH

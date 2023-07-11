@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity						//User Class가 자동으로 Oracle에 생성
-@Table(name="rs")
+@Table(name="users")
 public class User extends BaseEntity{
 
 

@@ -16,8 +16,7 @@ const ItemForm = () => {
     stockNum: "",
     itemDetail: "",
     itemSellStatus: "",
-    itemImgIds: [],
-    itemImgFile: []
+    itemImgIds: []
   });
 
   const [itemImgFileList, setItemImgFileList] = useState([]);
@@ -57,15 +56,21 @@ const ItemForm = () => {
   const handleItemRegister = (e) => {
     e.preventDefault();
 
+
     const formData = new FormData();
-    formData.append('itemImgDto', JSON.stringify(item));
+    formData.append('itemFormDto', JSON.stringify(item));
 
     for (let i = 0; i < itemImgFileList.length; i++) {
       formData.append('itemImgFileList', itemImgFileList[i]);
     }
 
-    fetch("http://localhost:8080/api/manager/item", {
+    console.log(item);
+
+    fetch("http://localhost:8080/api/manager/item/new", {
       method: "POST",
+      headers :{
+        Authorization : localStorage.getItem("token")
+      },
       body: formData
     })
       .then(res => {
@@ -79,7 +84,7 @@ const ItemForm = () => {
       .then(data => {
         if (data != null) {
           console.log(data);
-          alert(data.errorMessage);
+          alert(data.message);
         }
       })
       .catch(err => {

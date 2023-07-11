@@ -31,7 +31,6 @@ public class UserTest {
 	@Test
 	@DisplayName("--- Auditing 테스트 ---")
 	@WithMockCustomUser
-	//@WithMockUser(username = "jinseong", roles= {"USER", "ADMIN"})
 	public void auditingTest() {
 
 		User newUser = User.builder().username("gomawoomi").password(bCryptPasswordEncoder.encode("0000")).name("정진성")

@@ -25,18 +25,18 @@ public class ItemService {
 	private final ItemImgService itemImgService;
 	private final ItemImgRepository itemImgRepository;
 
-	public Long saveIttem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFIleList) throws IOException, Exception {
+	public Long saveIttem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws IOException, Exception {
 		Item item = itemFormDto.createItem();
 		itemRepository.save(item);
 
-		for (int i = 0; i < itemImgFIleList.size(); i++) {
+		for (int i = 0; i < itemImgFileList.size(); i++) {
 			ItemImg itemImg = new ItemImg();
 			itemImg.setItem(item);
 			if (i == 0)
 				itemImg.setRepImgYn("Y");
 			else
 				itemImg.setRepImgYn("N");
-			itemImgService.saveItemImg(itemImg, itemImgFIleList.get(i));
+			itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
 		}
 		return item.getId();
 	}
