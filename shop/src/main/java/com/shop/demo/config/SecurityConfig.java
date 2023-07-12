@@ -72,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// -> SecurityContextHolderAwareRequestFilter -> AnonymousAuthenticationFilter
 		// -> SessionManagementFilter
 		// -> ExceptionTranslationFilter -> FilterSecurityInterceptor
-		http.addFilterBefore(new TraceFilter(), SecurityContextPersistenceFilter.class); // csrf 비활성화
+		http.addFilterBefore(new TraceFilter(), SecurityContextPersistenceFilter.class);
 		// http.addFilterAfter(new TraceFilter(),
 		// SecurityContextPersistenceFilter.class); //csrf 비활성화
 

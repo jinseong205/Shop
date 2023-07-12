@@ -12,11 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 // Target all Controllers annotated with @RestController
 @ControllerAdvice(annotations = RestController.class)
 @RestController
+@Slf4j
 public class ApiExceptionHandler {
 
 	//@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler
 	public ResponseEntity<?> commonExceptionHandler(Exception e) {
+		log.debug("[ERROR]" , e);
 		return new ResponseEntity<>( new ErrorResult(e.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 }

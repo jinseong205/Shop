@@ -39,6 +39,7 @@ spring:
     show-sql: true
   servlet:
     multipart:
+      enabled: true
       max-file-size: 20MB       #파일 1개당 최대 사이즈
       max-request-size: 100MB   #요청당 최대 파일 크기
 
@@ -49,4 +50,4 @@ jwt:
     header: DEMO-AUTH
     issuer: demo
     secret: 2940b03656d14eb2b0724b3029ead60c
-    expiry-seconds: 1800000                   #30분   
+    expiry-seconds: 18000000                   #30분   
