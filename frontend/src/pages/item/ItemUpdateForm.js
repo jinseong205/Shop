@@ -4,10 +4,15 @@ import { Form, Row, Col, Container } from "react-bootstrap";
 import { useParams } from "react-router";
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 
 const ItemUpdateForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const [editorData, setEditorData] = useState("");
 
   const [itemFormDto, setItemFormDto] = useState({
     itemName: "",
@@ -31,6 +36,14 @@ const ItemUpdateForm = () => {
       ...itemFormDto,
       [e.target.name]: value,
     });
+  };
+
+  const changeEditorValue = (e, v) => {
+    setItemFormDto({
+      ...itemFormDto,
+      itemDetail: v,
+    });
+    console.log(itemFormDto);
   };
 
   const onFileChange = (e, index) => {
@@ -88,9 +101,12 @@ const ItemUpdateForm = () => {
       document.getElementById("itemName").value = itemFormDto.itemName;
       document.getElementById("price").value = itemFormDto.price;
       document.getElementById("stockNum").value = itemFormDto.stockNum;
-      document.getElementById("itemDetail").value = itemFormDto.itemDetail;
       document.getElementById("itemSellStatus").value = itemFormDto.itemSellStatus;
+      setEditorData(itemFormDto.itemDetail);
+
     }
+
+
   }, [id, itemFormDto]);
 
   const handleItemUpdate = (e) => {
@@ -144,7 +160,7 @@ const ItemUpdateForm = () => {
           <Row className="align-items-center">
             <Col xs="auto">
               <label className="input-group-text file-label" htmlFor={`itemImgFile${i}`}>
-                파일선택 {i}
+                이미지 첨부
                 <input
                   type="file"
                   id={`itemImgFile${i}`}
@@ -173,54 +189,98 @@ const ItemUpdateForm = () => {
           <h1>상품 수정</h1>
           <br />
           <form>
-            <select className="form-select" name="itemSellStatus" onChange={changeItemValue} id="itemSellStatus">
-              <option value="SELL">판매중</option>
-              <option value="SOLD_OUT">품절</option>
-            </select>
-
             <div className="form-group">
-              <label htmlFor="itemName">상품명</label>
-              <input
-                type="text"
-                className="form-control"
-                id="itemName"
-                name="itemName"
-                onChange={changeItemValue}
-              />
+              <Row className='mb-1'>
+                <Col xs="1">
+                  <label htmlFor="itemName">판매상태</label>
+                </Col>
+                <Col xs="5">
+                  <select className="form-select" id="itemSellStatus" name="itemSellStatus" onChange={changeItemValue}>
+                    <option value="SELL">판매중</option>
+                    <option value="SOLD_OUT" >품절</option>
+                  </select>
+                </Col>
+              </Row>
             </div>
 
             <div className="form-group">
-              <label htmlFor="price">상품 가격</label>
-              <input
-                type="text"
-                className="form-control"
-                id="price"
-                name="price"
-                onChange={changeItemValue}
-              />
+              <Row className='mb-1'>
+                <Col xs="1">
+                  <label htmlFor="itemName">상품명</label>
+                </Col>
+                <Col xs="5">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="itemName"
+                    name="itemName"
+                    onChange={changeItemValue}
+                  />
+                </Col>
+              </Row>
             </div>
 
             <div className="form-group">
-              <label htmlFor="stockNum">재고</label>
-              <input
-                type="text"
-                className="form-control"
-                id="stockNum"
-                name="stockNum"
-                onChange={changeItemValue}
-              />
+              <Row className='mb-1'>
+                <Col xs="1">
+                  <label htmlFor="price">상품 가격</label>
+                </Col>
+                <Col xs="5">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="price"
+                    name="price"
+                    onChange={changeItemValue}
+                  />
+                </Col>
+              </Row>
             </div>
 
             <div className="form-group">
-              <label htmlFor="itemDetail">상품 상세 내용</label>
-              <input
-                type="text"
-                className="form-control"
+              <Row className='mb-1'>
+                <Col xs="1">
+                  <label htmlFor="stockNum">재고</label>
+                </Col>
+                <Col xs="5">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="stockNum"
+                    name="stockNum"
+                    onChange={changeItemValue}
+                  />
+                </Col>
+              </Row>
+            </div>
+
+
+            <div>
+              <label htmlFor="stockNum">상품 상세 내용</label>
+              <CKEditor
+                editor={ClassicEditor}
+                data={editorData}
+                onReady={editor => {
+                  editor.editing.view.change((writer) => {
+                    writer.setStyle(
+                      "height",
+                      "200px",
+                      editor.editing.view.document.getRoot()
+                    );
+                  });
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  changeEditorValue(event, data);
+                }}
+                onBlur={(event, editor) => {
+                }}
+                onFocus={(event, editor) => {
+                }}
                 id="itemDetail"
-                name="itemDetail"
-                onChange={changeItemValue}
               />
             </div>
+
 
             <br />
             {renderFileUploadFields()}

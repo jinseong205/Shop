@@ -4,6 +4,8 @@ import { Form, Row, Col, Container } from "react-bootstrap";
 import { useParams } from "react-router";
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const ItemSaveForm = () => {
   const navigate = useNavigate();
@@ -21,17 +23,27 @@ const ItemSaveForm = () => {
 
   const changeItemValue = (e) => {
     let value = e.target.value;
-  
+
     if (e.target.name === "price" || e.target.name === "stockNum") {
-      value = value.replace(/\D/g, ""); 
+      value = value.replace(/\D/g, "");
       document.getElementById(e.target.name).value = value;
     }
-  
+
     setItemFormDto({
       ...itemFormDto,
       [e.target.name]: value,
     });
   };
+
+
+  const changeEditorValue = (e, v) => {
+    setItemFormDto({
+      ...itemFormDto,
+      itemDetail: v,
+    });
+    console.log(itemFormDto);
+  };
+
 
   const onFileChange = (e, index) => {
     const file = e.target.files[0];
@@ -119,7 +131,7 @@ const ItemSaveForm = () => {
           <Row className="align-items-center">
             <Col xs="auto">
               <label className="input-group-text file-label" htmlFor={`itemImgFile${i}`}>
-                파일선택 {i}
+                이미지 첨부
                 <input
                   type="file"
                   id={`itemImgFile${i}`}
@@ -145,62 +157,106 @@ const ItemSaveForm = () => {
     <>
       <Header />
       <Container>
+
         <div className="col-md-12">
           <h1>상품 등록</h1>
           <br />
           <form>
-            <select className="form-select" name="itemSellStatus" onChange={changeItemValue}>
-              <option value="SELL">판매중</option>
-              <option value="SOLD_OUT" >품절</option>
-            </select>
-
             <div className="form-group">
-              <label htmlFor="itemName">상품명</label>
-              <input
-                type="text"
-                className="form-control"
-                id="itemName"
-                name="itemName"
-                onChange={changeItemValue}
-              />
+              <Row className='mb-1'>
+                <Col xs="1">
+                  <label htmlFor="itemName">판매상태</label>
+                </Col>
+                <Col xs="5">
+                  <select className="form-select" name="itemSellStatus" onChange={changeItemValue}>
+                    <option value="SELL">판매중</option>
+                    <option value="SOLD_OUT" >품절</option>
+                  </select>
+                </Col>
+              </Row>
             </div>
 
             <div className="form-group">
-              <label htmlFor="price">상품 가격</label>
-              <input
-                type="text"
-                className="form-control"
-                id="price"
-                name="price"
-                onChange={changeItemValue}
-              />
+              <Row className='mb-1'>
+                <Col xs="1">
+                  <label htmlFor="itemName">상품명</label>
+                </Col>
+                <Col xs="5">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="itemName"
+                    name="itemName"
+                    onChange={changeItemValue}
+                  />
+                </Col>
+              </Row>
             </div>
 
             <div className="form-group">
-              <label htmlFor="stockNum">재고</label>
-              <input
-                type="text"
-                className="form-control"
-                id="stockNum"
-                name="stockNum"
-                onChange={changeItemValue}
-              />
+              <Row className='mb-1'>
+                <Col xs="1">
+                  <label htmlFor="price">상품 가격</label>
+                </Col>
+                <Col xs="5">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="price"
+                    name="price"
+                    onChange={changeItemValue}
+                  />
+                </Col>
+              </Row>
             </div>
 
             <div className="form-group">
-              <label htmlFor="itemDetail">상품 상세 내용</label>
-              <input
-                type="text"
-                className="form-control"
-                id="itemDetail"
-                name="itemDetail"
-                onChange={changeItemValue}
+              <Row className='mb-1'>
+                <Col xs="1">
+                  <label htmlFor="stockNum">재고</label>
+                </Col>
+                <Col xs="5">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="stockNum"
+                    name="stockNum"
+                    onChange={changeItemValue}
+                  />
+                </Col>
+              </Row>
+            </div>
+
+            <div>
+              <label htmlFor="price">상품 상세 내용</label>
+              <CKEditor
+                editor={ClassicEditor}
+                data=""
+                onReady={editor => {
+                  editor.editing.view.change((writer) => {
+                    writer.setStyle(
+                      "height",
+                      "200px",
+                      editor.editing.view.document.getRoot()
+                    );
+                  });
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  changeEditorValue(event, data);
+                }}
+                onBlur={(event, editor) => {
+                }}
+                onFocus={(event, editor) => {
+                }}
               />
             </div>
 
-            <br/>
-            {renderFileUploadFields()}
-            <br/>
+            <br />
+            <Row className="align-items-center">
+              {renderFileUploadFields()}
+            </Row>
+            <br />
 
             <div className="form-group mt-1">
               <button className="btn btn-secondary btn-block" onClick={handleItemRegister}>상품 등록</button>
@@ -208,8 +264,8 @@ const ItemSaveForm = () => {
 
 
           </form>
-        </div>
-      </Container>
+        </div >
+      </Container >
       <Footer />
     </>
   );
