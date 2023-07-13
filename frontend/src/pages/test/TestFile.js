@@ -16,9 +16,12 @@ const TestFile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('dto', JSON.stringify(dto));
+
+    formData.append('dto', new Blob([JSON.stringify(dto)], { type: 'application/json' }));
+    
   
     fetch('http://localhost:8080/api/upload', {
       method: 'POST',

@@ -2,17 +2,23 @@ package com.shop.demo.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.demo.config.dto.ItemFormDto;
+import com.shop.demo.entity.Item;
+import com.shop.demo.repository.ItemRepository;
 import com.shop.demo.service.ItemService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,34 +30,45 @@ import lombok.extern.slf4j.Slf4j;
 public class ItemController {
 
 	private final ItemService itemService;
+	private final ItemRepository itemRepository;
 	
-	@PostMapping(value = "api/manager/item/new", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<?> itemNew(@RequestPart("itemFormDto") ItemFormDto itemFormDto, @RequestPart(name = "itemImgFile") List<MultipartFile> itemImgFileList) throws Exception {
-	    log.debug("-----" + itemFormDto.toString());
-	    log.debug("-----" + itemImgFileList.size());
-	    return new ResponseEntity<>("OOO", HttpStatus.OK);
+	@GetMapping(value = "api/item/{id}")
+	public ResponseEntity<?> itemNew(@PathVariable long id) throws Exception {
+		ItemFormDto itemFormDto = itemService.getItemDtl(id);
+	    return new ResponseEntity<>(itemFormDto , HttpStatus.OK);
 	}
 	
-	@PostMapping("api/manager/item/new1")
-	//public ResponseEntity<?> itemImg(@Valid ItemFormDto itemFormDto, BindingResult bindingResult, @RequestParam("itemImgFile")List<MultipartFile> itemImgFileList) throws Exception{
-	public ResponseEntity<?> itemNew1( @RequestPart(name = "itemFormDto") ItemFormDto itemFormDto, @RequestParam(name = "itemImgFileList")List<MultipartFile> itemImgFileList) throws Exception{
-		
-		log.debug("-----" + itemFormDto.toString());	
-		
-		/*
-		if(bindingResult.hasErrors()) {			
-			throw new Exception(bindingResult.getFieldError().getDefaultMessage());
-		}
-		*/
-		
+	@PostMapping(value = "api/manager/item", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<?> itemNew(@RequestPart("itemFormDto") @Valid ItemFormDto itemFormDto, BindingResult bindingResult, @RequestPart(name = "itemImgFile") List<MultipartFile> itemImgFileList) throws Exception {
+	    
+	    if(bindingResult.hasErrors()) {
+	    	throw new Exception(bindingResult.getFieldError().getDefaultMessage());
+	    }
+	    
 		if(itemImgFileList.get(0).isEmpty()) {
 			throw new Exception("첫번째 상품이미지는 필수 입력 값입니다.");
 		}
 		
-		itemService.saveIttem(itemFormDto, itemImgFileList);
-		
-		return new ResponseEntity<>(null,HttpStatus.OK);
+		Item item = itemService.saveItem(itemFormDto, itemImgFileList);
+	    
+	    return new ResponseEntity<>(item , HttpStatus.OK);
 	}
 
+	@PutMapping(value = "api/manager/item/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<?> itemUpdate(@PathVariable long id, @RequestPart("itemFormDto") @Valid ItemFormDto itemFormDto, BindingResult bindingResult, @RequestPart(name = "itemImgFile") List<MultipartFile> itemImgFileList) throws Exception {
+	    
+	    if(bindingResult.hasErrors()) {
+	    	throw new Exception(bindingResult.getFieldError().getDefaultMessage());
+	    }
+	    
+		if(itemImgFileList.get(0).isEmpty()) {
+			throw new Exception("첫번째 상품이미지는 필수 입력 값입니다.");
+		}
+		
+		Item item = itemService.saveItem(itemFormDto, itemImgFileList);
+	    
+	    return new ResponseEntity<>(item , HttpStatus.OK);
+	}
 	
 }
+

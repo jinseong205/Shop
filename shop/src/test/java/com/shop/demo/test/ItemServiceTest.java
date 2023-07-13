@@ -63,7 +63,7 @@ public class ItemServiceTest {
 		
 		List<MultipartFile> multipartFileList = createMultipartFiles();
 		
-		Long itemId = itemService.saveIttem(itemFormDto, multipartFileList);
+		Long itemId = itemService.saveItem(itemFormDto, multipartFileList).getId();
 		
 		List<ItemImg> itemImgList = itemImgRepository.findByItemIdOrderByIdAsc(itemId);
 		

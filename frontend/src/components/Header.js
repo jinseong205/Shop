@@ -91,13 +91,13 @@ function Header() {
               <div className="d-flex me-auto"></div>
                 { userRoles.includes('ROLE_ADMIN') ?
                   <div className="d-flex me-4">
-                  <Link className="nav-link" to="/itemForm">회원관리</Link>
+                  <Link className="nav-link" to="/itemSaveForm">회원관리</Link>
                   </div>
                   : <></>
                 }
                 {userRoles.includes('ROLE_MANAGER') || userRoles.includes('ROLE_ADMIN') ?
                                     <div className="d-flex me-4">
-                                    <Link className="nav-link" to="/itemForm">상품등록</Link>
+                                    <Link className="nav-link" to="/itemSaveForm">상품등록</Link>
                                     </div>
                   : <></>
                 }

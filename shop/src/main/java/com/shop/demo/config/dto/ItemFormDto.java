@@ -17,21 +17,23 @@ import lombok.Data;
 public class ItemFormDto {
 	private Long id;
 	
-	//@NotBlank(message = "상품명은 필수 입력 값입니다.")
+	@NotBlank(message = "상품명은 필수 입력 값입니다.")
 	private String itemName;
 
-	//@NotNull(message = "가격은 필수 입력 값입니다.")
+	@NotNull(message = "가격은 필수 입력 값입니다.")
 	private Integer price;
 
-	//@NotBlank(message = "이름은 필수 입력 값입니다.")
+	@NotBlank(message = "이름은 필수 입력 값입니다.")
 	private String itemDetail;
 
-	//@NotNull(message = "재고는 필수 입력 값입니다.")
+	@NotNull(message = "재고는 필수 입력 값입니다.")
 	private Integer stockNum;
 
 	private ItemSellStatus itemSellStatus;
+
+	private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 	
-	private List<ItemImgDto> itemImgIds = new ArrayList<>();
+	private List<Long> itemImgIds = new ArrayList<>();
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	

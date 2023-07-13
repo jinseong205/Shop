@@ -1,6 +1,5 @@
 package com.shop.demo.test;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -21,7 +20,7 @@ import com.shop.demo.constant.ItemSellStatus;
 import com.shop.demo.entity.Item;
 import com.shop.demo.entity.QItem;
 import com.shop.demo.repository.ItemRepository;
-
+	
 @SpringBootTest
 public class ItemRepositoryTest {
 
