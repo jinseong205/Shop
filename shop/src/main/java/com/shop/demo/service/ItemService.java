@@ -26,6 +26,7 @@ public class ItemService {
 	private final ItemImgService itemImgService;
 	private final ItemImgRepository itemImgRepository;
 
+	//상품 생성
 	public Item saveItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws IOException, Exception {
 		Item item = itemFormDto.createItem();
 		itemRepository.save(item);
@@ -42,6 +43,16 @@ public class ItemService {
 		return item;
 	}
 
+	//상품 수정
+	public Long updateItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
+		
+		Item item = itemRepository.findById(itemFormDto.getId())
+				.orElseThrow(() -> new Exception("해당 상품을 찾을 수 없습니다."));
+		
+		return null;
+	}
+	
+	//단일 상품 조회
 	@Transactional(readOnly = true)
 	public ItemFormDto getItemDtl(Long itemId) throws Exception {
 		

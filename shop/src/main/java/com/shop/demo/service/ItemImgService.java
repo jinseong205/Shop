@@ -41,4 +41,25 @@ public class ItemImgService {
 		itemImg.updateItemImg(imgName, oriImgName, imgUrl);
 		itemImgRepository.save(itemImg);
 	}
+	
+	public void updateItemImg(Long itemImgId, MultipartFile itemImgFile) throws Exception {
+		if(!itemImgFile.isEmpty()) {
+			ItemImg savedItemImg = itemImgRepository.findById(itemImgId)
+					.orElseThrow(() -> new Exception("해당 상품을 찾을 수 없습니다."));;
+		
+			String tempName = savedItemImg.getImgName();
+			if(tempName!= null && tempName != "") {
+				fileService.delteFile(itemImgLocation + "/" + tempName);
+			}
+			
+			String oriImgName = itemImgFile.getOriginalFilename();
+			String imgName = fileService.uploadFile(itemImgLocation, oriImgName, itemImgFile.getBytes());
+			String imgUrl = "/images/item/" + imgName;
+			
+			savedItemImg.updateItemImg(imgName, oriImgName, imgUrl);
+		}
+		
+		
+		
+	}
 }

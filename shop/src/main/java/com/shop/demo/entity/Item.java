@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
+import com.shop.demo.config.dto.ItemFormDto;
 import com.shop.demo.constant.ItemSellStatus;
 
 import lombok.Data;
@@ -73,7 +74,13 @@ public class Item extends BaseEntity{
 	@Column(length = 200)
 	private String attr10;
 
-	
+	public void updateItem(ItemFormDto itemFormDto) {
+		this.itemName = itemFormDto.getItemName();
+		this.price = itemFormDto.getPrice();
+		this.stockNum = itemFormDto.getStockNum();
+		this.itemDetail = itemFormDto.getItemDetail();
+		this.itemSellStatus = itemFormDto.getItemSellStatus();
+	}
 	
 }
 
