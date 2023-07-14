@@ -67,14 +67,12 @@ const ItemUpdateForm = () => {
 
           if (deleteItemImgIdsArray.includes(tempId)) {
             console.log("hit");
-            deleteItemImgIdsArray = deleteItemImgIdsArray.filter((element) => element === tempId);
+            deleteItemImgIdsArray = deleteItemImgIdsArray.filter((element) => element !== tempId);
           }
 
 
-          /*
           var updateItemImgDtoList = [...prevState.itemImgDtoList];
           updateItemImgDtoList[index - 1].oriImgName = file.name;
-          */
 
 
           console.log("-----------------------");
@@ -86,7 +84,6 @@ const ItemUpdateForm = () => {
             ...prevState,
             updateItemImgIds: updatedItemImgIdsArray,
             deleteItemImgIds: deleteItemImgIdsArray,
-            itemImgDtoList: updateItemImgDtoList,
           };
 
         });
@@ -101,14 +98,12 @@ const ItemUpdateForm = () => {
 
           if (updatedItemImgIdsArray.includes(tempId)) {
             console.log("hit");
-            updatedItemImgIdsArray = updatedItemImgIdsArray.filter((element) => element === tempId);
+            updatedItemImgIdsArray = updatedItemImgIdsArray.filter((element) => element !== tempId);
           }
 
           var updateItemImgDtoList = [...prevState.itemImgDtoList];
-
-          if (updateItemImgDtoList[index - 1]) {
             updateItemImgDtoList[index - 1].oriImgName = "";
-          }
+            
           console.log("-----------------------");
           console.log(updatedItemImgIdsArray);
           console.log(deleteItemImgIdsArray);
