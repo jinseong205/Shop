@@ -1,4 +1,4 @@
-package com.shop.demo.config.dto;
+package com.shop.demo.dto;
 
 import org.modelmapper.ModelMapper;
 

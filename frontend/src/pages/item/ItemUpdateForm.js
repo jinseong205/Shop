@@ -7,7 +7,6 @@ import Footer from '../../components/Footer';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-
 const ItemUpdateForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -21,7 +20,8 @@ const ItemUpdateForm = () => {
     itemDetail: "",
     itemSellStatus: "SELL",
     itemImgDtoList: [],
-    itemImgIds: []
+    updateItemImgIds: [], // 빈 배열로 초기화
+    deleteItemImgIds: [] // 빈 배열로 초기화
   });
 
   const changeItemValue = (e) => {
@@ -43,12 +43,64 @@ const ItemUpdateForm = () => {
       ...itemFormDto,
       itemDetail: v,
     });
-    console.log(itemFormDto);
   };
 
   const onFileChange = (e, index) => {
     const file = e.target.files[0];
     const reader = new FileReader();
+
+    var tempId = document.getElementById('itemImgId' + index).value;
+    if (tempId) {
+
+      var itemImgName = document.getElementById(`itemImgName${index}`);
+
+      if (file) {
+        setItemFormDto(prevState => {
+          var updatedItemImgIds = [...prevState.updateItemImgIds, tempId];
+          var updatedItemImgIdsSet = new Set(updatedItemImgIds);
+          var updatedItemImgIdsArray = [...updatedItemImgIdsSet];
+
+
+          var deleteItemImgIdsArray = [...prevState.deleteItemImgIds];
+
+          if (deleteItemImgIdsArray.includes(tempId)) {
+            deleteItemImgIdsArray = deleteItemImgIdsArray.filter((element) => element !== tempId);
+          }
+
+          console.log(updatedItemImgIdsArray);
+          console.log(deleteItemImgIdsArray);
+
+          return {
+            ...prevState,
+            updateItemImgIds: updatedItemImgIdsArray,
+            deleteItemImgIds: deleteItemImgIdsArray
+          };
+
+        });
+
+      } else {
+        setItemFormDto(prevState => {
+          var deleteItemImgIds = [...prevState.deleteItemImgIds, tempId];
+          var deleteItemImgIdsSet = new Set(deleteItemImgIds);
+          var deleteItemImgIdsArray = [...deleteItemImgIdsSet];
+
+          var updatedItemImgIdsArray = [...prevState.deleteItemImgIds];
+
+          if (updatedItemImgIdsArray.includes(tempId)) {
+            updatedItemImgIdsArray = updatedItemImgIdsArray.filter((element) => element !== tempId);
+          }
+
+          console.log(updatedItemImgIdsArray);
+          console.log(deleteItemImgIdsArray);
+
+          return {
+            ...prevState,
+            updateItemImgIds: updatedItemImgIdsArray,
+            deleteItemImgIds: deleteItemImgIdsArray
+          };
+        });
+      }
+    }
 
     reader.onloadend = () => {
       const itemImgName = document.getElementById(`itemImgName${index}`);
@@ -57,18 +109,70 @@ const ItemUpdateForm = () => {
       }
     };
 
-    reader.readAsDataURL(file);
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      const itemImgName = document.getElementById(`itemImgName${index}`);
+      itemImgName.textContent = "";
+    }
+  };
+
+
+  const onFileDelete = (e, index) => {
+
+    var tempId = document.getElementById('itemImgId' + index).value;
+
+    setItemFormDto(prevState => {
+      var updateItemImgDtoList = [...prevState.itemImgDtoList];
+      updateItemImgDtoList = updateItemImgDtoList.splice(index);
+
+      return {
+        ...prevState,
+        itemImgDtoList: updateItemImgDtoList,
+      };
+    });
+
+    console.log(itemFormDto);
+
+    if (tempId) {
+
+      const itemImgName = document.getElementById(`itemImgName${index}`);
+
+      setItemFormDto(prevState => {
+        var deleteItemImgIds = [...prevState.deleteItemImgIds, tempId];
+        var deleteItemImgIdsSet = new Set(deleteItemImgIds);
+        var deleteItemImgIdsArray = [...deleteItemImgIdsSet];
+
+        var updatedItemImgIdsArray = [...prevState.deleteItemImgIds];
+
+        if (updatedItemImgIdsArray.includes(tempId)) {
+          updatedItemImgIdsArray = updatedItemImgIdsArray.filter((element) => element !== tempId);
+        }
+
+        console.log(updatedItemImgIdsArray);
+        console.log(deleteItemImgIdsArray);
+
+        return {
+          ...prevState,
+          updateItemImgIds: updatedItemImgIdsArray,
+          deleteItemImgIds: deleteItemImgIdsArray
+        };
+      });
+    }
+
+        
+    document.getElementById(`itemImgFile${index}`).value = "";
+    document.getElementById(`itemImgName${index}`).textContent = "";
+
   };
 
   useEffect(() => {
     if (id) {
-      // id 값이 존재하는 경우, 해당 id에 해당하는 상품 정보를 가져온다.
       fetch(`http://localhost:8080/api/item/${id}`)
         .then(res => res.json())
         .then(data => {
           if (data.id != null) {
-            console.log(data);
-            setItemFormDto(data); // 가져온 상품 정보로 item 상태를 업데이트한다.
+            setItemFormDto(data);
           } else {
             alert(data.message);
           }
@@ -80,7 +184,6 @@ const ItemUpdateForm = () => {
   }, [id]);
 
   useEffect(() => {
-    // 화면이 초기화된 후에 입력 필드에 값을 채워넣기 위해 useEffect를 사용한다.
     if (id) {
       for (var i = 1; i <= 5; i++) {
         if (itemFormDto.itemImgDtoList[i - 1]) {
@@ -92,21 +195,16 @@ const ItemUpdateForm = () => {
       const itemIds = document.getElementsByName('itemIds');
       itemIds.forEach((input, index) => {
         if (itemFormDto.itemImgDtoList[index]) {
-          // itemImgIds 배열에 값이 존재하는 경우에만 파일 입력 필드에 값을 할당한다.
           input.value = itemFormDto.itemImgDtoList[index].id;
         }
       });
 
-      // 나머지 입력 필드에 값을 할당한다.
       document.getElementById("itemName").value = itemFormDto.itemName;
       document.getElementById("price").value = itemFormDto.price;
       document.getElementById("stockNum").value = itemFormDto.stockNum;
       document.getElementById("itemSellStatus").value = itemFormDto.itemSellStatus;
       setEditorData(itemFormDto.itemDetail);
-
     }
-
-
   }, [id, itemFormDto]);
 
   const handleItemUpdate = (e) => {
@@ -115,7 +213,7 @@ const ItemUpdateForm = () => {
 
     formData.append('itemFormDto', new Blob([JSON.stringify(itemFormDto)], { type: 'application/json' }));
 
-    const itemImgFile = document.getElementByName('itemImgFile');
+    const itemImgFile = document.getElementsByName('itemImgFile');
     itemImgFile.forEach((input) => {
       const files = input.files;
       if (files.length > 0) {
@@ -124,8 +222,6 @@ const ItemUpdateForm = () => {
       }
     });
 
-    console.log([...formData.keys()]);
-
     fetch(`http://localhost:8080/api/manager/item/${itemFormDto.id}`, {
       method: 'PUT',
       headers: {
@@ -133,10 +229,7 @@ const ItemUpdateForm = () => {
       },
       body: formData,
     })
-      .then(res => {
-        //console.log(res);  
-        return res.json();
-      })
+      .then(res => res.json())
       .then(data => {
         if (data.id != null) {
           alert("상품수정에 성공하였습니다.");
@@ -146,7 +239,7 @@ const ItemUpdateForm = () => {
         }
       })
       .catch(err => {
-        alert("상품수정 중 오류가 발생 하였습니다.");
+        alert("상품수정 중 오류가 발생하였습니다.");
       });
   };
 
@@ -170,8 +263,11 @@ const ItemUpdateForm = () => {
                 />
               </label>
             </Col>
-            <Col>
+            <Col xs="auto">
               <div style={{ fontSize: "12px" }} id={`itemImgName${i}`}></div>
+            </Col>
+            <Col>
+              <div onClick={(e) => onFileDelete(e, i)}>[삭제]</div>
             </Col>
           </Row>
         </Form.Group>
@@ -254,7 +350,6 @@ const ItemUpdateForm = () => {
               </Row>
             </div>
 
-
             <div>
               <label htmlFor="stockNum">상품 상세 내용</label>
               <CKEditor
@@ -264,7 +359,7 @@ const ItemUpdateForm = () => {
                   editor.editing.view.change((writer) => {
                     writer.setStyle(
                       "height",
-                      "200px",
+                      "100px",
                       editor.editing.view.document.getRoot()
                     );
                   });
@@ -273,17 +368,17 @@ const ItemUpdateForm = () => {
                   const data = editor.getData();
                   changeEditorValue(event, data);
                 }}
-                onBlur={(event, editor) => {
-                }}
-                onFocus={(event, editor) => {
-                }}
+                onBlur={(event, editor) => { }}
+                onFocus={(event, editor) => { }}
                 id="itemDetail"
               />
             </div>
 
-
             <br />
-            {renderFileUploadFields()}
+            <label htmlFor="price">상품 이미지</label>
+            <Row className="align-items-center">
+              {renderFileUploadFields()}
+            </Row>
             <br />
 
             <div className="form-group mt-1">

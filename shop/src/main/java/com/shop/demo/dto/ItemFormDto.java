@@ -1,4 +1,4 @@
-package com.shop.demo.config.dto;
+package com.shop.demo.dto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,12 @@ public class ItemFormDto {
 
 	private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 	
-	private List<Long> itemImgIds = new ArrayList<>();
+	//private List<Long> itemImgIds = new ArrayList<>();
+	
+	private List<Long> updateItemImgIds = new ArrayList<>();
+	
+	private List<Long> deleteItemImgIds = new ArrayList<>();
+	
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	

@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.shop.demo.config.dto.UserFormDto;
+import com.shop.demo.dto.UserFormDto;
 import com.shop.demo.entity.User;
 import com.shop.demo.service.UserService;
 

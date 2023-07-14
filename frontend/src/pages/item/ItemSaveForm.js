@@ -41,7 +41,6 @@ const ItemSaveForm = () => {
       ...itemFormDto,
       itemDetail: v,
     });
-    console.log(itemFormDto);
   };
 
 
@@ -56,8 +55,63 @@ const ItemSaveForm = () => {
       }
     };
 
-    reader.readAsDataURL(file);
+    if(file){
+      reader.readAsDataURL(file);
+    }else{
+      const itemImgName = document.getElementById(`itemImgName${index}`);
+      itemImgName.textContent = "";
+    }
+
   };
+
+  const onFileDelete = (e, index) => {
+
+    var tempId = document.getElementById('itemImgId' + index).value;
+
+    setItemFormDto(prevState => {
+      var updateItemImgDtoList = [...prevState.itemImgDtoList];
+      updateItemImgDtoList = updateItemImgDtoList.splice(index);
+
+      return {
+        ...prevState,
+        itemImgDtoList: updateItemImgDtoList,
+      };
+    });
+
+    console.log(itemFormDto);
+
+    if (tempId) {
+
+      const itemImgName = document.getElementById(`itemImgName${index}`);
+
+      setItemFormDto(prevState => {
+        var deleteItemImgIds = [...prevState.deleteItemImgIds, tempId];
+        var deleteItemImgIdsSet = new Set(deleteItemImgIds);
+        var deleteItemImgIdsArray = [...deleteItemImgIdsSet];
+
+        var updatedItemImgIdsArray = [...prevState.deleteItemImgIds];
+
+        if (updatedItemImgIdsArray.includes(tempId)) {
+          updatedItemImgIdsArray = updatedItemImgIdsArray.filter((element) => element !== tempId);
+        }
+
+        console.log(updatedItemImgIdsArray);
+        console.log(deleteItemImgIdsArray);
+
+        return {
+          ...prevState,
+          updateItemImgIds: updatedItemImgIdsArray,
+          deleteItemImgIds: deleteItemImgIdsArray
+        };
+      });
+    }
+
+        
+    document.getElementById(`itemImgFile${index}`).value = "";
+    document.getElementById(`itemImgName${index}`).textContent = "";
+
+  };
+
 
   useEffect(() => {
 
@@ -141,8 +195,11 @@ const ItemSaveForm = () => {
                 />
               </label>
             </Col>
-            <Col>
+            <Col xs="auto">
               <div style={{ fontSize: "12px" }} id={`itemImgName${i}`}></div>
+            </Col>
+            <Col>
+              <div onClick={(e) => onFileDelete(e, i)}>[삭제]</div>
             </Col>
           </Row>
         </Form.Group>
@@ -236,7 +293,7 @@ const ItemSaveForm = () => {
                   editor.editing.view.change((writer) => {
                     writer.setStyle(
                       "height",
-                      "200px",
+                      "400px",
                       editor.editing.view.document.getRoot()
                     );
                   });

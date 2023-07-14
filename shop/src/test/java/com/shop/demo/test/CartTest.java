@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.shop.demo.config.dto.UserFormDto;
+import com.shop.demo.dto.UserFormDto;
 import com.shop.demo.entity.Cart;
 import com.shop.demo.entity.User;
 import com.shop.demo.repository.CartRepository;

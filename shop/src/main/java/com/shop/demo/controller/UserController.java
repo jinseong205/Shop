@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.shop.demo.config.dto.UserFormDto;
+import com.shop.demo.dto.UserFormDto;
 import com.shop.demo.entity.User;
 import com.shop.demo.service.UserService;
 

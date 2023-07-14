@@ -16,8 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.shop.demo.config.dto.ItemFormDto;
 import com.shop.demo.constant.ItemSellStatus;
+import com.shop.demo.dto.ItemFormDto;
 import com.shop.demo.entity.Item;
 import com.shop.demo.entity.ItemImg;
 import com.shop.demo.repository.ItemImgRepository;

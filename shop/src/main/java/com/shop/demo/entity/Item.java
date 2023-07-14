@@ -10,8 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
-import com.shop.demo.config.dto.ItemFormDto;
 import com.shop.demo.constant.ItemSellStatus;
+import com.shop.demo.dto.ItemFormDto;
 
 import lombok.Data;
 import lombok.ToString;

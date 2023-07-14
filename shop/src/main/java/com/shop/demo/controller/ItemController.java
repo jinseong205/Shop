@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.shop.demo.config.dto.ItemFormDto;
+import com.shop.demo.dto.ItemFormDto;
 import com.shop.demo.entity.Item;
 import com.shop.demo.repository.ItemRepository;
 import com.shop.demo.service.ItemService;
