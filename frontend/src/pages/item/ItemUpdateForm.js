@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Form, Row, Col, Container } from "react-bootstrap";
 import { useParams } from "react-router";
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
@@ -54,7 +53,6 @@ const ItemUpdateForm = () => {
 
     if (tempId) {
 
-      var itemImgName = document.getElementById(`itemImgName${index}`);
 
       if (file) {
         setItemFormDto(prevState => {
@@ -103,7 +101,7 @@ const ItemUpdateForm = () => {
 
           var updateItemImgDtoList = [...prevState.itemImgDtoList];
             updateItemImgDtoList[index - 1].oriImgName = "";
-            
+
           console.log("-----------------------");
           console.log(updatedItemImgIdsArray);
           console.log(deleteItemImgIdsArray);
@@ -132,7 +130,7 @@ const ItemUpdateForm = () => {
   };
 
 
-  const onFileDelete = (e, index) => {
+  const onFileDelete = (index) => {
 
     var tempId = document.getElementById('itemImgId' + index).value;
     console.log("id >>" + tempId + "   index >>>" + index);
@@ -154,8 +152,6 @@ const ItemUpdateForm = () => {
 
 
     if (tempId) {
-
-      const itemImgName = document.getElementById(`itemImgName${index}`);
 
       setItemFormDto(prevState => {
         var deleteItemImgIds = [...prevState.deleteItemImgIds, tempId];
@@ -289,7 +285,7 @@ const ItemUpdateForm = () => {
               <div style={{ fontSize: "12px" }} id={`itemImgName${i}`}></div>
             </Col>
             <Col>
-              <div onClick={(e) => onFileDelete(e, i)}>[삭제]</div>
+              <div onClick={() => onFileDelete(i)}>[삭제]</div>
             </Col>
           </Row>
         </Form.Group>
@@ -390,8 +386,6 @@ const ItemUpdateForm = () => {
                   const data = editor.getData();
                   changeEditorValue(event, data);
                 }}
-                onBlur={(event, editor) => { }}
-                onFocus={(event, editor) => { }}
                 id="itemDetail"
               />
             </div>
