@@ -106,7 +106,6 @@ const LoginForm = () => {
           </Form>
         </div>
       </Container>
-      <Footer />
     </>
   );
 };

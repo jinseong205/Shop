@@ -14,7 +14,6 @@ const Home = () => {
                 <h1>Home</h1>
                 {/* {books.map((book) => (<BookItem key = {book.id} book={book}/>)) } */}
             </Container>
-            <Footer />
         </>
     );
 };

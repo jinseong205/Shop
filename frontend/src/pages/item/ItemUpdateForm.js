@@ -50,6 +50,8 @@ const ItemUpdateForm = () => {
     const reader = new FileReader();
 
     var tempId = document.getElementById('itemImgId' + index).value;
+
+
     if (tempId) {
 
       var itemImgName = document.getElementById(`itemImgName${index}`);
@@ -64,16 +66,25 @@ const ItemUpdateForm = () => {
           var deleteItemImgIdsArray = [...prevState.deleteItemImgIds];
 
           if (deleteItemImgIdsArray.includes(tempId)) {
-            deleteItemImgIdsArray = deleteItemImgIdsArray.filter((element) => element !== tempId);
+            deleteItemImgIdsArray = deleteItemImgIdsArray.filter((element) => element == tempId);
           }
 
+
+          var updateItemImgDtoList = [...prevState.itemImgDtoList];
+          updateItemImgDtoList[index - 1].oriImgName = file.name;
+
+
+
+          console.log("-----------------------");
           console.log(updatedItemImgIdsArray);
           console.log(deleteItemImgIdsArray);
+
 
           return {
             ...prevState,
             updateItemImgIds: updatedItemImgIdsArray,
-            deleteItemImgIds: deleteItemImgIdsArray
+            deleteItemImgIds: deleteItemImgIdsArray,
+            itemImgDtoList: updateItemImgDtoList,
           };
 
         });
@@ -84,19 +95,26 @@ const ItemUpdateForm = () => {
           var deleteItemImgIdsSet = new Set(deleteItemImgIds);
           var deleteItemImgIdsArray = [...deleteItemImgIdsSet];
 
-          var updatedItemImgIdsArray = [...prevState.deleteItemImgIds];
+          var updatedItemImgIdsArray = [...prevState.updateItemImgIds];
 
           if (updatedItemImgIdsArray.includes(tempId)) {
-            updatedItemImgIdsArray = updatedItemImgIdsArray.filter((element) => element !== tempId);
+            updatedItemImgIdsArray = updatedItemImgIdsArray.filter((element) => element == tempId);
           }
 
+          var updateItemImgDtoList = [...prevState.itemImgDtoList];
+
+          if (updateItemImgDtoList[index - 1]) {
+            updateItemImgDtoList[index - 1].oriImgName = "";
+          }
+          console.log("-----------------------");
           console.log(updatedItemImgIdsArray);
           console.log(deleteItemImgIdsArray);
 
           return {
             ...prevState,
             updateItemImgIds: updatedItemImgIdsArray,
-            deleteItemImgIds: deleteItemImgIdsArray
+            deleteItemImgIds: deleteItemImgIdsArray,
+            itemImgDtoList: updateItemImgDtoList,
           };
         });
       }
@@ -111,9 +129,6 @@ const ItemUpdateForm = () => {
 
     if (file) {
       reader.readAsDataURL(file);
-    } else {
-      const itemImgName = document.getElementById(`itemImgName${index}`);
-      itemImgName.textContent = "";
     }
   };
 
@@ -121,10 +136,14 @@ const ItemUpdateForm = () => {
   const onFileDelete = (e, index) => {
 
     var tempId = document.getElementById('itemImgId' + index).value;
+    console.log("id >>" + tempId + "   index >>>" + index);
 
     setItemFormDto(prevState => {
       var updateItemImgDtoList = [...prevState.itemImgDtoList];
-      updateItemImgDtoList = updateItemImgDtoList.splice(index);
+
+      if (updateItemImgDtoList[index - 1]) {
+        updateItemImgDtoList[index - 1].oriImgName = "";
+      }
 
       return {
         ...prevState,
@@ -132,7 +151,8 @@ const ItemUpdateForm = () => {
       };
     });
 
-    console.log(itemFormDto);
+
+
 
     if (tempId) {
 
@@ -143,12 +163,13 @@ const ItemUpdateForm = () => {
         var deleteItemImgIdsSet = new Set(deleteItemImgIds);
         var deleteItemImgIdsArray = [...deleteItemImgIdsSet];
 
-        var updatedItemImgIdsArray = [...prevState.deleteItemImgIds];
+        var updatedItemImgIdsArray = [...prevState.updateItemImgIds];
 
         if (updatedItemImgIdsArray.includes(tempId)) {
           updatedItemImgIdsArray = updatedItemImgIdsArray.filter((element) => element !== tempId);
         }
 
+        console.log("-----------------------");
         console.log(updatedItemImgIdsArray);
         console.log(deleteItemImgIdsArray);
 
@@ -159,10 +180,10 @@ const ItemUpdateForm = () => {
         };
       });
     }
-
-        
+    
     document.getElementById(`itemImgFile${index}`).value = "";
     document.getElementById(`itemImgName${index}`).textContent = "";
+  
 
   };
 
@@ -191,6 +212,8 @@ const ItemUpdateForm = () => {
           document.getElementById("itemImgName" + i).textContent = itemFormDto.itemImgDtoList[i - 1].oriImgName;
         }
       }
+
+      console.log(itemFormDto);
 
       const itemIds = document.getElementsByName('itemIds');
       itemIds.forEach((input, index) => {
@@ -249,7 +272,7 @@ const ItemUpdateForm = () => {
     for (let i = 1; i <= 5; i++) {
       fileUploadFields.push(
         <Form.Group key={i}>
-          <input type="hidden" name="itemImgId" id={`itemImgId${i}`} />
+          <input type="text" name="itemImgId" id={`itemImgId${i}`} />
           <Row className="align-items-center">
             <Col xs="auto">
               <label className="input-group-text file-label" htmlFor={`itemImgFile${i}`}>
