@@ -66,19 +66,21 @@ const ItemUpdateForm = () => {
           var deleteItemImgIdsArray = [...prevState.deleteItemImgIds];
 
           if (deleteItemImgIdsArray.includes(tempId)) {
-            deleteItemImgIdsArray = deleteItemImgIdsArray.filter((element) => element == tempId);
+            console.log("hit");
+            deleteItemImgIdsArray = deleteItemImgIdsArray.filter((element) => element === tempId);
           }
 
 
+          /*
           var updateItemImgDtoList = [...prevState.itemImgDtoList];
           updateItemImgDtoList[index - 1].oriImgName = file.name;
-
+          */
 
 
           console.log("-----------------------");
           console.log(updatedItemImgIdsArray);
           console.log(deleteItemImgIdsArray);
-
+          console.log(itemFormDto);
 
           return {
             ...prevState,
@@ -98,7 +100,8 @@ const ItemUpdateForm = () => {
           var updatedItemImgIdsArray = [...prevState.updateItemImgIds];
 
           if (updatedItemImgIdsArray.includes(tempId)) {
-            updatedItemImgIdsArray = updatedItemImgIdsArray.filter((element) => element == tempId);
+            console.log("hit");
+            updatedItemImgIdsArray = updatedItemImgIdsArray.filter((element) => element === tempId);
           }
 
           var updateItemImgDtoList = [...prevState.itemImgDtoList];
@@ -109,6 +112,7 @@ const ItemUpdateForm = () => {
           console.log("-----------------------");
           console.log(updatedItemImgIdsArray);
           console.log(deleteItemImgIdsArray);
+          console.log(itemFormDto);
 
           return {
             ...prevState,
