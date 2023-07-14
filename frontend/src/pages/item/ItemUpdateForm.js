@@ -410,7 +410,6 @@ const ItemUpdateForm = () => {
           </form>
         </div>
       </Container>
-      <Footer />
     </>
   );
 };

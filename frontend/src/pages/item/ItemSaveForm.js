@@ -323,7 +323,6 @@ const ItemSaveForm = () => {
           </form>
         </div >
       </Container >
-      <Footer />
     </>
   );
 };
