@@ -16,10 +16,12 @@ import com.shop.demo.repository.ItemImgRepository;
 import com.shop.demo.repository.ItemRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class ItemService {
 
 	private final ItemRepository itemRepository;
@@ -44,28 +46,18 @@ public class ItemService {
 	}
 
 	// 상품 수정
-	public Long updateItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
+	public Item updateItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
 
 		Item item = itemRepository.findById(itemFormDto.getId()).orElseThrow(() -> new Exception("해당 상품을 찾을 수 없습니다."));
 		item.updateItem(itemFormDto);
 
-		// List<Long> itemImgIds = itemFormDto.getItemImgIds();
+		List<Long> imgImgDtoUpdateList = itemFormDto.getUpdateItemImgIds();
+		//log.debug(imgImgDtoUpdateList.toString());
+		if (itemImgFileList != null) {
 
-		List<ItemImgDto> imgImgDtoList = itemFormDto.getItemImgDtoList();
-
-		if (imgImgDtoList.size() >= itemImgFileList.size()) {
-			for (int i = 0; i < imgImgDtoList.size(); i++) {
-				if (i < itemImgFileList.size()) {
-					itemImgService.updateItemImg(imgImgDtoList.get(i).getId(), itemImgFileList.get(i));
-				} else {
-					itemImgRepository.deleteById(imgImgDtoList.get(i).getId());
-				}
-			}
-
-		} else {
-			for (int i = 0; i < imgImgDtoList.size(); i++) {
-				if (i < itemImgFileList.size()) {
-					itemImgService.updateItemImg(imgImgDtoList.get(i).getId(), itemImgFileList.get(i));
+			for (int i = 0; i < itemImgFileList.size(); i++) {
+				if (i < imgImgDtoUpdateList.size()) {
+					itemImgService.updateItemImg(imgImgDtoUpdateList.get(i), itemImgFileList.get(i));
 				} else {
 					ItemImg itemImg = new ItemImg();
 					itemImg.setItem(item);
@@ -74,11 +66,14 @@ public class ItemService {
 			}
 		}
 
-		/*
-		 * for(int i = 0; i < itemImgFileList.size(); i++) {
-		 * itemImgService.updateItemImg(itemImgIds.get(i), itemImgFileList.get(i)); }
-		 */
-		return item.getId();
+		List<Long> imgImgDtoDeleteList = itemFormDto.getDeleteItemImgIds();
+		//log.debug(imgImgDtoUpdateList.toString());
+		
+		for (int i = 0; i < imgImgDtoDeleteList.size(); i++) {
+				itemImgService.deleteItemImg(imgImgDtoDeleteList.get(i));
+		}
+		return item;
+
 	}
 
 	// 단일 상품 조회

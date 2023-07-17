@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Form from 'react-bootstrap/Form';
@@ -66,12 +66,16 @@ const LoginForm = () => {
       <Container>
 
         <div className="col-md-12">
-
+          
           <h1>로그인</h1>
+          <br/>
+
           <Form onSubmit={login}>
             <div className="form-group">
               <label htmlFor="username">ID</label>
               &nbsp;
+              <Row>
+              <Col xs="3">
               <input
                 type="text"
                 className="form-control"
@@ -79,11 +83,17 @@ const LoginForm = () => {
                 onChange={changeValue}
                 required
               />
+              </Col>
+              <Col xs="1"></Col>
+              </Row>
             </div>
 
             <div className="form-group">
               <label htmlFor="password">Password</label>
               &nbsp;
+              <Row>
+              <Col xs="3">
+            
               <input
                 type="password"
                 className="form-control"
@@ -91,6 +101,9 @@ const LoginForm = () => {
                 onChange={changeValue}
                 required
               />
+              </Col>
+              <Col xs="1"></Col>
+              </Row>
             </div>
 
             <div className="form-group mt-1">

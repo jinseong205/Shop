@@ -76,7 +76,6 @@ const ItemUpdateForm = () => {
           console.log("-----------------------");
           console.log(updatedItemImgIdsArray);
           console.log(deleteItemImgIdsArray);
-          console.log(itemFormDto);
 
           return {
             ...prevState,
@@ -105,7 +104,6 @@ const ItemUpdateForm = () => {
           console.log("-----------------------");
           console.log(updatedItemImgIdsArray);
           console.log(deleteItemImgIdsArray);
-          console.log(itemFormDto);
 
           return {
             ...prevState,
@@ -267,7 +265,7 @@ const ItemUpdateForm = () => {
     for (let i = 1; i <= 5; i++) {
       fileUploadFields.push(
         <Form.Group key={i}>
-          <input type="text" name="itemImgId" id={`itemImgId${i}`} />
+          <input type="hidden" name="itemImgId" id={`itemImgId${i}`} />
           <Row className="align-items-center">
             <Col xs="auto">
               <label className="input-group-text file-label" htmlFor={`itemImgFile${i}`}>
@@ -377,7 +375,7 @@ const ItemUpdateForm = () => {
                   editor.editing.view.change((writer) => {
                     writer.setStyle(
                       "height",
-                      "100px",
+                      "600px",
                       editor.editing.view.document.getRoot()
                     );
                   });

@@ -20,7 +20,7 @@ public class ApiExceptionHandler {
 	@ExceptionHandler
 	public ResponseEntity<?> commonExceptionHandler(Exception e) {
 		
-		//log.debug("[ERROR]" , e);
+		log.debug("[ERROR]" , e);
 		
 		String errorMessage;
 		

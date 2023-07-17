@@ -55,17 +55,13 @@ public class ItemController {
 	}
 
 	@PutMapping(value = "api/manager/item/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<?> itemUpdate(@PathVariable long id, @RequestPart("itemFormDto") @Valid ItemFormDto itemFormDto, BindingResult bindingResult, @RequestPart(name = "itemImgFile") List<MultipartFile> itemImgFileList) throws Exception {
+	public ResponseEntity<?> itemUpdate(@PathVariable long id, @RequestPart(name = "itemFormDto") @Valid ItemFormDto itemFormDto, BindingResult bindingResult, @RequestPart(name = "itemImgFile", required =  false) List<MultipartFile> itemImgFileList) throws Exception {
 	    
 	    if(bindingResult.hasErrors()) {
 	    	throw new Exception(bindingResult.getFieldError().getDefaultMessage());
 	    }
-	    
-		if(itemImgFileList.get(0).isEmpty()) {
-			throw new Exception("첫번째 상품이미지는 필수 입력 값입니다.");
-		}
-		
-		Item item = itemService.saveItem(itemFormDto, itemImgFileList);
+
+		Item item = itemService.updateItem(itemFormDto, itemImgFileList);
 	    
 	    return new ResponseEntity<>(item , HttpStatus.OK);
 	}

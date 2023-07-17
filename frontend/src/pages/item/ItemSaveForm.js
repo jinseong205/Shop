@@ -293,7 +293,7 @@ const ItemSaveForm = () => {
                   editor.editing.view.change((writer) => {
                     writer.setStyle(
                       "height",
-                      "400px",
+                      "300px",
                       editor.editing.view.document.getRoot()
                     );
                   });
