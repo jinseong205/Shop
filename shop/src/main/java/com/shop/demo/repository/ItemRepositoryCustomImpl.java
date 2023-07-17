@@ -1,11 +1,13 @@
 package com.shop.demo.repository;
 
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -58,16 +60,18 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 
 	@Override
 	public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
-	
-		QueryResults<Item> result = queryFactory
-									.select(QItem.item)
-									.where(crtDtsAfter(itemSearchDto.getSearchDateType())	
-										   ,searchSellStatusEq(itemSearchDto.getSearchSellStatus())
-										   ,searchByLike(itemSearchDto.getSearchBy(),itemSearchDto.getSearchQuery())
-										   )
-									.fetchResults();
+
+		QueryResults<Item> results = queryFactory.select(QItem.item)
+				.where(crtDtsAfter(itemSearchDto.getSearchDateType()),
+						searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
+						searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()))
+				.orderBy(QItem.item.id.desc()).offset(pageable.getOffset()).limit(pageable.getPageSize())
+				.fetchResults();
+
+		List<Item> content = results.getResults();
+		long total = results.getTotal();
 		
-		return null;
+		return new PageImpl<>(content, pageable, total);
 	}
 
 }

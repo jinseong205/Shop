@@ -48,14 +48,14 @@ const LoginForm = () => {
         }
       })
       .then(data => {
-        if(data != null){
-          console.log(data);  
+        if (data != null) {
+          console.log(data);
           alert(data.message);
         }
       })
       .catch(err => {
-        if(err){
-        alert("로그인 중 오류가 발생 하였습니다." + err);
+        if (err) {
+          alert("로그인 중 오류가 발생 하였습니다." + err);
         }
       });
   }
@@ -66,25 +66,25 @@ const LoginForm = () => {
       <Container>
 
         <div className="col-md-12">
-          
-          <h1>로그인</h1>
-          <br/>
+
+          <h2>로그인</h2>
+          <br />
 
           <Form onSubmit={login}>
             <div className="form-group">
               <label htmlFor="username">ID</label>
               &nbsp;
               <Row>
-              <Col xs="3">
-              <input
-                type="text"
-                className="form-control"
-                name="username"
-                onChange={changeValue}
-                required
-              />
-              </Col>
-              <Col xs="1"></Col>
+                <Col xs="3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="username"
+                    onChange={changeValue}
+                    required
+                  />
+                </Col>
+                <Col xs="1"></Col>
               </Row>
             </div>
 
@@ -92,25 +92,24 @@ const LoginForm = () => {
               <label htmlFor="password">Password</label>
               &nbsp;
               <Row>
-              <Col xs="3">
-            
-              <input
-                type="password"
-                className="form-control"
-                name="password"
-                onChange={changeValue}
-                required
-              />
-              </Col>
-              <Col xs="1"></Col>
+                <Col xs="3">
+
+                  <input
+                    type="password"
+                    className="form-control"
+                    name="password"
+                    onChange={changeValue}
+                    required
+                  />
+                </Col>
+                <Col xs="1"></Col>
               </Row>
             </div>
-
+            <br />
             <div className="form-group mt-1">
               <button
                 className="btn btn-secondary btn-block"
               >
-
                 <span>Login</span>
               </button>
             </div>

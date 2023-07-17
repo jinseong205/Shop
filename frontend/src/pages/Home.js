@@ -11,7 +11,7 @@ const Home = () => {
             <Header />
             <Container>
                 <br/>
-                <h1>Home</h1>
+                <h2>Home</h2>
                 {/* {books.map((book) => (<BookItem key = {book.id} book={book}/>)) } */}
             </Container>
         </>

@@ -184,7 +184,7 @@ const ItemSaveForm = () => {
           <input type="hidden" name="itemImgId" id={`itemImgId${i}`} />
           <Row className="align-items-center">
             <Col xs="auto">
-              <label className="input-group-text file-label" htmlFor={`itemImgFile${i}`}>
+              <label className="input-group-text file-label" htmlFor={`itemImgFile${i}`} style={{padding : "3px" , fontSize :"10px"}}>
                 이미지 첨부
                 <input
                   type="file"
@@ -199,7 +199,7 @@ const ItemSaveForm = () => {
               <div style={{ fontSize: "12px" }} id={`itemImgName${i}`}></div>
             </Col>
             <Col>
-              <div onClick={(e) => onFileDelete(e, i)}>[삭제]</div>
+              <div onClick={(e) => onFileDelete(e, i)} style={{ fontSize: "12px" }}>[삭제]</div>
             </Col>
           </Row>
         </Form.Group>
@@ -216,7 +216,7 @@ const ItemSaveForm = () => {
       <Container>
 
         <div className="col-md-12">
-          <h1>상품 등록</h1>
+          <h2>상품 등록</h2>
           <br />
           <form>
             <div className="form-group">
@@ -293,7 +293,7 @@ const ItemSaveForm = () => {
                   editor.editing.view.change((writer) => {
                     writer.setStyle(
                       "height",
-                      "300px",
+                      "250px",
                       editor.editing.view.document.getRoot()
                     );
                   });
@@ -310,6 +310,7 @@ const ItemSaveForm = () => {
             </div>
 
             <br />
+            <label htmlFor="itemName">상품 이미지</label>
             <Row className="align-items-center">
               {renderFileUploadFields()}
             </Row>

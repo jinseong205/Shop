@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.shop.demo.entity.Item;
 
-public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredicateExecutor<Item>{
+public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredicateExecutor<Item>, ItemRepositoryCustom {
 	
 	List<Item> findByItemName(String itemName);
 
@@ -21,4 +21,7 @@ public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredi
 	
 	@Query(value="SELECT * FROM item i WHERE i.itemDetail like %?1% ORDER BY i.price DESC", nativeQuery = true)
 	List<Item> findByProdctDetail(@Param("itemDetail") String itemDetail);
+	
 }
+
+

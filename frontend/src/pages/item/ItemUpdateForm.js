@@ -99,7 +99,7 @@ const ItemUpdateForm = () => {
           }
 
           var updateItemImgDtoList = [...prevState.itemImgDtoList];
-            updateItemImgDtoList[index - 1].oriImgName = "";
+          updateItemImgDtoList[index - 1].oriImgName = "";
 
           console.log("-----------------------");
           console.log(updatedItemImgIdsArray);
@@ -173,10 +173,10 @@ const ItemUpdateForm = () => {
         };
       });
     }
-    
+
     document.getElementById(`itemImgFile${index}`).value = "";
     document.getElementById(`itemImgName${index}`).textContent = "";
-  
+
 
   };
 
@@ -268,7 +268,7 @@ const ItemUpdateForm = () => {
           <input type="hidden" name="itemImgId" id={`itemImgId${i}`} />
           <Row className="align-items-center">
             <Col xs="auto">
-              <label className="input-group-text file-label" htmlFor={`itemImgFile${i}`}>
+              <label className="input-group-text file-label" htmlFor={`itemImgFile${i}`} style={{ padding: "3px", fontSize: "10px" }}>
                 이미지 첨부
                 <input
                   type="file"
@@ -283,7 +283,7 @@ const ItemUpdateForm = () => {
               <div style={{ fontSize: "12px" }} id={`itemImgName${i}`}></div>
             </Col>
             <Col>
-              <div onClick={() => onFileDelete(i)}>[삭제]</div>
+            <div onClick={(e) => onFileDelete(e, i)} style={{ fontSize: "12px" }}>[삭제]</div>
             </Col>
           </Row>
         </Form.Group>
@@ -298,7 +298,7 @@ const ItemUpdateForm = () => {
       <Header />
       <Container>
         <div className="col-md-12">
-          <h1>상품 수정</h1>
+          <h2>상품 수정</h2>
           <br />
           <form>
             <div className="form-group">
