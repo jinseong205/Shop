@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.demo.dto.ItemFormDto;
+import com.shop.demo.dto.ItemMainDto;
 import com.shop.demo.dto.ItemSearchDto;
 import com.shop.demo.entity.Item;
 import com.shop.demo.entity.User;
@@ -76,7 +77,18 @@ public class ItemController {
 	public ResponseEntity<?> itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, @AuthenticationPrincipal User user){
 		
 		Pageable pegealbe = PageRequest.of(page.isPresent()? page.get(): 0,3);
-		Page<Item> items = itemService.getManagerItemPage(itemSearchDto, pegealbe, user);
+		Page<Item> items = itemService.getItemManagePage(itemSearchDto, pegealbe, user);
+		
+		itemSearchDto.setItems(items);
+		
+	    return new ResponseEntity<>(itemSearchDto , HttpStatus.OK);
+	}
+	
+	@GetMapping(value = {"/api/items", "/api/items/{page}"})
+	public ResponseEntity<?> itemMain(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, @AuthenticationPrincipal User user){
+		
+		Pageable pegealbe = PageRequest.of(page.isPresent()? page.get(): 0,9);
+		Page<ItemMainDto> items = itemService.getItemMainPage(itemSearchDto, pegealbe);
 		
 		itemSearchDto.setItems(items);
 		

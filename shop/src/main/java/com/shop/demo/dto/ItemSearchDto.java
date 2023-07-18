@@ -18,7 +18,7 @@ public class ItemSearchDto {
 	
 	private String searchQuery = "";
 	
-	private Page<Item> items;
+	private Page<?> items;
 	
 	
 }
