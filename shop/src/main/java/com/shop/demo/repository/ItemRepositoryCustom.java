@@ -6,8 +6,9 @@ import org.springframework.data.domain.Pageable;
 
 import com.shop.demo.dto.ItemSearchDto;
 import com.shop.demo.entity.Item;
+import com.shop.demo.entity.User;
 
 public interface ItemRepositoryCustom {
 
-	Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable);
+	Page<Item> getMangerItemPage(ItemSearchDto itemSearchDto, Pageable pageable, User user);
 }

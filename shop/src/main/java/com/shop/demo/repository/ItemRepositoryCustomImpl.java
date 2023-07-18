@@ -16,6 +16,7 @@ import com.shop.demo.constant.ItemSellStatus;
 import com.shop.demo.dto.ItemSearchDto;
 import com.shop.demo.entity.Item;
 import com.shop.demo.entity.QItem;
+import com.shop.demo.entity.User;
 
 public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 
@@ -57,21 +58,45 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 		}
 		return null;
 	}
+	
+	private BooleanExpression searchByCrtId(String crtNmae) {
+		return QItem.item.crtName.eq(crtNmae);
+	}
+	
 
 	@Override
-	public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+	public Page<Item> getMangerItemPage(ItemSearchDto itemSearchDto, Pageable pageable, User user) {
 
-		QueryResults<Item> results = queryFactory.select(QItem.item)
-				.where(crtDtsAfter(itemSearchDto.getSearchDateType()),
-						searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
-						searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()))
-				.orderBy(QItem.item.id.desc()).offset(pageable.getOffset()).limit(pageable.getPageSize())
-				.fetchResults();
-
-		List<Item> content = results.getResults();
-		long total = results.getTotal();
+		QueryResults<Item> results;
+		List<Item> content;
+		long total;
 		
-		return new PageImpl<>(content, pageable, total);
+		if (user.getRoles().contains("ROLE_ADMIN")) {
+			results = queryFactory.select(QItem.item)
+					.where(crtDtsAfter(itemSearchDto.getSearchDateType()),
+							searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
+							searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()))
+					.orderBy(QItem.item.id.desc()).offset(pageable.getOffset()).limit(pageable.getPageSize())
+					.fetchResults();
+
+			content = results.getResults();
+			total = results.getTotal();
+
+			return new PageImpl<>(content, pageable, total);
+		} else{
+			results = queryFactory.select(QItem.item)
+					.where(crtDtsAfter(itemSearchDto.getSearchDateType()),
+							searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
+							searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()),
+							searchByCrtId(user.getUsername()))
+					.orderBy(QItem.item.id.desc()).offset(pageable.getOffset()).limit(pageable.getPageSize())
+					.fetchResults();
+			content = results.getResults();
+			total = results.getTotal();
+
+			return new PageImpl<>(content, pageable, total);
+		}
+
 	}
 
 }

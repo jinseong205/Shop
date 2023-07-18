@@ -4,14 +4,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.demo.dto.ItemFormDto;
 import com.shop.demo.dto.ItemImgDto;
+import com.shop.demo.dto.ItemSearchDto;
 import com.shop.demo.entity.Item;
 import com.shop.demo.entity.ItemImg;
+import com.shop.demo.entity.User;
 import com.shop.demo.repository.ItemImgRepository;
 import com.shop.demo.repository.ItemRepository;
 
@@ -96,4 +100,9 @@ public class ItemService {
 		return itemFormDto;
 	}
 
+	@Transactional(readOnly = true)
+	public Page<Item> getManagerItemPage(ItemSearchDto itemSearchDto, Pageable pageable, User user ){
+		return itemRepository.getMangerItemPage(itemSearchDto, pageable, user);
+	}
+	
 }
