@@ -31,7 +31,7 @@ const ItemManage = () => {
                 <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>
-                    <a href={`/admin/item/${item.id}`}>{item.itemNm}</a>
+                    <a href={`http://localhost:8080/admin/item/${item.id}`}>{item.itemNm}</a>
                   </td>
                   <td>{item.itemSellStatus === 'SELL' ? '판매중' : '품절'}</td>
                   <td>{item.createdBy}</td>

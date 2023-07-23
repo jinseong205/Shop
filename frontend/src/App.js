@@ -4,20 +4,26 @@ import JoinForm from './pages/JoinForm';
 import LoginForm from './pages/LoginForm';
 import ItemSaveForm from './pages/item/ItemSaveForm';
 import ItemUpdateForm from './pages/item/ItemUpdateForm';
-import Test from './pages/Test';
-import TestFile from './pages/test/TestFile';
+import ItemMain from './pages/item/ItemMain';
+import ItemDetail from './pages/item/ItemDetail';
+import ItemManage from './pages/item/ItemManage';
+
+
+
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<ItemMain />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/join" element={<JoinForm />} />
-        <Route path="/test" element={<Test/>} />
-        <Route path="/ItemSaveForm" element={<ItemSaveForm/>} />
-        <Route path="/ItemUpdateForm/:id" element={<ItemUpdateForm/>} />
-        <Route path="/testFile" element={<TestFile/>} />
+
+        <Route path="/itemMain" element={<ItemMain />} />
+        <Route path="/ItemManage" element={<ItemManage/>} />
+        <Route path="/itemSaveForm" element={<ItemSaveForm/>} />
+        <Route path="/itemUpdateForm/:id" element={<ItemUpdateForm/>} />
+        <Route path="/itemDetail/:id" element={<ItemDetail/>} />
       </Routes>
     </>
   );
