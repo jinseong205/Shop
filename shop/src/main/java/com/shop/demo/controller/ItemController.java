@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.shop.demo.config.auth.PrincipalDetails;
 import com.shop.demo.dto.ItemFormDto;
 import com.shop.demo.dto.ItemMainDto;
 import com.shop.demo.dto.ItemSearchDto;
@@ -74,9 +75,11 @@ public class ItemController {
 	}
 	
 	@GetMapping(value = {"/api/manager/items", "/api/manager/items/{page}"})
-	public ResponseEntity<?> itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, @AuthenticationPrincipal User user){
+	public ResponseEntity<?> itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, @AuthenticationPrincipal PrincipalDetails principalDetails){
 		
 		Pageable pegealbe = PageRequest.of(page.isPresent()? page.get(): 0,3);
+		User user = principalDetails.getUser();
+		
 		Page<Item> items = itemService.getItemManagePage(itemSearchDto, pegealbe, user);
 		
 		itemSearchDto.setItems(items);
@@ -85,7 +88,7 @@ public class ItemController {
 	}
 	
 	@GetMapping(value = {"/api/items", "/api/items/{page}"})
-	public ResponseEntity<?> itemMain(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, @AuthenticationPrincipal User user){
+	public ResponseEntity<?> itemMain(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page){
 		
 		Pageable pegealbe = PageRequest.of(page.isPresent()? page.get(): 0,9);
 		Page<ItemMainDto> items = itemService.getItemMainPage(itemSearchDto, pegealbe);
