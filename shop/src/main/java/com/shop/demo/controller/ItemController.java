@@ -87,8 +87,8 @@ public class ItemController {
 	    return new ResponseEntity<>(itemSearchDto , HttpStatus.OK);
 	}
 	
-	@GetMapping(value = {"/api/items", "/api/items/{page}"})
-	public ResponseEntity<?> itemMain(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page){
+	@GetMapping(value = "/api/items")
+	public ResponseEntity<?> itemMain(ItemSearchDto itemSearchDto, Optional<Integer> page){
 		
 		Pageable pegealbe = PageRequest.of(page.isPresent()? page.get(): 0,9);
 		Page<ItemMainDto> items = itemService.getItemMainPage(itemSearchDto, pegealbe);

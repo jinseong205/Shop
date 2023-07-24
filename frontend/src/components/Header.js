@@ -1,18 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 
-
-
 function Header() {
+  const navigate = useNavigate();
 
-  const [username, setUsername] = useState(null)
+  const [username, setUsername] = useState(null);
   const [userRoles, setUserRoles] = useState(null);
+  const [itemSearchDto, setItemSearchDto] = useState({
+    searchDateType: '',
+    itemSellStatus: 'SELL',
+    searchBy: 'itemName',
+    searchQuery: '',
+    items: '',
+  });
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -26,93 +32,109 @@ function Header() {
   }, []);
 
   const logout = () => {
-    localStorage.removeItem("token", "");
+    localStorage.removeItem('token', '');
     setUsername(null);
     setUserRoles(null);
-  }
+  };
+
+  const handleItemSearch = () => {
+    const tempQuery = document.getElementById('searchBy').value;
+
+    setItemSearchDto((prevState) => {
+      return {
+        ...prevState,
+        searchBy: tempQuery,
+      };
+    });
+
+    navigate('/itemMain', { state: { itemSearchDto: { ...itemSearchDto, searchQuery: tempQuery } } });
+  };
 
   return (
     <>
-
       <Navbar bg="dark" expand="lg">
         <Container fluid>
-          <Link to="/" className="navbar-brand me-5 text-light">J-Shop</Link>
+          <Link to="/" className="navbar-brand me-5 text-light">
+            J-Shop
+          </Link>
           <Navbar.Toggle className="bg-light" aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
-
-            <Nav
-              className="container-fluid my-2 my-lg-0"
-              style={{ maxHeight: '100px' }}
-              navbarScroll
-            >
-
-              <Form className="d-flex  me-auto" style={{ minWidth: "40%" }}>
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                />
-                <Button className="text-nowrap" variant="outline-light">
+            <Nav className="container-fluid my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
+              <Form className="d-flex  me-auto" style={{ minWidth: '40%' }}>
+                <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" id="searchBy" />
+                <Button className="text-nowrap" variant="outline-light" onClick={handleItemSearch}>
                   검색
                 </Button>
               </Form>
 
               <div className="d-flex">
-                <Link className="nav-link text-light text-nowrap" to="/">BEST</Link>
+                <Link className="nav-link text-light text-nowrap" to="/">
+                  BEST
+                </Link>
               </div>
               <div className="d-flex">
-                <Link className="nav-link text-light text-nowrap" to="/">전체</Link>
+                <Link className="nav-link text-light text-nowrap" to="/">
+                  전체
+                </Link>
               </div>
               <div className="d-flex">
-                <Link className="nav-link text-light text-nowrap" to="/">공지사항</Link>
+                <Link className="nav-link text-light text-nowrap" to="/">
+                  공지사항
+                </Link>
               </div>
-
             </Nav>
-
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Navbar variant="outline-dark" >
-        <Container fluid >
-
-          {username == null ?
+      <Navbar variant="outline-dark">
+        <Container fluid>
+          {username == null ? (
             <>
               <div className="d-flex me-auto"></div>
               <div className="d-flex me-4">
-                <Link className="nav-link" to="/join">회원가입</Link>
+                <Link className="nav-link" to="/join">
+                  회원가입
+                </Link>
               </div>
               <div className="d-flex me-4">
-                <Link className="nav-link" to="/login">로그인</Link>
+                <Link className="nav-link" to="/login">
+                  로그인
+                </Link>
               </div>
             </>
-          : 
+          ) : (
             <>
               <div className="d-flex me-auto"></div>
-                { userRoles.includes('ROLE_ADMIN') ?
-                  <div className="d-flex me-4">
-                  <Link className="nav-link" to="/itemSaveForm">회원관리</Link>
-                  </div>
-                  : <></>
-                }
-                {userRoles.includes('ROLE_MANAGER') || userRoles.includes('ROLE_ADMIN') ?
-                                    <div className="d-flex me-4">
-                                    <Link className="nav-link" to="/itemSaveForm">상품등록</Link>
-                                    </div>
-                  : <></>
-                }
+              {userRoles.includes('ROLE_ADMIN') ? (
+                <div className="d-flex me-4">
+                  <Link className="nav-link" to="/itemSaveForm">
+                    회원관리
+                  </Link>
+                </div>
+              ) : (
+                <></>
+              )}
+              {userRoles.includes('ROLE_MANAGER') || userRoles.includes('ROLE_ADMIN') ? (
+                <div className="d-flex me-4">
+                  <Link className="nav-link" to="/itemSaveForm">
+                    상품등록
+                  </Link>
+                </div>
+              ) : (
+                <></>
+              )}
               <div className="d-flex me-4">
-                <Link className="nav-link" onClick={logout}>마이페이지</Link>
+                <Link className="nav-link" onClick={logout}>
+                  마이페이지
+                </Link>
               </div>
-
               <div className="d-flex me-4">
-                <Link className="nav-link" onClick={logout}>로그아웃</Link>
+                <Link className="nav-link" onClick={logout}>
+                  로그아웃
+                </Link>
               </div>
-
-
             </>
-          }
-
+          )}
         </Container>
       </Navbar>
     </>

@@ -1,16 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Header from '../../components/Header';
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const ItemMain = () => {
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [itemSearchDto, setItemSearchDto] = useState(null);
   const pageSize = 9;
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    loadItems(); // 페이지 로드시 한 번 실행
+    setItemSearchDto(location.state?.itemSearchDto || null);
+  }, [location.state]);
+
+  useEffect(() => {
+    setPage(0);
+    loadItems();
+  }, [itemSearchDto]);
+
+  useEffect(() => {
+    loadItems();
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -21,14 +34,30 @@ const ItemMain = () => {
     if (loading) return;
     setLoading(true);
 
+    var queryString;
+    if (itemSearchDto != null) {
+      queryString = Object.keys(itemSearchDto)
+        .map((key) => {
+          if (key !== 'items') {
+            return `${encodeURIComponent(key)}=${encodeURIComponent(itemSearchDto[key])}`;
+          }
+        })
+        .join('&');
+    }
+
     try {
-      const response = await fetch(`http://localhost:8080/api/items/${page}`);
+      const response = await fetch(`http://localhost:8080/api/items?page=${page}&${queryString}`);
       const data = await response.json();
 
+      console.log(`http://localhost:8080/api/items?page=${page}&${queryString}`);
       console.log(data.items.content);
-      console.log(`http://localhost:8080/api/items?page=${page}`);
 
-      setItems((prevItems) => [...prevItems, ...data.items.content]);
+      if (page === 0) {
+        setItems(data.items.content);
+      } else {
+        setItems((prevItems) => [...prevItems, ...data.items.content]);
+      }
+
       setLoading(false);
     } catch (error) {
       console.error('Error fetching items:', error);
@@ -37,8 +66,7 @@ const ItemMain = () => {
   };
 
   useEffect(() => {
-    console.log(page); // page 값이 업데이트된 후에 실행됩니다.
-    if (page > 0) { // 페이지가 0보다 큰 경우에만 loadItems 함수 호출
+    if (page > 0) {
       loadItems();
     }
   }, [page]);
@@ -46,12 +74,11 @@ const ItemMain = () => {
   const handleScroll = () => {
     const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
     if (scrollTop + clientHeight >= scrollHeight - 200) {
-      setPage((prevPage) => prevPage + 1); // 페이지를 올바르게 업데이트합니다.
+      setPage((prevPage) => prevPage + 1);
     }
   };
 
   const handleImageError = (event) => {
-    // 이미지 로드에 실패하면 "No Image"로 대체
     event.target.src = 'http://localhost:8080/no-image.png';
   };
 
@@ -64,7 +91,7 @@ const ItemMain = () => {
           <Row>
             {items.map((item, index) => (
               <Col key={item.id} md={4} className="mb-4">
-                <Link className="nav-link text-light text-nowrap" to={`/itemDetail/` + item.id}>
+                <Link className="nav-link text-light text-nowrap" to={`/itemDetail/${item.id}`}>
                   <div className="card">
                     <input type="hidden" value={item.id} />
                     <div style={{ height: '250px', textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
@@ -72,12 +99,12 @@ const ItemMain = () => {
                         src={"http://localhost:8080" + item.imgUrl}
                         alt={item.name}
                         style={{ height: '100%', width: '100%', objectFit: 'contain' }}
-                        onError={handleImageError} // 이미지 로드 실패 시 onError 이벤트 처리
+                        onError={handleImageError}
                       />
                     </div>
 
                     <div className="mx-4">
-                      <div><h5>{item.itemName} </h5></div>
+                      <div><h5>{item.itemName}</h5></div>
                       <div className="justify-content-end"><b>가격: {item.price}원</b></div>
                     </div>
                   </div>
@@ -85,8 +112,8 @@ const ItemMain = () => {
               </Col>
             ))}
           </Row>
-        </div >
-      </Container >
+        </div>
+      </Container>
     </>
   );
 };

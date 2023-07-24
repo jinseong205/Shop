@@ -43,11 +43,10 @@ const ItemDetail = () => {
   };
 
   const handleImageClick = (imgUrl) => {
-    setMainImage(imgUrl); // 클릭한 이미지를 메인 이미지로 설정
+    setMainImage(imgUrl); 
   };
 
   const handleImageError = (event) => {
-    // 이미지 로드에 실패하면 "No Image"로 대체
     event.target.src = 'http://localhost:8080/no-image.png';
   };
 
