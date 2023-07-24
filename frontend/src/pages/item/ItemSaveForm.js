@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Form, Row, Col, Container } from "react-bootstrap";
 import { useParams } from "react-router";
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 

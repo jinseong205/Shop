@@ -20,7 +20,7 @@ function App() {
         <Route path="/join" element={<JoinForm />} />
 
         <Route path="/itemMain" element={<ItemMain />} />
-        <Route path="/ItemManage" element={<ItemManage/>} />
+        <Route path="/itemManage" element={<ItemManage/>} />
         <Route path="/itemSaveForm" element={<ItemSaveForm/>} />
         <Route path="/itemUpdateForm/:id" element={<ItemUpdateForm/>} />
         <Route path="/itemDetail/:id" element={<ItemDetail/>} />

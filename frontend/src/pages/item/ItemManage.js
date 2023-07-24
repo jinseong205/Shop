@@ -1,5 +1,8 @@
-// "ItemsTable.js" 파일을 생성합니다.
 import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { Form, Row, Col, Container } from "react-bootstrap";
+import { useParams } from "react-router";
+import Header from '../../components/Header';
 
 const ItemManage = () => {
   const [items, setItems] = useState([]);
@@ -41,7 +44,7 @@ const ItemManage = () => {
             </tbody>
           </table>
 
-          <div className="form-inline justify-content-center" th: object="${itemSearchDto}">
+          <div className="form-inline justify-content-center" name ="itemSearchDto">
             <select name="searchDateType" class="form-control" style="width:auto;">
               <option value="all">전체기간</option>
               <option value="1d">1일</option>
