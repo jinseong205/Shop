@@ -1,18 +1,22 @@
 package com.shop.demo.dto;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import com.shop.demo.entity.OrderItem;
 
 import lombok.Data;
 
 @Data
-public class OrderItemDto{
+public class OrderItemDto {
 
-	@NotNull(message = "상품 아이디는 필수 입력 값입니다.")
-	private Long itemId;
-	
-	@Min(value = 1, message = "최소 주문수량은 1개 입니다.")
-	@Max(value = 999, message = "최대 주문 수량은 999개 입니다.")
+	public OrderItemDto(OrderItem orderItem, String imgUrl) {
+		this.itemName = orderItem.getItem().getItemName();
+		this.count = orderItem.getCount();
+		this.orderPrice = orderItem.getOrderPrice();
+		this.imgUrl = imgUrl;
+	}
+
+	private String itemName;
 	private int count;
+	private int orderPrice;
+	private String imgUrl;
+	
 }

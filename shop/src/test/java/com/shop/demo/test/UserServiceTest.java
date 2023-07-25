@@ -42,7 +42,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	@DisplayName("--- 회원가입테스트 ---")
+	@DisplayName("--- 회원가입 테스트 ---")
 	public void saveMemberTest() {
 		
 		User user = createUser();

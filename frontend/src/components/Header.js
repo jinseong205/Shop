@@ -39,7 +39,7 @@ function Header() {
 
   const handleItemSearch = () => {
     const tempQuery = document.getElementById('searchBy').value;
-
+    console.log(tempQuery);
     setItemSearchDto((prevState) => {
       return {
         ...prevState,
@@ -60,12 +60,12 @@ function Header() {
           <Navbar.Toggle className="bg-light" aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="container-fluid my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
-              <Form className="d-flex  me-auto" style={{ minWidth: '40%' }}>
+              <div className="d-flex  me-auto" style={{ minWidth: '40%' }} onSubmit={handleItemSearch}>
                 <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" id="searchBy" />
-                <Button className="text-nowrap" variant="outline-light" onClick={handleItemSearch}>
+                <Button className="text-nowrap" variant="outline-light" onClick={handleItemSearch}  >
                   검색
                 </Button>
-              </Form>
+              </div>
 
               <div className="d-flex">
                 <Link className="nav-link text-light text-nowrap" to="/">

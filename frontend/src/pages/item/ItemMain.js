@@ -15,24 +15,30 @@ const ItemMain = () => {
 
   useEffect(() => {
     setItemSearchDto(location.state?.itemSearchDto || null);
+    console.log(">>>1");
+    console.log(location.state);
   }, [location.state]);
 
   useEffect(() => {
+    console.log(">>>2");
     setPage(0);
-    loadItems();
+    setLoading(true); // 로딩 상태를 true로 설정하여 첫 렌더링 시에 loadItems 함수 호출
   }, [itemSearchDto]);
 
   useEffect(() => {
-    loadItems();
+    console.log(">>>3");
+    if (loading) {
+      loadItems(); // 로딩 상태가 true일 때에만 loadItems 함수 호출
+      setLoading(false); // loadItems 호출 후 로딩 상태를 false로 변경
+    }
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [loading]);
 
   const loadItems = async () => {
-    if (loading) return;
-    setLoading(true);
+    console.log("load?");
 
     var queryString;
     if (itemSearchDto != null) {
@@ -57,11 +63,8 @@ const ItemMain = () => {
       } else {
         setItems((prevItems) => [...prevItems, ...data.items.content]);
       }
-
-      setLoading(false);
     } catch (error) {
       console.error('Error fetching items:', error);
-      setLoading(false);
     }
   };
 
