@@ -1,4 +1,4 @@
-package com.shop.demo.test;
+package com.shop.demo.test.controller;
 
 import javax.transaction.Transactional;
 

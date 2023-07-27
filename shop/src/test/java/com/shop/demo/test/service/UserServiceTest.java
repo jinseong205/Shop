@@ -1,4 +1,4 @@
-package com.shop.demo.test;
+package com.shop.demo.test.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

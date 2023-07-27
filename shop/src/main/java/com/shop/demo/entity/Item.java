@@ -85,12 +85,14 @@ public class Item extends BaseEntity {
 	public void removeStock(int stockNum) throws Exception {
 		int restStock = this.stockNum - stockNum;
 
-		if (restStock < 0) {
+		if (restStock < 0)
 			throw new Exception("상품의 재고가 부족합니다. \n(현재 재고수량 : " + this.stockNum + ")");
-		}
-		
-		this.stockNum = restStock;
 
+		this.stockNum = restStock;
+	}
+
+	public void addStock(int stockNumber) {
+		this.stockNum += stockNumber;
 	}
 
 }

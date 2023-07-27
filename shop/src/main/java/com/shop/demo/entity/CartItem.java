@@ -25,7 +25,7 @@ public class CartItem {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name= "cart_id")
-	private Cart order;
+	private Cart cart;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="item_id")
@@ -33,4 +33,15 @@ public class CartItem {
 	
 	private int count;
 
+	public static CartItem createCatrtItem(Cart cart, Item item, int count) {
+		CartItem cartItem = new CartItem();
+		cartItem.setCart(cart);
+		cartItem.setItem(item);
+		cartItem.setCount(count);
+		return cartItem;
+	}
+	
+	public void addCount(int count) {
+		this.count += count;
+	}
 }

@@ -1,4 +1,4 @@
-package com.shop.demo.test;
+package com.shop.demo.test.repository;
 
 import java.util.List;
 

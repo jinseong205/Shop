@@ -1,4 +1,4 @@
-package com.shop.demo.test;
+package com.shop.demo.test.entity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;

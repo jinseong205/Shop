@@ -1,4 +1,4 @@
-package com.shop.demo.test.custom;
+package com.shop.demo.test.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.demo.constant.ItemSellStatus;
+import com.shop.demo.constant.OrderStatus;
 import com.shop.demo.dto.OrderDto;
 import com.shop.demo.dto.UserFormDto;
 import com.shop.demo.entity.Item;
@@ -71,8 +72,7 @@ public class OrderServiceTest {
 		return userRepository.save(user);
 	}
 
-	@Test
-	@DisplayName("--- 주문 테스트 ---")
+	@DisplayName("--- 주문 생성 테스트 ---")
 	public void order() throws Exception {
 		Item item = saveItem();
 		User user = saveUser();
@@ -92,4 +92,29 @@ public class OrderServiceTest {
 
 		assertEquals(totalPrice, order.getTotalPrice());
 	}
+	
+	@Test
+	@DisplayName("--- 주문 취소 테스트 ---")
+	public void cancelOrder() throws Exception {
+		Item item = saveItem();
+		User user = saveUser();
+		
+		OrderDto orderDto = new OrderDto();
+		orderDto.setCount(10);
+		orderDto.setItemId(item.getId());
+		
+		Long orderId = orderService.order(orderDto, user);
+		
+		Order order = orderRepository.findById(orderId).orElseThrow(()-> new Exception("주문정보를 찾을 수 없습니다"));
+		
+		orderService.cancelOrder(orderId);
+		
+		assertEquals(OrderStatus.CANCEL, order.getOrderStatus());
+		assertEquals(100, item.getStockNum());		
+		
+		
+		
+	}
+		
+		
 }
