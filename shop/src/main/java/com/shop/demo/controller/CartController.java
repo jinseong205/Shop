@@ -30,7 +30,7 @@ public class CartController {
 
     private final CartService cartService;
 
-	@PostMapping(value = "/cart")
+	@PostMapping(value = "api/cart")
 	public ResponseEntity<?> cart(@RequestBody @Valid CartItemDto cartItemDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception{
 		
 	    if(bindingResult.hasErrors())
@@ -40,13 +40,13 @@ public class CartController {
 		return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/cart")
+	@GetMapping(value = "api/cart")
 	public ResponseEntity<?> cart(@AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception{
 		List<CartDetailDto> cartDetailList = cartService.getCartList(principalDetails.getUser());
 		return new ResponseEntity<List<?>>(cartDetailList, HttpStatus.OK);
 	}
 	
-	@PutMapping(value = "/cartItem/{cartItemId}")
+	@PutMapping(value = "api/cartItem/{cartItemId}")
 	public ResponseEntity<?> updateCartItem(@PathVariable Long cartItemId, int count, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
 		
 		if(count <= 0)
@@ -58,7 +58,7 @@ public class CartController {
 		return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);	
 	}
 	
-	@DeleteMapping(value = "/cartItem/{cartItemId}")
+	@DeleteMapping(value = "api/cartItem/{cartItemId}")
 	public ResponseEntity<?> deleteCartItem(@PathVariable Long cartItemId, int count, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
 		if(!cartService.validateCartItem(cartItemId, principalDetails.getUser()))
 			throw new Exception("삭제 권한이 없습니다.");
@@ -66,7 +66,7 @@ public class CartController {
 		return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);	
 	}
 	
-	@PostMapping(value="/cart/orders")
+	@PostMapping(value="api/cart/orders")
 	public ResponseEntity<?> orderCartItem(@RequestBody CartOrderDto cartOrderDto, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception{
 		
 		List<CartOrderDto> cartOrderDtoList = cartOrderDto.getCartOrderList();

@@ -56,7 +56,7 @@ public class OrderController {
 		return new ResponseEntity<Page<OrderHistDto>>(orderHistDtoList, HttpStatus.OK);
 	}
 
-	@PutMapping("/order/{orderId}")
+	@PutMapping("api/order/{orderId}")
 	public ResponseEntity<?> cnacelOrder (@PathVariable Long orderId, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception{
 		
 		if(orderService.validateOrder(orderId, principalDetails.getUser())) {
