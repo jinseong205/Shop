@@ -41,7 +41,7 @@ public class ItemController {
 	private final ItemService itemService;
 	private final ItemRepository itemRepository;
 	
-	@GetMapping(value = "/api/items")
+	@GetMapping(value = "api/items")
 	public ResponseEntity<?> itemMain(ItemSearchDto itemSearchDto, Optional<Integer> page){
 		
 		Pageable pegealbe = PageRequest.of(page.isPresent()? page.get(): 0,9);
@@ -86,7 +86,7 @@ public class ItemController {
 	    return new ResponseEntity<>(item , HttpStatus.OK);
 	}
 	
-	@GetMapping(value = {"/api/manager/items", "/api/manager/items/{page}"})
+	@GetMapping(value = {"api/manager/items", "api/manager/items/{page}"})
 	public ResponseEntity<?> itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, @AuthenticationPrincipal PrincipalDetails principalDetails){
 		
 		Pageable pegealbe = PageRequest.of(page.isPresent()? page.get(): 0,3);
