@@ -16,9 +16,9 @@ import com.shop.demo.entity.CartItem;
 import com.shop.demo.entity.Item;
 import com.shop.demo.entity.User;
 import com.shop.demo.repository.CartItemRepository;
-import com.shop.demo.repository.CartService;
 import com.shop.demo.repository.ItemRepository;
 import com.shop.demo.repository.UserRepository;
+import com.shop.demo.service.CartService;
 
 @SpringBootTest
 @Transactional

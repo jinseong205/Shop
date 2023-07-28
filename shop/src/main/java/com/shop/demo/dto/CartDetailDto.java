@@ -1,16 +1,16 @@
-package com.shop.demo.controller;
+package com.shop.demo.dto;
 
 import lombok.Data;
 
 @Data
-public class CartDetilDto {
+public class CartDetailDto {
 	private Long cartItemId;
 	private String itemName;
 	private int price;
 	private int count;
 	private String imgUrl;
 	
-	public CartDetilDto(Long cartItemId, String itemName, int price, int count, String imgUrl) {
+	public CartDetailDto(Long cartItemId, String itemName, int price, int count, String imgUrl) {
 		super();
 		this.cartItemId = cartItemId;
 		this.itemName = itemName;

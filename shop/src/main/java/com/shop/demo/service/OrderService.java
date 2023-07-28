@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,9 +81,25 @@ public class OrderService {
 		}
 		return true;
 	}
-	
+
 	public void cancelOrder(Long orderId) throws Exception {
 		Order order = orderRepository.findById(orderId).orElseThrow(() -> new Exception("해당 주문정보를 찾을 수 없습니다."));
 		order.cancelOrder();
+	}
+
+	public Long orders(List<OrderDto> orderDtoList, User user) throws Exception {
+		
+		List<OrderItem> orderItemList = new ArrayList();
+		for(OrderDto orderDto : orderDtoList) {
+			Item item = itemRepository.findById(orderDto.getItemId()).orElseThrow(() -> new Exception("해당 상품을 찾을 수 없습니다."));;
+			OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
+			orderItemList.add(orderItem);		
+		}
+		
+		Order order = Order.createOrder(user, orderItemList);
+		orderRepository.save(order);			
+		
+		
+		return order.getId();
 	}
 }

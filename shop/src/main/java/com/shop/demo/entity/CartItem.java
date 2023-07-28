@@ -17,7 +17,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name="CART_ITEM")
-public class CartItem {
+public class CartItem extends BaseEntity{
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="cart_item_id")
@@ -43,5 +43,9 @@ public class CartItem {
 	
 	public void addCount(int count) {
 		this.count += count;
+	}
+	
+	public void updateCount(int count) {
+		this.count = count;
 	}
 }
