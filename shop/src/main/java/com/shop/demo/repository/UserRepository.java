@@ -11,4 +11,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	//findBy규칙 ->Username 문법
 	//select * from user where username = (username)?
 	public User findByUsername(String username);		//Jpa query methods
+	
+	
 }

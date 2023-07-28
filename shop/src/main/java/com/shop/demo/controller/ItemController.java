@@ -86,8 +86,8 @@ public class ItemController {
 	    return new ResponseEntity<>(item , HttpStatus.OK);
 	}
 	
-	@GetMapping(value = {"api/manager/items", "api/manager/items/{page}"})
-	public ResponseEntity<?> itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, @AuthenticationPrincipal PrincipalDetails principalDetails){
+	@GetMapping(value = "api/manager/items")
+	public ResponseEntity<?> itemManage(ItemSearchDto itemSearchDto, Optional<Integer> page, @AuthenticationPrincipal PrincipalDetails principalDetails){
 		
 		Pageable pegealbe = PageRequest.of(page.isPresent()? page.get(): 0,3);
 		User user = principalDetails.getUser();

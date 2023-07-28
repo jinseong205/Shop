@@ -22,9 +22,12 @@ public class PrincipalDetails implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> authorities = new ArrayList<>();
+		
 		user.getRoleList().forEach(r->{
 				authorities.add(()->r);
 			});
+
+		
 		return authorities;
 	}
 	

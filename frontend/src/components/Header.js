@@ -107,7 +107,7 @@ function Header() {
               <div className="d-flex me-auto"></div>
               {userRoles.includes('ROLE_ADMIN') ? (
                 <div className="d-flex me-4">
-                  <Link className="nav-link" to="/itemSaveForm">
+                  <Link className="nav-link" to="/userMange">
                     회원관리
                   </Link>
                 </div>
@@ -124,8 +124,8 @@ function Header() {
                 <></>
               )}
               <div className="d-flex me-4">
-                <Link className="nav-link" onClick={logout}>
-                  마이페이지
+                <Link className="nav-link" to="/orderHist">
+                  내 주문
                 </Link>
               </div>
               <div className="d-flex me-4">

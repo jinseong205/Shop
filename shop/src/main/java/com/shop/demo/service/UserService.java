@@ -1,9 +1,9 @@
 package com.shop.demo.service;
 
-import javax.transaction.Transactional;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.demo.entity.User;
 import com.shop.demo.repository.UserRepository;
@@ -32,5 +32,13 @@ public class UserService {
 		}
 	}
 	
+	
+	@Transactional(readOnly = true)
+	public Page<User> getUsers(Pageable pageable ){
+		Page<User> users = userRepository.findAll(pageable);
+		for(User u : users) 
+			u.setPassword(null);
+		return users;
+	}
 	
 }
