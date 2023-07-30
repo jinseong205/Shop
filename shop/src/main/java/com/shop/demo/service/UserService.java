@@ -9,10 +9,12 @@ import com.shop.demo.entity.User;
 import com.shop.demo.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 	private final UserRepository userRepository;
 	//private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -34,11 +36,23 @@ public class UserService {
 	
 	
 	@Transactional(readOnly = true)
-	public Page<User> getUsers(Pageable pageable ){
+	public Page<User> getUsers(Pageable pageable){
+		
 		Page<User> users = userRepository.findAll(pageable);
 		for(User u : users) 
 			u.setPassword(null);
 		return users;
 	}
+	
+	@Transactional
+	public void updateUserRoles(User user) throws Exception{
+
+		User savedUser = userRepository.findById(user.getId()).orElseThrow(() -> new Exception("해당 회원을 찾을 수 없습니다."));
+		savedUser.setRoles(user.getRoles());
+		log.debug(user.getRoles());
+		userRepository.save(savedUser);
+		return;
+	}
+	
 	
 }

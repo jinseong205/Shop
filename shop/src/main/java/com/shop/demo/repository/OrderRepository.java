@@ -14,7 +14,7 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
 	@Query("select o from Order o " + "where o.user.id = :id " + "order by o.crtDt desc")
 	List<Order> findOrders(@Param("id") Long id, Pageable pageable);
 
-	@Query("select count(o) from Order o " + "where o.user.id = : id")
+	@Query("select count(o) from Order o " + "where o.user.id = :id")
 	Long countOrder(@Param("id") Long id);
 	
 }

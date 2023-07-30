@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import Header from '../../components/Header';
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ItemDetail = () => {
   const [item, setItem] = useState(null);
@@ -9,6 +10,7 @@ const ItemDetail = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [mainImage, setMainImage] = useState(null);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchItemDetail();
@@ -43,7 +45,7 @@ const ItemDetail = () => {
   };
 
   const handleImageClick = (imgUrl) => {
-    setMainImage(imgUrl); 
+    setMainImage(imgUrl);
   };
 
   const handleImageError = (event) => {
@@ -51,8 +53,38 @@ const ItemDetail = () => {
   };
 
   const order = () => {
-    // 주문 처리 로직 (React 기반으로 변경 필요)
-    // ...
+
+
+
+    const orderDto = {
+      itemId : item.id,
+      count : count
+    }
+    
+    console.log(orderDto);
+
+    fetch(`http://localhost:8080/api/order`, {
+      method: "POST",
+      headers: {
+        'Authorization': localStorage.getItem("token"),
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(orderDto)
+    })
+      .then(res => {
+        if (res.status === 200)navigate("/orderHist");
+        else return res.json();
+      })
+      .then(data => {
+        if (data != null) {
+          console.log(data);
+          alert(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('상품 주문에 실패하였습니다 \n', error);
+      });
+
   };
 
   const addCart = () => {
@@ -72,7 +104,7 @@ const ItemDetail = () => {
           <input type="hidden" id="itemId" value={item.id} />
 
           <div className="d-flex">
-            <div className="repImgDiv m-4" style={{ width: '300px', height  : '300px', textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
+            <div className="repImgDiv m-4" style={{ width: '300px', height: '300px', textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
               <img
                 src={"http://localhost:8080" + mainImage}
                 className="rounded repImg"
@@ -144,18 +176,18 @@ const ItemDetail = () => {
             </div>
           </div>
 
-          <br/>
+          <br />
           <div className="text-center my-3">
             {item.itemImgDtoList.map((itemImg, index) => (
               <button key={index} onClick={() => handleImageClick(itemImg.imgUrl)} style={{ cursor: 'pointer' }}>
-                <div style = {{width: "75px"}}>
-                <img
-                  src={"http://localhost:8080" + itemImg.imgUrl}
-                  className="rounded mgb-15 squareImage" // 여기서 squareImage 클래스를 추가해줍니다.
-                  height="75px"
-                  alt=""
-                  onError={handleImageError}
-                />
+                <div style={{ width: "75px" }}>
+                  <img
+                    src={"http://localhost:8080" + itemImg.imgUrl}
+                    className="rounded mgb-15 squareImage" // 여기서 squareImage 클래스를 추가해줍니다.
+                    height="75px"
+                    alt=""
+                    onError={handleImageError}
+                  />
                 </div>
               </button>
             ))}

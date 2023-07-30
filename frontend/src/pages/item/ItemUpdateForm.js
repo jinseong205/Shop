@@ -53,29 +53,20 @@ const ItemUpdateForm = () => {
 
     if (tempId) {
 
-
       if (file) {
         setItemFormDto(prevState => {
           var updatedItemImgIds = [...prevState.updateItemImgIds, tempId];
           var updatedItemImgIdsSet = new Set(updatedItemImgIds);
           var updatedItemImgIdsArray = [...updatedItemImgIdsSet];
 
-
           var deleteItemImgIdsArray = [...prevState.deleteItemImgIds];
 
           if (deleteItemImgIdsArray.includes(tempId)) {
-            console.log("hit");
             deleteItemImgIdsArray = deleteItemImgIdsArray.filter((element) => element !== tempId);
           }
 
-
           var updateItemImgDtoList = [...prevState.itemImgDtoList];
           updateItemImgDtoList[index - 1].oriImgName = file.name;
-
-
-          console.log("-----------------------");
-          console.log(updatedItemImgIdsArray);
-          console.log(deleteItemImgIdsArray);
 
           return {
             ...prevState,
@@ -94,16 +85,11 @@ const ItemUpdateForm = () => {
           var updatedItemImgIdsArray = [...prevState.updateItemImgIds];
 
           if (updatedItemImgIdsArray.includes(tempId)) {
-            console.log("hit");
             updatedItemImgIdsArray = updatedItemImgIdsArray.filter((element) => element !== tempId);
           }
 
           var updateItemImgDtoList = [...prevState.itemImgDtoList];
           updateItemImgDtoList[index - 1].oriImgName = "";
-
-          console.log("-----------------------");
-          console.log(updatedItemImgIdsArray);
-          console.log(deleteItemImgIdsArray);
 
           return {
             ...prevState,
@@ -128,10 +114,9 @@ const ItemUpdateForm = () => {
   };
 
 
-  const onFileDelete = (index) => {
+  const onFileDelete = (e, index) => {
 
     var tempId = document.getElementById('itemImgId' + index).value;
-    console.log("id >>" + tempId + "   index >>>" + index);
 
     setItemFormDto(prevState => {
       var updateItemImgDtoList = [...prevState.itemImgDtoList];
@@ -161,10 +146,6 @@ const ItemUpdateForm = () => {
         if (updatedItemImgIdsArray.includes(tempId)) {
           updatedItemImgIdsArray = updatedItemImgIdsArray.filter((element) => element !== tempId);
         }
-
-        console.log("-----------------------");
-        console.log(updatedItemImgIdsArray);
-        console.log(deleteItemImgIdsArray);
 
         return {
           ...prevState,
@@ -205,8 +186,6 @@ const ItemUpdateForm = () => {
           document.getElementById("itemImgName" + i).textContent = itemFormDto.itemImgDtoList[i - 1].oriImgName;
         }
       }
-
-      console.log(itemFormDto);
 
       const itemIds = document.getElementsByName('itemIds');
       itemIds.forEach((input, index) => {

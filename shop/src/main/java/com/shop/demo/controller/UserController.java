@@ -13,7 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,6 +65,21 @@ public class UserController {
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 
+
+	@PatchMapping("/api/user/roles")
+	public ResponseEntity<?> user( @RequestBody User user ,@AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
+		
+		if (!principalDetails.getUser().getRoleList().contains("ROLE_ADMIN")
+				&& !principalDetails.getUser().getRoleList().contains("ROLE_ADMIN")) {
+			throw new Exception("권한이 없습니다.");
+		}
+
+		log.debug(user.toString());
+		userService.updateUserRoles(user);
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+
+	
 	@GetMapping("/api/user")
 	public String user() {
 		return "user";

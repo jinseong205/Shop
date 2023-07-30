@@ -15,21 +15,17 @@ const ItemMain = () => {
 
   useEffect(() => {
     setItemSearchDto(location.state?.itemSearchDto || null);
-    console.log(">>>1");
-    console.log(location.state);
   }, [location.state]);
 
   useEffect(() => {
-    console.log(">>>2");
     setPage(0);
-    setLoading(true); // 로딩 상태를 true로 설정하여 첫 렌더링 시에 loadItems 함수 호출
+    setLoading(true); // 로딩 상태를 true로 설정하여 첫 렌더링 시에 getItems 함수 호출
   }, [itemSearchDto]);
 
   useEffect(() => {
-    console.log(">>>3");
     if (loading) {
-      loadItems(); // 로딩 상태가 true일 때에만 loadItems 함수 호출
-      setLoading(false); // loadItems 호출 후 로딩 상태를 false로 변경
+      getItems(); // 로딩 상태가 true일 때에만 getItems 함수 호출
+      setLoading(false); // getItems 호출 후 로딩 상태를 false로 변경
     }
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -37,8 +33,7 @@ const ItemMain = () => {
     };
   }, [loading]);
 
-  const loadItems = async () => {
-    console.log("load?");
+  const getItems = () => {
 
     var queryString;
     if (itemSearchDto != null) {
@@ -51,26 +46,33 @@ const ItemMain = () => {
         .join('&');
     }
 
-    try {
-      const response = await fetch(`http://localhost:8080/api/items?page=${page}&${queryString}`);
-      const data = await response.json();
-
-      console.log(`http://localhost:8080/api/items?page=${page}&${queryString}`);
-      console.log(data.items.content);
-
-      if (page === 0) {
-        setItems(data.items.content);
-      } else {
-        setItems((prevItems) => [...prevItems, ...data.items.content]);
+    fetch(`http://localhost:8080/api/items?page=${page}&${queryString}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
       }
-    } catch (error) {
-      console.error('Error fetching items:', error);
-    }
-  };
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if (data.items != null) {
+          if (page === 0)
+            setItems(data.items.content);
+          else
+            setItems((prevItems) => [...prevItems, ...data.items.content]);
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('상품 정보 조회에 실패하였습니다 \n', error);
+      });
 
+
+  };
   useEffect(() => {
     if (page > 0) {
-      loadItems();
+      getItems();
     }
   }, [page]);
 
