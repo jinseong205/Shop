@@ -30,7 +30,14 @@ import lombok.RequiredArgsConstructor;
 public class CartController {
 
     private final CartService cartService;
-
+	
+    @GetMapping(value = "api/cart")
+	public ResponseEntity<?> cart(@AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception{
+		List<CartDetailDto> cartDetailList = cartService.getCartList(principalDetails.getUser());
+		return new ResponseEntity<List<?>>(cartDetailList, HttpStatus.OK);
+	}
+	
+    
 	@PostMapping(value = "api/cart")
 	public ResponseEntity<?> cart(@RequestBody @Valid CartItemDto cartItemDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception{
 		
@@ -41,30 +48,25 @@ public class CartController {
 		return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "api/cart")
-	public ResponseEntity<?> cart(@AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception{
-		List<CartDetailDto> cartDetailList = cartService.getCartList(principalDetails.getUser());
-		return new ResponseEntity<List<?>>(cartDetailList, HttpStatus.OK);
-	}
-	
-	@PatchMapping(value = "api/cartItem/{cartItemId}")
-	public ResponseEntity<?> updateCartItem(@PathVariable Long cartItemId, int count, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
+
+	@PatchMapping(value = "api/cartItem/{id}")
+	public ResponseEntity<?> updateCartItem(@PathVariable Long id, int count, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
 		
 		if(count <= 0)
 			throw new Exception("최소 1개 이상 담아주세요.");
-		else if(!cartService.validateCartItem(cartItemId, principalDetails.getUser()))
+		else if(!cartService.validateCartItem(id, principalDetails.getUser()))
 			throw new Exception("수정 권한이 없습니다.");
 			
-		cartService.updateCartItem(cartItemId, count);
-		return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);	
+		cartService.updateCartItem(id, count);
+		return new ResponseEntity<Long>(id, HttpStatus.OK);	
 	}
 	
-	@DeleteMapping(value = "api/cartItem/{cartItemId}")
-	public ResponseEntity<?> deleteCartItem(@PathVariable Long cartItemId, int count, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
-		if(!cartService.validateCartItem(cartItemId, principalDetails.getUser()))
+	@DeleteMapping(value = "api/cartItem/{id}")
+	public ResponseEntity<?> deleteCartItem(@PathVariable Long id, int count, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
+		if(!cartService.validateCartItem(id, principalDetails.getUser()))
 			throw new Exception("삭제 권한이 없습니다.");
-		cartService.deleteCartItem(cartItemId);
-		return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);	
+		cartService.deleteCartItem(id);
+		return new ResponseEntity<Long>(id, HttpStatus.OK);	
 	}
 	
 	@PostMapping(value="api/cart/orders")

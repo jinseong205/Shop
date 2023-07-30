@@ -34,6 +34,19 @@ public class OrderController {
 
 	private final OrderService orderService;
 
+	@GetMapping(value = "api/orders")
+	public ResponseEntity<?> orderHist(Optional<Integer> page,
+			@AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+		log.debug(principalDetails.getUser().toString());
+		
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 4);
+
+		Page<OrderHistDto> orderHistDtoList = orderService.getOrderList(principalDetails.getUser(), pageable);
+
+		return new ResponseEntity<Page<OrderHistDto>>(orderHistDtoList, HttpStatus.OK);
+	}
+	
 	@PostMapping(value = "api/order")
 	public ResponseEntity<?> order(@RequestBody @Valid OrderDto orderDto, BindingResult bindingResult,
 			@AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
@@ -48,18 +61,7 @@ public class OrderController {
 		return new ResponseEntity<Long>(orderId, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "api/orders")
-	public ResponseEntity<?> orderHist(Optional<Integer> page,
-			@AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-		log.debug(principalDetails.getUser().toString());
-		
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 4);
-
-		Page<OrderHistDto> orderHistDtoList = orderService.getOrderList(principalDetails.getUser(), pageable);
-
-		return new ResponseEntity<Page<OrderHistDto>>(orderHistDtoList, HttpStatus.OK);
-	}
 
 	@PatchMapping("api/order/{orderId}")
 	public ResponseEntity<?> cnacelOrder (@PathVariable Long orderId, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception{
