@@ -6,7 +6,7 @@ function OrderItem({ order }) {
   return (
     <div className="card d-flex">
       {order.orderItemDtoList.map((orderItem) => (
-        <div key={orderItem.itemId} className="d-flex mb-3">
+        <div key={orderItem.itemId} className="d-flex m-1">
           <div className="repImgDiv m-1">
             <img
               src={"http://localhost:8080" + orderItem.imgUrl}
@@ -79,11 +79,11 @@ function OrderHist() {
           <br />
           {orders.map((order) => (
             <div key={order.orderId}>
-              <div className="d-flex mb-3 align-self-center">
+              <div className="d-flex m-1 align-self-center">
                 <h4>
                   {order.orderDate} 주문
                 </h4>
-                <div className="ml-3">
+                <div className="mx-3">
                   {order.orderStatus === 'ORDER' ? (
                     <button
                       type="button"
