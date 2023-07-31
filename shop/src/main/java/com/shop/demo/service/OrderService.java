@@ -23,10 +23,12 @@ import com.shop.demo.repository.OrderRepository;
 import com.shop.demo.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
 	private final ItemRepository itemRepository;
@@ -77,6 +79,7 @@ public class OrderService {
 		User savedUser = order.getUser();
 
 		if (!user.getUsername().equals(savedUser.getUsername())) {
+			log.debug(user.getUsername() + " " + savedUser.getUsername());
 			return false;
 		}
 		return true;

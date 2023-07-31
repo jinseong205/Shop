@@ -20,6 +20,30 @@ const ItemSaveForm = () => {
     itemImgIds: []
   });
 
+
+  useEffect(() => {
+    retrieveItem();
+  }, [id]);
+
+  const retrieveItem = () => {
+    if (id) {
+      // id 값이 존재하는 경우, 해당 id에 해당하는 상품 정보를 가져온다.
+      fetch(`http://localhost:8080/api/item/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.id != null) {
+            //setItem(data); // 가져온 상품 정보로 item 상태를 업데이트한다.
+          } else {
+            alert(data.message);
+          }
+        })
+        .catch(err => {
+          alert("상품 정보를 가져오는 중 오류가 발생했습니다. \n" + err);
+        });
+    }
+  }
+
+
   const changeItemValue = (e) => {
     let value = e.target.value;
 
@@ -54,9 +78,9 @@ const ItemSaveForm = () => {
       }
     };
 
-    if(file){
+    if (file) {
       reader.readAsDataURL(file);
-    }else{
+    } else {
       const itemImgName = document.getElementById(`itemImgName${index}`);
       itemImgName.textContent = "";
     }
@@ -105,33 +129,16 @@ const ItemSaveForm = () => {
       });
     }
 
-        
+
     document.getElementById(`itemImgFile${index}`).value = "";
     document.getElementById(`itemImgName${index}`).textContent = "";
 
   };
 
 
-  useEffect(() => {
 
-    if (id) {
-      // id 값이 존재하는 경우, 해당 id에 해당하는 상품 정보를 가져온다.
-      fetch(`http://localhost:8080/api/item/${id}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.id != null) {
-            //setItem(data); // 가져온 상품 정보로 item 상태를 업데이트한다.
-          } else {
-            alert(data.message);
-          }
-        })
-        .catch(err => {
-          alert("상품 정보를 가져오는 중 오류가 발생했습니다. \n" + err);
-        });
-    }
-  }, [id]);
 
-  const handleItemRegister = (e) => {
+  const createItem = (e) => {
     e.preventDefault();
     const formData = new FormData();
 
@@ -183,7 +190,7 @@ const ItemSaveForm = () => {
           <input type="hidden" name="itemImgId" id={`itemImgId${i}`} />
           <Row className="align-items-center">
             <Col xs="auto">
-              <label className="input-group-text file-label" htmlFor={`itemImgFile${i}`} style={{padding : "3px" , fontSize :"10px"}}>
+              <label className="input-group-text file-label" htmlFor={`itemImgFile${i}`} style={{ padding: "3px", fontSize: "10px" }}>
                 이미지 첨부
                 <input
                   type="file"
@@ -316,7 +323,7 @@ const ItemSaveForm = () => {
             <br />
 
             <div className="form-group mt-1">
-              <button className="btn btn-secondary btn-block" onClick={handleItemRegister}>상품 등록</button>
+              <button className="btn btn-secondary btn-block" onClick={createItem}>상품 등록</button>
             </div>
 
 

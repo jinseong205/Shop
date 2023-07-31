@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class ItemMainDto {
-	
+	/* 상품 조회 전용 DTO (res) */
 	private Long id;
 	
 	private String itemName;

@@ -9,8 +9,8 @@ import ItemMain from './pages/item/ItemMain';
 import ItemDetail from './pages/item/ItemDetail';
 import ItemManage from './pages/item/ItemManage';
 
-import OrderHist from './pages/orders/OrderHist';
-
+import OrderMain from './pages/orders/OrderMain';
+import CartMain from './pages/cart/CartMain';
 
 
 
@@ -30,8 +30,10 @@ function App() {
         <Route path="/itemUpdateForm/:id" element={<ItemUpdateForm/>} />
         <Route path="/itemDetail/:id" element={<ItemDetail/>} />
 
-        <Route path="/orderHist" element={<OrderHist />} />
+        <Route path="/orderMain" element={<OrderMain />} />
         
+        <Route path="/cartMain" element={<CartMain />} />
+
 
       </Routes>
     </>

@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class ItemImgDto {
-
+	/* 상품 생성,수정 DTO (req/res)*/
 	private Long Id;
 	
 	private String imgName;

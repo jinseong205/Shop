@@ -24,7 +24,7 @@ const ItemMain = () => {
 
   useEffect(() => {
     if (loading) {
-      getItems(); // 로딩 상태가 true일 때에만 getItems 함수 호출
+      retrieveItems(); // 로딩 상태가 true일 때에만 getItems 함수 호출
       setLoading(false); // getItems 호출 후 로딩 상태를 false로 변경
     }
     window.addEventListener('scroll', handleScroll);
@@ -33,7 +33,7 @@ const ItemMain = () => {
     };
   }, [loading]);
 
-  const getItems = () => {
+  const retrieveItems = () => {
 
     var queryString;
     if (itemSearchDto != null) {
@@ -72,7 +72,7 @@ const ItemMain = () => {
   };
   useEffect(() => {
     if (page > 0) {
-      getItems();
+      retrieveItems();
     }
   }, [page]);
 

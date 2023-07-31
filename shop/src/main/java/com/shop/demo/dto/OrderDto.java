@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class OrderDto{
-
+	/* 주문 생성 전용 DTO (req) */
 	@NotNull(message = "상품 아이디는 필수 입력 값입니다.")
 	private Long itemId;
 	

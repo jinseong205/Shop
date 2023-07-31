@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class CartDetailDto {
+	/* 장바구니 조회 전용 DTO (res) */
 	private Long cartItemId;
 	private String itemName;
 	private int price;

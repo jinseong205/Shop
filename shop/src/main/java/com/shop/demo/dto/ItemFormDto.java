@@ -15,6 +15,7 @@ import lombok.Data;
 
 @Data
 public class ItemFormDto {
+	/* 상품 생성, 조회 전용 DTO (req/res) */
 	private Long id;
 	
 	@NotBlank(message = "상품명을 입력해주세요.")

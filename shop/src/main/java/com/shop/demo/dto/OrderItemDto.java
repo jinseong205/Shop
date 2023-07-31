@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class OrderItemDto {
-
+	/* 상품 조회 전용 DTO (res) */
 	public OrderItemDto(OrderItem orderItem, String imgUrl) {
 		this.itemName = orderItem.getItem().getItemName();
 		this.count = orderItem.getCount();

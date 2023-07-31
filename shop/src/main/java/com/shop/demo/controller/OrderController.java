@@ -66,7 +66,7 @@ public class OrderController {
 	@PatchMapping("api/order/{orderId}")
 	public ResponseEntity<?> cnacelOrder (@PathVariable Long orderId, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception{
 		
-		if(orderService.validateOrder(orderId, principalDetails.getUser())) {
+		if(!orderService.validateOrder(orderId, principalDetails.getUser())) {
 			throw new Exception("주문 취소 권한이 없습니다.");
 		}
 		

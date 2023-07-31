@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class ItemSearchDto {
-
+	/* 상품 검색 조회 전용 DTO (req) */ 
 	private String searchDateType;
 	
 	private ItemSellStatus searchSellStatus;	

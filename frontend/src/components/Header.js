@@ -37,7 +37,7 @@ function Header() {
     setUserRoles(null);
   };
 
-  const handleItemSearch = () => {
+  const itemSearch = () => {
     const tempQuery = document.getElementById('searchBy').value;
     console.log(tempQuery);
     setItemSearchDto((prevState) => {
@@ -60,9 +60,9 @@ function Header() {
           <Navbar.Toggle className="bg-light" aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="container-fluid my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
-              <div className="d-flex  me-auto" style={{ minWidth: '40%' }} onSubmit={handleItemSearch}>
+              <div className="d-flex  me-auto" style={{ minWidth: '40%' }} onSubmit={itemSearch}>
                 <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" id="searchBy" />
-                <Button className="text-nowrap" variant="outline-light" onClick={handleItemSearch}  >
+                <Button className="text-nowrap" variant="outline-light" onClick={itemSearch}  >
                   검색
                 </Button>
               </div>
@@ -115,17 +115,31 @@ function Header() {
                 <></>
               )}
               {userRoles.includes('ROLE_MANAGER') || userRoles.includes('ROLE_ADMIN') ? (
-                <div className="d-flex me-4">
-                  <Link className="nav-link" to="/itemSaveForm">
-                    상품등록
-                  </Link>
-                </div>
+                <>
+                  <div className="d-flex me-4">
+                    <Link className="nav-link" to="/itemSaveForm">
+                      상품등록
+                    </Link>
+                  </div>
+                  <div className="d-flex me-4">
+                    <Link className="nav-link" to="/itemManage">
+                      상품관리
+                    </Link>
+                  </div>
+                </>
+
               ) : (
                 <></>
               )}
+
               <div className="d-flex me-4">
-                <Link className="nav-link" to="/orderHist">
+                <Link className="nav-link" to="/orderMain">
                   내 주문
+                </Link>
+              </div>
+              <div className="d-flex me-4">
+                <Link className="nav-link" to="/cartMain">
+                  장바구니
                 </Link>
               </div>
               <div className="d-flex me-4">

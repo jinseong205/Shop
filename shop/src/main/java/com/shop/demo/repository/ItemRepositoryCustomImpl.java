@@ -59,8 +59,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 		if (searchBy != null) {
 			if (searchBy.equals("itemName"))
 				return QItem.item.itemName.like("%" + searchQuery + "%");
-			else if (searchBy.equals("createBy"))
-				return QItem.item.itemName.like("%" + searchQuery + "%");
+			else if (searchBy.equals("createdBy"))
+				return QItem.item.crtName.like("%" + searchQuery + "%");
 		}
 		return null;
 	}
@@ -84,7 +84,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 		long total;
 
 		if (user.getRoles().contains("ROLE_ADMIN")) {
-			results = queryFactory.select(QItem.item)
+			results = queryFactory.selectFrom(QItem.item)
 					.where(crtDtsAfter(itemSearchDto.getSearchDateType()),
 							searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
 							searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()))
@@ -96,7 +96,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 
 			return new PageImpl<>(content, pageable, total);
 		} else {
-			results = queryFactory.select(QItem.item)
+			results = queryFactory.selectFrom(QItem.item)
 					.where(crtDtsAfter(itemSearchDto.getSearchDateType()),
 							searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
 							searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()),

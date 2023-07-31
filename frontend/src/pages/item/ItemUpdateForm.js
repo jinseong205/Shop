@@ -23,6 +23,10 @@ const ItemUpdateForm = () => {
     deleteItemImgIds: [] // 빈 배열로 초기화
   });
 
+  useEffect(() => {
+    retrieveItem();
+  }, [id]);
+
   const changeItemValue = (e) => {
     let value = e.target.value;
 
@@ -161,7 +165,7 @@ const ItemUpdateForm = () => {
 
   };
 
-  useEffect(() => {
+  const retrieveItem = () => {
     if (id) {
       fetch(`http://localhost:8080/api/item/${id}`)
         .then(res => res.json())
@@ -176,7 +180,9 @@ const ItemUpdateForm = () => {
           alert("상품 정보를 가져오는 중 오류가 발생했습니다. \n" + err);
         });
     }
-  }, [id]);
+  }
+
+
 
   useEffect(() => {
     if (id) {
@@ -202,7 +208,7 @@ const ItemUpdateForm = () => {
     }
   }, [id, itemFormDto]);
 
-  const handleItemUpdate = (e) => {
+  const updateItem = (e) => {
     e.preventDefault();
     const formData = new FormData();
 
@@ -375,7 +381,7 @@ const ItemUpdateForm = () => {
             <br />
 
             <div className="form-group mt-1">
-              <button className="btn btn-secondary btn-block" onClick={handleItemUpdate}>상품 수정</button>
+              <button className="btn btn-secondary btn-block" onClick={updateItem}>상품 수정</button>
             </div>
           </form>
         </div>

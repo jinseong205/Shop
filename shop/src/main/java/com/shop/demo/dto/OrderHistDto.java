@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 public class OrderHistDto {
-	
+	/* 상품 조회 전용 DTO (res) */
 	public OrderHistDto(Order order) {
 		this.orderId = order.getId();
 		this.orderDate = order.getCrtDt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));

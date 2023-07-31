@@ -4,15 +4,18 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 const UserManage = () => {
   const [users, setUsers] = useState([]);
+  
+  const [orders, setOrders] = useState([]);
+  const [page, setPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    getUsers();
-  }, [currentPage]);
+    retrieveUsers();
+  }, [page]);
 
   // 사용자 목록을 서버에서 가져오는 함수
-  const getUsers = () => {
-      fetch(`http://localhost:8080/api/users?page=${currentPage}`, {
+  const retrieveUsers = () => {
+      fetch(`http://localhost:8080/api/users?page=${page}`, {
         method: "GET",
         headers: {
           'Authorization': localStorage.getItem("token"),
@@ -60,7 +63,7 @@ const UserManage = () => {
       .then((res) => {
         if (res.status === 200) {
           alert("권한변경이 완료되었습니다.");
-          getUsers();
+          retrieveUsers();
         } else {
           return res.json();
         }
@@ -76,10 +79,10 @@ const UserManage = () => {
 
   };
 
-  // 페이지 변경 시 호출되는 함수
   const handlePageChange = (page) => {
-    setCurrentPage(page);
+    setPage(page);
   };
+
 
   return (
     <>
@@ -110,17 +113,17 @@ const UserManage = () => {
                       <td>{user.roles}</td>
                       <td>
                         {(
-                          <button onClick={() => updateUserRole(user.id, 'USER')}>
+                          <button onClick={() => updateUserRole(user.id, 'USER')} className='btn btn-secondary'>
                             일반
                           </button>
                         )}
                         {(
-                          <button onClick={() => updateUserRole(user.id, 'MANAGER')}>
+                          <button onClick={() => updateUserRole(user.id, 'MANAGER')} className='btn btn-secondary mx-1'>
                             매니저
                           </button>
                         )}
                         {(
-                          <button onClick={() => updateUserRole(user.id, 'ADMIN')}>
+                          <button onClick={() => updateUserRole(user.id, 'ADMIN')} className='btn btn-secondary'>
                             관리자
                           </button>
                         )}
@@ -132,17 +135,49 @@ const UserManage = () => {
               </table>
             </Col>
           </Row>
+        {/* 페이지네이션 */}
+        <div className="d-flex justify-content-center">
           <div>
-            <ul>
-              {Array.from({ length: users.totalPages }).map((_, index) => (
-                <li key={index}>
-                  <button onClick={() => handlePageChange(index)}>
+            <ul className="pagination justify-content-center">
+              <li className={`page-item ${page === 0 ? 'disabled' : ''}`}>
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(page - 1)}
+                  disabled={page === 0}
+                >
+                  Previous
+                </button>
+              </li>
+              {Array.from({ length: orders.totalPages }).map((_, index) => (
+                <li
+                  key={index}
+                  className={`page-item ${page === index ? 'active' : ''}`}
+                >
+                  <button
+                    className="page-link"
+                    onClick={() => handlePageChange(index)}
+                  >
                     {index + 1}
                   </button>
                 </li>
               ))}
+
+              <li
+                className={`page-item ${page + 1 >= orders.totalPages ? 'disabled' : ''
+                  }`}
+              >
+
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(page + 1)}
+                  disabled={page + 1 >= orders.totalPages}
+                >
+                  Next
+                </button>
+              </li>
             </ul>
           </div>
+        </div>
         </div>
       </Container>
     </>

@@ -13,14 +13,14 @@ const ItemDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchItemDetail();
+    retrieveItemDetail();
   }, []);
 
   useEffect(() => {
     calculateTotalPrice();
   }, [count]);
 
-  const fetchItemDetail = async () => {
+  const retrieveItemDetail = async () => {
     try {
       const response = await fetch(`http://localhost:8080/api/item/${id}`);
       const data = await response.json();
@@ -52,16 +52,11 @@ const ItemDetail = () => {
     event.target.src = 'http://localhost:8080/no-image.png';
   };
 
-  const order = () => {
-
-
-
+  const createOrder = () => {
     const orderDto = {
       itemId : item.id,
       count : count
     }
-    
-    console.log(orderDto);
 
     fetch(`http://localhost:8080/api/order`, {
       method: "POST",
@@ -72,8 +67,8 @@ const ItemDetail = () => {
       body: JSON.stringify(orderDto)
     })
       .then(res => {
-        if (res.status === 200)navigate("/orderHist");
-        else return res.json();
+        if (res.status === 200){navigate("/orderMain");}
+        else {return res.json()};
       })
       .then(data => {
         if (data != null) {
@@ -87,9 +82,35 @@ const ItemDetail = () => {
 
   };
 
-  const addCart = () => {
-    // 장바구니 추가 처리 로직 (React 기반으로 변경 필요)
-    // ...
+  const createCart = () => {
+    
+    const cartItemDto = {
+      itemId : item.id,
+      count : count
+    }
+    
+    console.log(cartItemDto);
+    fetch(`http://localhost:8080/api/cart`, {
+      method: "POST",
+      headers: {
+        'Authorization': localStorage.getItem("token"),
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(cartItemDto)
+    })
+      .then(res => {
+        if (res.status === 200){navigate("/cartMain");}
+        else {return res.json();}
+      })
+      .then(data => {
+        if (data != null) {
+          console.log(data);
+          alert(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('상품 주문에 실패하였습니다 \n', error);
+      });
   };
 
   if (!item) {
@@ -155,14 +176,14 @@ const ItemDetail = () => {
                     <button
                       type="button"
                       className="btn btn-light border border-primary btn-lg"
-                      onClick={addCart}
+                      onClick= {createCart}
                     >
                       장바구니 담기
                     </button>
                     <button
                       type="button"
                       className="btn btn-primary btn-lg"
-                      onClick={order}
+                      onClick={createOrder}
                     >
                       주문하기
                     </button>

@@ -22,7 +22,7 @@ const JoinForm = () => {
         });
     }
 
-    const handleSignup = (e) => {
+    const createUser = (e) => {
         e.preventDefault();
 
         fetch("http://localhost:8080/api/join", {
@@ -59,7 +59,7 @@ const JoinForm = () => {
                 <div className="col-md-12">
                     <h2>회원가입</h2>
                     <br />
-                    <form onSubmit={handleSignup}>
+                    <form onSubmit={createUser}>
                         <div className="form-group">
                             <Row className='mb-1'>
                                 <Col xs="1">

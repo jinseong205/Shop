@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import Header from '../../components/Header';
+import { useNavigate } from "react-router-dom";
+
 
 function OrderItem({ order }) {
   return (
@@ -27,26 +29,46 @@ function OrderItem({ order }) {
   );
 }
 
-function OrderHist() {
+function OrderMain() {
   const [orders, setOrders] = useState([]);
   const [page, setPage] = useState(0);
 
+  const navigate = useNavigate();
+  
   const cancelOrder = (orderId) => {
-    // Your AJAX request code goes here
-    // Make sure to use fetch or any AJAX library compatible with React
-    // For example, you can use the `axios` library for AJAX requests
+
+    console.log(`http://localhost:8080/api/order/${orderId}`);
+    fetch(`http://localhost:8080/api/order/${orderId}`, {
+      method: "PATCH",
+      headers: {
+        'Authorization': localStorage.getItem("token"),
+        "Content-Type": "application/json; charset=utf-8"
+      },
+    })
+      .then(res => {
+        if (res.status === 200) retrieveOrder();
+        else return res.json();
+      })
+      .then(data => {
+        if (data != null) {
+          console.log(data);
+          alert(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('주문 취소에 실패하였습니다 \n', error);
+      });
   };
 
   const handlePageChange = (page) => {
     setPage(page);
-    // You can also update the data here if needed
   };
 
   useEffect(() => {
-    getOrder();
+    retrieveOrder();
   }, [page]);
 
-  const getOrder = () => {
+  const retrieveOrder = () => {
     console.log(`http://localhost:8080/api/orders?page=${page}`)
 
     fetch(`http://localhost:8080/api/orders?page=${page}`, {
@@ -147,4 +169,4 @@ function OrderHist() {
   );
 }
 
-export default OrderHist;
+export default OrderMain;
