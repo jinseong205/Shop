@@ -89,7 +89,6 @@ function ItemManage() {
       <br />
       <Container>
 
-        {/* 테이블 */}
         <Table >
           <thead>
             <tr>

@@ -81,24 +81,18 @@ public class CartService {
 		return false;
 	}
 
-	@Transactional(readOnly = true)
 	public void updateCartItem(Long cartItemId, int count) throws Exception {
-
 		CartItem cartItem = cartItemRepository.findById(cartItemId)
 				.orElseThrow(() -> new Exception("장바구니 정보를 찾을 수 없습니다. " + cartItemId));
 		cartItem.updateCount(count);
 		return;
-
 	}
 
-	@Transactional(readOnly = true)
 	public void deleteCartItem(Long cartItemId) throws Exception {
-
 		CartItem cartItem = cartItemRepository.findById(cartItemId)
 				.orElseThrow(() -> new Exception("장바구니 정보를 찾을 수 없습니다." + cartItemId));
 		cartItemRepository.delete(cartItem);
 		return;
-
 	}
 
 	public Long orderCartItem(List<CartOrderDto> cartOrderDtoList, User user) throws Exception {

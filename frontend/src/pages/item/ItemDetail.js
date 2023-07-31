@@ -99,8 +99,8 @@ const ItemDetail = () => {
       body: JSON.stringify(cartItemDto)
     })
       .then(res => {
-        if (res.status === 200){navigate("/cartMain");}
-        else {return res.json();}
+        if (res.status === 200)navigate("/cartMain");
+        else return res.json();
       })
       .then(data => {
         if (data != null) {

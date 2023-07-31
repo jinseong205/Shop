@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.shop.demo.config.auth.PrincipalDetails;
@@ -24,9 +23,11 @@ import com.shop.demo.dto.CartOrderDto;
 import com.shop.demo.service.CartService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class CartController {
 
     private final CartService cartService;
@@ -62,7 +63,7 @@ public class CartController {
 	}
 	
 	@DeleteMapping(value = "api/cartItem/{id}")
-	public ResponseEntity<?> deleteCartItem(@PathVariable Long id, int count, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
+	public ResponseEntity<?> deleteCartItem(@PathVariable Long id, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception {
 		if(!cartService.validateCartItem(id, principalDetails.getUser()))
 			throw new Exception("삭제 권한이 없습니다.");
 		cartService.deleteCartItem(id);
@@ -71,6 +72,10 @@ public class CartController {
 	
 	@PostMapping(value="api/cart/orders")
 	public ResponseEntity<?> orderCartItem(@RequestBody CartOrderDto cartOrderDto, @AuthenticationPrincipal PrincipalDetails principalDetails) throws Exception{
+		
+		log.debug(cartOrderDto.toString());
+		log.debug(cartOrderDto.getCartOrderList().toString());
+
 		
 		List<CartOrderDto> cartOrderDtoList = cartOrderDto.getCartOrderList();
 		

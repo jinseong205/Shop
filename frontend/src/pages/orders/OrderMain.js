@@ -98,9 +98,9 @@ function OrderMain() {
       <Container>
         <div className="content-mg">
           <h1 className="mb-4">구매 이력</h1>
-          <br />
           {orders.map((order) => (
             <div key={order.orderId}>
+              <br />
               <div className="d-flex m-1 align-self-center">
                 <h4>
                   {order.orderDate} 주문
