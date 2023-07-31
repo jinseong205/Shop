@@ -360,7 +360,7 @@ const ItemUpdateForm = () => {
                   editor.editing.view.change((writer) => {
                     writer.setStyle(
                       "height",
-                      "600px",
+                      "250px",
                       editor.editing.view.document.getRoot()
                     );
                   });
