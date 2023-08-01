@@ -1,9 +1,9 @@
-# JShop #
+# JShop - 개인 프로젝트 #
 
 
 ### 운영환경 ###
 
-- Orcale Cloud Servcie - Instance  (Ubuntu)
+- Orcale Cloud Servcie - Instance  (Ubuntu)     --> 예정 
 - Orcale Cloud Servcie - ADW  (Oracle Database)
 
 ---
