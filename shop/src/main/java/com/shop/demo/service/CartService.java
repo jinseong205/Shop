@@ -103,7 +103,7 @@ public class CartService {
 					.orElseThrow(() -> new Exception("장바구니 정보를 찾을 수 없습니다."));
 
 			OrderDto orderDto = new OrderDto();
-			orderDto.setItemId(cartItem.getId());
+			orderDto.setItemId(cartItem.getItem().getId());
 			orderDto.setCount(cartItem.getCount());
 			orderDtoList.add(orderDto);	
 			}

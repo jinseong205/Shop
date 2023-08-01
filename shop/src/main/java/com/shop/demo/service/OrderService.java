@@ -92,6 +92,8 @@ public class OrderService {
 
 	public Long orders(List<OrderDto> orderDtoList, User user) throws Exception {
 		
+		log.debug(orderDtoList.toString());
+		
 		List<OrderItem> orderItemList = new ArrayList();
 		for(OrderDto orderDto : orderDtoList) {
 			Item item = itemRepository.findById(orderDto.getItemId()).orElseThrow(() -> new Exception("해당 상품을 찾을 수 없습니다."));;

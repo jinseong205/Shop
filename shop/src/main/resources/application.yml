@@ -25,7 +25,7 @@ spring:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@db202201212242_high?TNS_ADMIN=C:/key/Wallet_DB202201212242
     username: demo
-    password: 00780078Jsjs^^
+    password: -
   mvc:
     view:
       prefix: /templates/
