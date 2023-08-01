@@ -3,8 +3,8 @@
 
 ### 운영환경 ###
 
-- Orcale Cloud Servcie - Instance  (Ubuntu)     --> 예정 
-- Orcale Cloud Servcie - ADW  (Oracle Database)
+- Orcale Cloud Servcie - Instance > Ubuntu     (예정)      
+- Orcale Cloud Servcie - ADW > Oracle Database
 
 ---
 
