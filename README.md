@@ -1,12 +1,14 @@
 # JShop #
 
+
 ###운영 환경###
 
 - Orcale Cloud Servcie - Instance  (Ubuntu)
 - Orcale Cloud Servcie - ADW  (Oracle Database)
 
 
-###**적용 기술**###
+
+###적용 기술###
 
 >공통
 
@@ -25,7 +27,8 @@
 - CK Editor 를 이용한 컨텐츠 업로드
 
 
-###**구현 API**###
+
+###구현 API###
 
 >계정
 
