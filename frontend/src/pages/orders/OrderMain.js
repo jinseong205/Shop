@@ -97,7 +97,7 @@ function OrderMain() {
       <Header />
       <Container>
         <div className="content-mg">
-          <h1 className="mb-4">구매 이력</h1>
+          <h1 className="mb-4">주문이력</h1>
           {orders.map((order) => (
             <div key={order.orderId}>
               <br />

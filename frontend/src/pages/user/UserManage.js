@@ -90,7 +90,7 @@ const UserManage = () => {
       <br />
       <Container>
         <div>
-          <h2>사용자 관리</h2>
+          <h2>회원관리</h2>
           <br />
           <Row className="justify-content-center">
             <Col xs={10}>

@@ -42,9 +42,13 @@ const CartMain = () => {
 
   const updateCartItemCount = (event, cartItemId) => {
 
-    const count = parseInt(event.target.value, 10);
 
-
+    var count = parseInt(event.target.value, 10);
+    
+    if(isNaN(count)){
+      count = 0;
+    }
+      
     fetch(`http://localhost:8080/api/cartItem/${cartItemId}?count=${count}`, {
       method: "PATCH",
       headers: {
