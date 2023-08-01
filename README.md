@@ -1,15 +1,14 @@
 # JShop #
 
 
-###운영 환경###
+### 운영환경 ###
 
 - Orcale Cloud Servcie - Instance  (Ubuntu)
 - Orcale Cloud Servcie - ADW  (Oracle Database)
 
 
 
-###적용 기술###
-
+### 적용 기술 ###
 >공통
 
 - REST API
@@ -28,7 +27,7 @@
 
 
 
-###구현 API###
+### 구현 API ###
 
 >계정
 
