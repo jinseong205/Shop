@@ -44,8 +44,8 @@ public class ItemController {
 	@GetMapping(value = "api/items")
 	public ResponseEntity<?> itemMain(ItemSearchDto itemSearchDto, Optional<Integer> page){
 		
-		Pageable pegealbe = PageRequest.of(page.isPresent()? page.get(): 0,9);
-		Page<ItemMainDto> items = itemService.getItemMainPage(itemSearchDto, pegealbe);
+		Pageable pegeable = PageRequest.of(page.isPresent()? page.get(): 0,9);
+		Page<ItemMainDto> items = itemService.getItemMainPage(itemSearchDto, pegeable);
 		
 		itemSearchDto.setItems(items);
 		
@@ -54,7 +54,7 @@ public class ItemController {
 	
 	
 	@GetMapping(value = "api/item/{id}")
-	public ResponseEntity<?> itemNew(@PathVariable long id) throws Exception {
+	public ResponseEntity<?> item(@PathVariable long id) throws Exception {
 		ItemFormDto itemFormDto = itemService.getItemDtl(id);
 	    return new ResponseEntity<>(itemFormDto , HttpStatus.OK);
 	}

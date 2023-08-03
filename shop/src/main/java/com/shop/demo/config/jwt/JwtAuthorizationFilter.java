@@ -15,8 +15,12 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shop.demo.config.auth.PrincipalDetails;
 import com.shop.demo.entity.User;
+import com.shop.demo.error.ErrorResult;
 import com.shop.demo.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -58,8 +62,22 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 		//JWT 토큰을 검증을 해서 정상적인 사용자인지 확인
 		String tokenString = request.getHeader(jwtProperties.getHEADER_STRING()).replace(jwtProperties.getTOKEN_PREFIX(), "");
 		
-		String username = JWT.require(Algorithm.HMAC512(jwtProperties.getSECRET())).build().verify(tokenString).getClaim("username").asString();
-		
+		String username;
+		try {
+			username = JWT.require(Algorithm.HMAC512(jwtProperties.getSECRET())).build().verify(tokenString).getClaim("username").asString();
+		}catch (TokenExpiredException e) {
+			ErrorResult errorResult = new ErrorResult("토큰이 만료되었습니다.");
+			
+			ObjectMapper mapper = new ObjectMapper();
+			String result ="";
+			try {result = mapper.writeValueAsString(errorResult);} 
+			catch (JsonProcessingException ex) {ex.printStackTrace();}
+			
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			try {response.getWriter().write(result);} 
+			catch (IOException ex) {ex.printStackTrace();}
+            return;
+        }
 		// Jwt 토큰 서명을 통해서 서명이 정상적이면 Authentication 객체를 만들어 준다.
 		if(username != null) {
 			//log.debug("********** JwtAuthorizationFilter -- " + username + " **********");
