@@ -72,9 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// -> SecurityContextHolderAwareRequestFilter -> AnonymousAuthenticationFilter
 		// -> SessionManagementFilter
 		// -> ExceptionTranslationFilter -> FilterSecurityInterceptor
+		
 		http.addFilterBefore(new TraceFilter(), SecurityContextPersistenceFilter.class);
-		// http.addFilterAfter(new TraceFilter(),
-		// SecurityContextPersistenceFilter.class); //csrf 비활성화
 
 		http.csrf().disable(); // csrf 비활성화
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // session 사용하지 않음
@@ -88,12 +87,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().permitAll();
 
 	}
-
-	/*
-	 * @Override protected void configure(AuthenticationManagerBuilder auth) throws
-	 * Exception {
-	 * auth.userDetailsService(principalDetailsService).passwordEncoder(encodePwd())
-	 * ; //패스워드 encoder 설정 }
-	 */
 
 }

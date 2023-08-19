@@ -46,12 +46,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		//super.doFilterInternal(request, response, chain);
-		//log.debug("********** JwtAuthorizationFilter -- Authentication is required **********");
 
-		
 		String jwtHeader = request.getHeader(jwtProperties.getHEADER_STRING());
-		//log.debug("********** JwtAuthorizationFilter -- " + jwtHeader + " **********");
 
 		//Header 확인
 		if(jwtHeader == null || !jwtHeader.startsWith(jwtProperties.getTOKEN_PREFIX())) {
@@ -80,7 +76,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
         }
 		// Jwt 토큰 서명을 통해서 서명이 정상적이면 Authentication 객체를 만들어 준다.
 		if(username != null) {
-			//log.debug("********** JwtAuthorizationFilter -- " + username + " **********");
 			User userEntity = userRepository.findByUsername(username);
 			
 			PrincipalDetails principalDetails = new PrincipalDetails(userEntity);

@@ -44,36 +44,6 @@ public class Item extends BaseEntity {
 	@Column(name = "IMG_SELL_STATUS")
 	private ItemSellStatus itemSellStatus;
 
-	@Column(length = 200)
-	private String attr1;
-
-	@Column(length = 200)
-	private String attr2;
-
-	@Column(length = 200)
-	private String attr3;
-
-	@Column(length = 200)
-	private String attr4;
-
-	@Column(length = 200)
-	private String attr5;
-
-	@Column(length = 200)
-	private String attr6;
-
-	@Column(length = 200)
-	private String attr7;
-
-	@Column(length = 200)
-	private String attr8;
-
-	@Column(length = 200)
-	private String attr9;
-
-	@Column(length = 200)
-	private String attr10;
-
 	public void updateItem(ItemFormDto itemFormDto) {
 		this.itemName = itemFormDto.getItemName();
 		this.price = itemFormDto.getPrice();

@@ -27,16 +27,6 @@ public class AuditAwareImpl implements AuditorAware<String>{
 	        }
 	    }
 	    
-		
-		/*
-		String username = "";
-		PrincipalDetails principalDetails;
-		
-		if(authentication != null ) {
-			principalDetails = (PrincipalDetails)authentication.getPrincipal();
-			username = principalDetails.getUser().getUsername();
-		}
-		*/
 
 		return Optional.of(username);
 		

@@ -17,13 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserService {
 	private final UserRepository userRepository;
-	//private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	//회원 가입
 	public User join(User user) {
 		validateUser(user);
-		//user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		//user.setRoles("ROLE_USER");
 		return userRepository.save(user);
 	}
 

@@ -80,19 +80,5 @@ public class UserController {
 	}
 
 	
-	@GetMapping("/api/user")
-	public String user() {
-		return "user";
-	}
-
-	@GetMapping("/api/manager")
-	public String manager() {
-		return "manager";
-	}
-
-	@GetMapping("/api/admin")
-	public String admin() {
-		return "admin";
-	}
 
 }

@@ -10,10 +10,10 @@ import lombok.Data;
 public class JwtProperties {
 	
 	@Value("${jwt.token.secret}")
-	private String SECRET;; // 우리 서버만 알고 있는 비밀값
+	private String SECRET;
 	
 	@Value("${jwt.token.expiry-seconds}")
-	private int EXPIRATION_TIME; // 10일 (1/1000초)
+	private int EXPIRATION_TIME; //  1/1000초
 	
 	private String TOKEN_PREFIX = "Bearer ";
 	private String HEADER_STRING = "Authorization";
