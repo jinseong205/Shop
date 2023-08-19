@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ApiExceptionHandler {
 
-	//@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler
 	public ResponseEntity<?> commonExceptionHandler(Exception e) {
 		
